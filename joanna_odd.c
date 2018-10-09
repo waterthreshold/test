@@ -14,6 +14,6 @@ int main ()
 			sum += (1+2*(num-1-i));
 			printf ("%llu\n",sum);
 	}
-	
+	//git hub test
 	return 0;
 }
