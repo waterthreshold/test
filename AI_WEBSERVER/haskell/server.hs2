@@ -1,0 +1,12 @@
+-- This haskell Program generate by AI
+import Network.Wai
+import Network.HTTP.Types (status200)
+import Network.Wai.Handler.Warp (run)
+
+app :: Application
+app _ respond = respond $ responseLBS status200 [("Content-Type", "text/plain")] "Hello, World!"
+
+main :: IO ()
+main = do
+  putStrLn "Starting server on port 8080..."
+  run 8080 app
