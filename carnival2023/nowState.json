@@ -1,0 +1,15 @@
+{
+    "endSignup": false,
+    "startActivity": true,
+    "startAiChatbot": true,
+    "startDependentsLogin": false,
+    "startLogin": true,
+    "startLottery": false,
+    "startMap": false,
+    "startNotify": false,
+    "startParty": true,
+    "startSchedule": true,
+    "startShow": false,
+    "startTechnology": true
+}
+
