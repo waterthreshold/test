@@ -1,0 +1,24 @@
+# build.ninja
+
+# Specify the compiler and compiler flags
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall
+
+# Rule to compile C++ source files
+rule CXX
+  command = $CXX $CXXFLAGS -MMD -MF $out.d -c $in -o $out
+  depfile = $out.d
+  deps = gcc
+
+rule LINK
+  command = $CXX $in -o $out
+# Build main.cpp
+build main.o: CXX main.cpp
+
+# Build helper.cpp
+build helper.o: CXX helper.cpp
+
+# Link object files into an executable
+build my_project: LINK main.o helper.o
+
+
