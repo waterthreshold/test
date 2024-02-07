@@ -6,3 +6,4 @@
 ```bash
 fun.sh
 ```
+ai_prompt help to translate chinese to English

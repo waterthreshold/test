@@ -1,0 +1,3 @@
+#!/bin/sh
+MESSAGE=$1 
+curl -X POST https://d27vkanbfmjob6.cloudfront.net/api/chatbot/v1/chatWithKnowledge -H 'Content-Type: application/json'   -d "{\"chatMessage\":\"translate ${MESSAGE}\",\"lang\": \"tw\", \"userEmail\":\"\",\"userName\":\"\",\"userId\":\"b6a9825b-9230-4667-8d0a-eae140d3ec7a\"}" | jq -r '.result' | jq -r '.content'
