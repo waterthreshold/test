@@ -1,4 +1,14 @@
-# test
+# Some toy program 
+
+# usage 
+
+	some of those are deprecated
+
+printf.c - was are console progress waiting mark in embeded system
+
+
+---
+
 <h1>標題</h1>
 
 <h2>二級標題</h2>
