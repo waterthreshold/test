@@ -1,0 +1,34 @@
+
+* task 1: Get Kernal panic crash log 
+
+
+* task 2: stability test (Connected device lost connection )
+
+log
+
+---
+
+	
+	- 30 clinet and close smart connection
+		- result: after two hours all client disconnect [2023/05/11]
+	- 25 client are playing  youtube video  and meeting streaming  test again [2023/05/11-17:22]
+		- result: 19 clients alive but at [2023/05/11-19:22:54] BCM Matt setcommand restart. 
+				No kernal panic found 
+	 
+[2023/5/18-17:01]
+[09:00] TEC SQA早上來看環境. 所有client都連回去了,
+[09:12] 所有client的應用程式重新跑起來.
+[10:00] 46台client在線上, internet and 串流看起來正常, 沒有kernel panic, 新的client 可以正常加入. uptime: 2days 17hours
+[11:30] 無線裝置串流斷線, brcm Matt 近來蒐集log.
+[11:45] 所有無線裝置自動連回來繼續跑測試
+[14:00] 重啟中午有些斷線裝置的串流服務,繼續測試
+[16:45] 所有裝置正常連線 串流也都正常, 沒有kernel panic, uptime: 3days 0hours
+
+[2023/5/19 10:30] yesterday all clinet still connected
+[2023/5/19 approxi 16:30] change to new RS700 (HWVER: beta 3) and upgrade new SDK debug firmware.
+	- result: 
+	- When adding client devices one by one, a kernel panic occurs.
+	- Armour cannot active even use valid sn 
+	- add all client device for while, a kernel panic occurs again.
+
+		

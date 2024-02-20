@@ -1,0 +1,316 @@
+{
+	"client" : [
+		{
+			"name" : "PC" ,
+			"run_app" : "stability application setting PC" ,
+			"distance" : "close" ,
+			"MAC" : "D8:BB:C1:83:B3:26",
+			"Connectedi_with" : "wired"
+		},
+		{
+			"name" : "wired PC" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "close" ,
+			"MAC" : "54:E1:AD:10:7D:82",
+			"Connectedi_with" : "wired"
+		},
+		{
+			"name" : "NAS server" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "close" ,
+			"MAC" : "08:BD:43:F6:39:62",
+			"Connectedi_with" : "wired"
+		},
+		{
+			"name" : "Zoom host" ,
+			"run_app" : "Anydesk and zoom" ,
+			"distance" : "close" ,
+			"MAC" : "00:E0:4C:68:26:D3",
+			"Connectedi_with" : "wired"
+		},
+		{
+			"name" : "TP-LINK smart plug 1" ,
+			"run_app" : "ping from desktop pc" ,
+			"distance" : "close" ,
+			"MAC" : "C0:06:C3:70:1C:73",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "WEMO smart plug 1" ,
+			"run_app" : "ping from desktop pc" ,
+			"distance" : "close" ,
+			"MAC" : "30:23:03:03:73:45",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "Lenovo NB (intel 8265)" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "close" ,
+			"MAC" : "B4:6B:FC:ED:2B:82",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "Windows 10 AX201" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "close" ,
+			"MAC" : "04:56:E5:7E:2C:1E",
+			"Connectedi_with" : "5GHZ"
+		},
+		{
+			"name" : "Windows 11 AX210" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "close" ,
+			"MAC" : "28:DF:EB:1A:CD:36",
+			"Connectedi_with" : "6GHZ"
+		},
+		{
+			"name" : "SONOS" ,
+			"run_app" : "Online audio" ,
+			"distance" : "close" ,
+			"MAC" : "54:2A:1B:CB:C9:CA",
+			"Connectedi_with" : "smart connection"
+		},
+		{
+			"name" : "Samsung Tab A" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "close" ,
+			"MAC" : "50:50:A4:A8:66:40",
+			"Connectedi_with" : "smart connection"
+		},
+		{
+			"name" : "ipad mini 5" ,
+			"run_app" : "zoom" ,
+			"distance" : "close" ,
+			"MAC" : "44:C6:5D:18:0A:71",
+			"Connectedi_with" : "smart connection"
+		}, 
+		{
+			"name" : "Samsung Galaxy-S22-Ultra" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "close" ,
+			"MAC" : "F0:F5:64:5E:D2:48",
+			"Connectedi_with" : "smart connection"
+		},
+		{
+			"name" : "EPSON WF-2631" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "middle" ,
+			"MAC" : "64:EB:8C:53:0D:DC",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "TP-LINK Smart plug 2" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "middle" ,
+			"MAC" : "C0:06:C3:70:1E:D2",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "WEMO smart plug 2" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "middle" ,
+			"MAC" : "30:23:03:03:71:F1",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "Macbook air" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "middle" ,
+			"MAC" : "9C:F3:87:BC:F8:36",
+			"Connectedi_with" : "5G-Guest"
+		},
+		{
+			"name" : "Windows 11 AX210-medium" ,
+			"run_app" : "Youtube Streaming" ,
+			"distance" : "middle" ,
+			"MAC" : "58:6C:25:CF:BA:7A",
+			"Connectedi_with" : "6G"
+		},
+		{
+			"name" : "Samsung flip 4" ,
+			"run_app" : "Youtube Streaming" ,
+			"distance" : "middle" ,
+			"MAC" : "F0:CD:31:8E:83:1A",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "windows 10 AX201-medium" ,
+			"run_app" : "teams" ,
+			"distance" : "middle" ,
+			"MAC" : "28:D0:EA:D4:44:46",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Google Home Mini" ,
+			"run_app" : "play music and youtube" ,
+			"distance" : "middle" ,
+			"MAC" : "20:DF:B9:2A:DE:60",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Samsung Galaxy-S21-Ultra-5G" ,
+			"run_app" : "Youtube Streaming" ,
+			"distance" : "middle" ,
+			"MAC" : "28:C2:1F:48:A9:B1",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Sansung fold 3" ,
+			"run_app" : "zoom" ,
+			"distance" : "middle" ,
+			"MAC" : "58:A6:39:0B:71:DF",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Netgear A8000" ,
+			"run_app" : "Youtube Streaming" ,
+			"distance" : "middle" ,
+			"MAC" : "94:18:65:3C:B2:94",
+			"Connectedi_with" : "6G"
+		},
+		{
+			"name" : "Vizio TV" ,
+			"run_app" : "Youtube Streaming" ,
+			"distance" : "middle" ,
+			"MAC" : "0C:8B:7D:8A:45:76",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "TP-LINK smart plug 3" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "long" ,
+			"MAC" : "C0:06:C3:70:1A:BC",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "TP-LINK smart plug 4" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "long" ,
+			"MAC" : "C0:06:C3:70:1E:0C",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "TP-LINK smart plug 5" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "long" ,
+			"MAC" : "C0:06:C3:70:1D:CC",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "WEMO smart plug 3" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "long" ,
+			"MAC" : "30:23:03:03:70:01",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "WEMO smart plug 4" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "long" ,
+			"MAC" : "30:23:03:03:70:57",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "WEMO smart plug 5" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "long" ,
+			"MAC" : "24:F5:A2:9C:C0:5B",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "windows 10 AX201-Far" ,
+			"run_app" : "zoom" ,
+			"distance" : "long" ,
+			"MAC" : "04:56:E5:7E:17:B5",
+			"Connectedi_with" : "2.4G"
+		},
+		{
+			"name" : "Gaming PC" ,
+			"run_app" : "Youtube streaming & Gaming" ,
+			"distance" : "long" ,
+			"MAC" : "10:3D:1C:97:10:80",
+			"Connectedi_with" : "5G"
+		},
+		{
+			"name" : "Amazon fire TV" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "long" ,
+			"MAC" : "4C:17:44:70:EF:DA",
+			"Connectedi_with" : "5G-Guest"
+		},
+		{
+			"name" : "Samsung flip 3" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "long" ,
+			"MAC" : "78:46:D4:9A:D0:4D",
+			"Connectedi_with" : "5G-Guest"
+		},
+		{
+			"name" : "Windows 11 AX210-Far" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "long" ,
+			"MAC" : "A8:64:F1:26:94:81",
+			"Connectedi_with" : "6GHZ"
+		},
+		{
+			"name" : "APPLE TV" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "long" ,
+			"MAC" : "28:FF:3C:B4:F0:7E",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "chromecast" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "long" ,
+			"MAC" : "54:60:09:BC:59:EE",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Google nest camera" ,
+			"run_app" : "surveillance" ,
+			"distance" : "long" ,
+			"MAC" : "44:BB:3B:0C:52:F2",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Nest learning thermostat" ,
+			"run_app" : "ping from desktop PC" ,
+			"distance" : "long" ,
+			"MAC" : "64:16:66:91:0D:8A",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Samsung Fold 1" ,
+			"run_app" : "zoom" ,
+			"distance" : "long" ,
+			"MAC" : "2C:4C:C6:F3:DE:86",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "Samsung Fold 4" ,
+			"run_app" : "Youtube streaming" ,
+			"distance" : "long" ,
+			"MAC" : "F0:CD:31:8C:DD:54",
+			"Connectedi_with" : "smart connect"
+		},
+
+		{
+			"name" : "iPhone 11" ,
+			"run_app" : "Youtube Streaming" ,
+			"distance" : "long" ,
+			"MAC" : "48:B8:A3:14:E1:6F",
+			"Connectedi_with" : "smart connect"
+		},
+		{
+			"name" : "PlayStation 5" ,
+			"run_app" : "ping from PC" ,
+			"distance" : "long" ,
+			"MAC" : "C8:4A:A0:19:F5:35",
+			"Connectedi_with" : "smart connect"
+		}
+
+
+	]
+
+}

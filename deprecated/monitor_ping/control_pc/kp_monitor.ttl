@@ -1,0 +1,131 @@
+string1='Kernel panic - not syncing: Fatal exception'
+string2='TRAP type'
+string3='U-Boot SPL'
+password='Aa_12345678'
+opentelnetd=1
+logdump=0
+IP='10.0.0.1'
+intdim static 3 
+config_file="stability_tt.config/"
+;get password 
+call L_getpassword
+;get password end
+
+call L_get_ttpath
+
+getdate date_prefix '%Y-%m-%d-%H%M%S'
+getdate date_prefix_notime '%Y-%m-%d'
+getdir dir
+getenv 'HOMEPATH' nowpath
+sprintf2 savepath '%s\desktop' nowpath
+changedir savepath
+
+testlink
+if result = 0 connect '/C=4 /BAUD=115200 /CDATABIT=8 /CPARITY=none /CSTOPBIT=1 /CFLOWCTRL=none' 
+;full log recording 
+sprintf2 full_log_name  '%s_full.log'  date_prefix
+loginfo tmp_log_name 
+if result = -1 logopen full_log_name 0 1 0 1 
+;strcompare tmp_log_name full_log_name
+;if result <> 0 then
+;	logclose 
+;	logopen full_log_name 0 1 0 1
+;endif
+
+sprintf2 starter #13#10'=== log start : %s ========'#13#10 date_prefix
+logwrite starter
+;end full log recording 
+
+; Monitor part
+sprintf2 log 'monitor_log-%s.txt' date_prefix_notime
+fileopen floghandle log 1
+
+while 1
+	timeout=300
+	wait string1 string2 string3
+	if result = 1 then
+		gettime time_str '%Y%m%d-%H%M%S'
+		sprintf2 log_line '[%s] Kernel panic detect' time_str
+		filewriteln floghandle log_line
+		static[0] = static[0] + 1 
+	elseif result = 2 then
+		gettime time_str '%Y%m%d-%H%M%S'
+		sprintf2 log_line '[%s] Dongle Trap detect' time_str
+		filewriteln floghandle log_line
+		static[1] = static[1] + 1 
+		HAVE_TRAP=1
+	elseif result =3 then 
+		gettime time_str '%Y%m%d-%H%M%S'
+		sprintf2 log_line '[%s] Reboot detect' time_str
+		filewriteln floghandle log_line
+		static[2] = static[2] + 1 
+		call L_AUTOLOGIN
+	endif	
+endwhile
+;monitor part end 
+logclose 
+fileclose floghandle
+end 
+
+:L_STATIC_LOG
+fileopen floghandle logname 0
+i=0
+while  1
+filereadln floghandle str
+if result = 1 then 
+	break
+endif 
+	strsplit str ':'
+	num=groupmatchstr2
+	str2int static[i] num	
+endwhile 
+return 
+
+:L_AUTOLOGIN
+timeout=360
+waitstr='Foxconn Consoled'
+wait waitstr
+sendkcode 28 1
+pause 1 
+sendln 'admin'
+pause 1 
+sendln password
+pause 1
+if HAVE_TRAP = 1 then 
+	call L_HAVE_TRAP
+	HAVE_TRAP=0
+endif
+pause 1 
+if logdump = 1 sendln '/data/logdump.sh &'
+pause 1
+if opentelnetd = 1 call L_OPENTELNETD 
+return 
+
+
+:L_OPENTELNETD
+if sendln 'utelnetd -d -l /bin/sh'
+strlen tt_path
+if result <> 0 then 
+	sprintf2 cmd '"%s" telnet://%s:23' tt_path IP 
+	exec cmd 
+endif
+pause 1
+return
+
+:L_HAVE_TRAP
+sendln '/data/tdump.sh'
+return 
+
+:L_getpassword
+fileopen fhp "stability_tt.config" 0
+filereadln fhp password 
+strlen password 
+if result = 0 password = 'Aa_12345678'
+;fileclose fhp
+return
+
+:L_get_ttpath
+filereadln fhp tt
+makepath tt_path tt 'ttermpro.exe'
+fileclose fhp
+return
