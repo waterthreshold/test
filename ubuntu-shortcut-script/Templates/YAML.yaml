@@ -1,0 +1,42 @@
+# YAML Configuration Example
+
+# Basic key-value pairs
+title: YAML Configuration Example
+version: 1.0
+
+# String
+author: John Doe
+
+# Integer
+port: 8080
+
+# Floating-point number
+pi: 3.14159
+
+# Boolean values
+enabled: true
+
+# List of items
+fruits:
+  - apple
+  - banana
+  - cherry
+
+# Nested properties
+database:
+  server: localhost
+  port: 5432
+  name: mydb
+
+# Nested YAML objects
+user:
+  username: johndoe
+  email: johndoe@example.com
+
+# Lists of objects
+users:
+  - username: user1
+    email: user1@example.com
+  - username: user2
+    email: user2@example.com
+

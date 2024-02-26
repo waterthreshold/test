@@ -1,0 +1,32 @@
+# This is a TOML configuration file example
+
+# Basic key-value pair
+title = "TOML Example"
+
+# Integer
+count = 42
+
+# Floating-point number
+pi = 3.14159
+
+# Boolean values
+is_enabled = true
+
+# String array
+fruits = ["apple", "banana", "cherry"]
+
+# Nested table
+[database]
+server = "localhost"
+port = 5432
+name = "mydb"
+
+# Table of tables
+[[users]]
+username = "user1"
+email = "user1@example.com"
+
+[[users]]
+username = "user2"
+email = "user2@example.com"
+

@@ -1,0 +1,29 @@
+{
+  "title": "JSON Configuration Example",
+  "version": "1.0",
+  "author": "John Doe",
+  "port": 8080,
+  "pi": 3.14159,
+  "enabled": true,
+  "fruits": ["apple", "banana", "cherry"],
+  "database": {
+    "server": "localhost",
+    "port": 5432,
+    "name": "mydb"
+  },
+  "user": {
+    "username": "johndoe",
+    "email": "johndoe@example.com"
+  },
+  "users": [
+    {
+      "username": "user1",
+      "email": "user1@example.com"
+    },
+    {
+      "username": "user2",
+      "email": "user2@example.com"
+    }
+  ]
+}
+

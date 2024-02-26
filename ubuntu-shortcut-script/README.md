@@ -10,3 +10,7 @@
 	-wifi.sh: toggle on or off the wifi adaptar
 	-screenshot-area.sh: zenity use to screenshot the select area which copy to clipboard or save to file or both
 	-project_mode.sh: like windows `#+P` to switch the screen mode
+
+## Templates
+
+ please copy under Templates file into templates file 
