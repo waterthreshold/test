@@ -1,0 +1,74 @@
+Index: Makefile
+===================================================================
+--- Makefile	(revision 216)
++++ Makefile	(working copy)
+@@ -12,8 +12,8 @@
+ # $Id$
+ #
+ 
+-include ../config.mk
+-include ../config.in
++#include ../config.mk
++#include ../config.in
+ 
+ ################################################################################
+ CSS_PAGES += css/new_custom.css css/perfect-scrollbar.css css/progress.css
+@@ -121,33 +121,34 @@
+ PAGES += error400.htm
+ 
+ all: 
+-	@echo "create ./html==============================="
+-	rm -rf ./html
+-	install -d ./html
+-	rm -rf ./html/css
+-	install -d ./html/css
+-	rm -rf ./html/img
+-	install -d ./html/img
+-	rm -rf ./html/script
+-	install -d ./html/script
+-	rm -rf ./html/help
+-	install -d ./html/help
+-	rm -rf ./html/cgi-bin
+-	install -d ./html/cgi-bin
+-	rm -rf ./html/fonts
+-	install -d ./html/fonts
+-	install -d ./html/fonts/roboto
+-	cp $(PAGES) ./html/
+-	cp $(CSS_PAGES) ./html/css
+-	cp $(SCRIPT_PAGES) ./html/script
+-	cp $(IMG_PAGES) ./html/img
++	#@echo "create ./html==============================="
++	#rm -rf ./html
++	#install -d ./html
++	#rm -rf ./html/css
++	#install -d ./html/css
++	#rm -rf ./html/img
++	#install -d ./html/img
++	#rm -rf ./html/script
++	#install -d ./html/script
++	#rm -rf ./html/help
++	#install -d ./html/help
++	#rm -rf ./html/cgi-bin
++	#install -d ./html/cgi-bin
++	#rm -rf ./html/fonts
++	#install -d ./html/fonts
++	#install -d ./html/fonts/roboto
++	#cp $(PAGES) ./html/
++	#cp $(CSS_PAGES) ./html/css
++	#cp $(SCRIPT_PAGES) ./html/script
++	#cp $(IMG_PAGES) ./html/img
+ 
+-	cp $(FONTS_FILES) ./html/fonts
+-	cp $(FONTS_FILES2) ./html/fonts/roboto
++	#cp $(FONTS_FILES) ./html/fonts
++	#cp $(FONTS_FILES2) ./html/fonts/roboto
++	#
++	#rm -f ./html
++	./tools/print.sh $(PAGES)
+ 	
+-	rm -f ./html/*.bak
+ 	
+-	
+ install: all
+ 	rm -r -f $(TARGET_ROOTFS_DIR)/www
+ 	install -d $(TARGET_ROOTFS_DIR)/www
