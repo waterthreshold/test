@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content" style="overflow:auto">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  method="POST" action="RestoreConfig.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Backup Settings</div>
+                    </div>
+                    <div class="card-body">
+                    	<p>Loading the factory default settings will erase all the current settings.</p>
+                    	<p>Are you sure you want to do this?</p>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="pull-right">
+                        	<button id="yes" type="submit" value="Yes" name="ROMReset" class="btn btn-white btn-mg-15 btn-round" onclick="buttonClick(this,'Yes');" >Yes</button>
+							<button id="no" type="BUTTON" value="No" name="no" class="btn btn-primary btn-mg-15 btn-round" onclick="buttonClick(this,'No');window.location.href='BAK_backup.htm'">No</button></td>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script language="javascript" type="text/javascript"><!--
+$(document).ready(function()
+{
+    $("#target").submit(function(e) {
+      
+	  
+		e.preventDefault();
+		var formdata = {
+			ROMReset:"Yes"
+			
+		};
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+		});
+        buttonFilter();
+		window.location.href = 'DIG_reboot.htm'
+    });
+	
+});
+</script>
+
+</html>

@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+</head>
+<script language="javascript" type="text/javascript">
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+    var conn_type = cf.ipv6_proto.value;
+}
+
+function checkType(ipv6_proto) // called from basictop.htm
+{
+    if (ipv6_proto == "disable" || ipv6_proto == "")
+    {
+        window.location.href = "IPV6_disable.htm";
+    }
+    else if (ipv6_proto == "auto")
+    {
+        window.location.href = "IPV6_auto.htm";
+    }
+    else if (ipv6_proto == "6to4")
+    {
+        window.location.href = "IPV6_tunnel.htm";
+    }
+    else if (ipv6_proto == "passthrough")
+    {
+        window.location.href = "IPV6_passthrough.htm";
+    }
+    else if (ipv6_proto == "fixed")
+    {
+        window.location.href = "IPV6_fixed.htm";
+    }
+    else if (ipv6_proto == "dhcp")
+    {
+        window.location.href = "IPV6_dhcp.htm";
+    }
+    else if (ipv6_proto == "pppoe")
+    {
+        window.location.href = "IPV6_pppoe.htm";
+    }
+    else if (ipv6_proto == "autoconfig") //Auto Config
+    {
+        window.location.href = "IPV6_autoconfig.htm";
+    }
+    else if (ipv6_proto == "6rd")
+    {
+        window.location.href = "IPV6_6rd.htm";
+    }
+}
+
+</script>
+
+<body class="page-body" onload="loadSettings();checkType(document.forms[0].ipv6_proto.value);">
+<form name="basic" method="POST" action="#"> 
+    <input name=ipv6_proto type=hidden value= "NVRAM_ipv6_proto">
+</form>
+</body>
+</html>

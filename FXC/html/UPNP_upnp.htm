@@ -1,0 +1,271 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body  class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target"  name="formname" method="POST" action="Setupnp.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <label class="card-btn card-flex" for="upnp">
+                        <div class="card-title">Turn UPnP On</div>
+                        <div class="card-margin-left">
+                            <div class="togglebutton">
+                                <label>
+                                    <input id="upnp" type="checkbox" name="UPnP" value="UPnP"  onclick="enable_upnp_func()" >
+                                    <span class="toggle"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </label>
+                    <div id="upnp_container" style="display: none;">
+                        <div class="card-divider"></div>
+                        <div class="card-body">
+                            <div class="mui-textfield">
+                                <input class="form-control" id="adver_time" type="text" name="AdverTime" maxlength="4" value="UPNP_advertisementPeriod" onFocus="this.select();">
+                                <label tabindex="-1">Advertisement Period (in minutes)</label>
+                            </div>
+                            <div class="mui-textfield">
+                                <input class="form-control" id="time_to_live" type="text" name="TimeToLive" maxlength="3" value="UPNP_advertisementTTL" onFocus="this.select();">
+                                <label tabindex="-1">Advertisement Time to Live (in hops)</label>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+				 <div class="card-bottom">
+                            <button id="apply" value="Apply"  type="submit" name="apply" class="btn btn-primary pull-right btn-round">Apply</button>
+                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-flex">
+                            <div class="card-title">UPnP Portmap Table</div>
+                            <div class="card-margin-left">
+                                <button class="btn btn-green btn-round btn-icon pull-righ" id="refresh" value="Cancel" OnClick="buttonClick(this,'Refresh');fresh();" type="submit" name="refresh"><i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="20px" viewBox="0 0 24 24" width="20px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg><p>Refresh</p></i></button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="PortMapTable" class="table table-hover">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>Active</th>
+                                <th>Protocol</th>
+                                <th>Int. Port</th>
+                                <th>Ext. Port</th>
+                                <th class="align-right">IP Address</th>
+                            </tr>
+							 
+                            </thead>
+                            <tbody >
+							<tr>
+                                <td>Enable</td>
+                                <td>tcp</td>
+                                <td>123</td>
+                                <td>12345</td>
+                                <td class="align-right">192.168.1.1</td>
+                            </tr>
+                                <!-- <% upnp_cgi_get_param("portmapTable"); %> -->
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <input type="hidden" value="<% upnp_cgi_get_param("turnUPnPOn"); %>" name="hiddenTurnUPnPOn"> -->
+        <!-- <input type="hidden" value="<% upnp_cgi_get_param("advertisementPeriod"); %>" name="hiddenAdverTime"> -->
+        <!-- <input type="hidden" value="<% upnp_cgi_get_param("advertisementTTL"); %>" name="hiddenTimeToLive"> -->
+    </form>
+</div>
+</body>
+
+<script language="javascript" type="text/javascript">
+function genData (){
+	var formData = {}
+	if ($('#upnp').attr('checked') )
+		formData.enable_upnp=1
+	else 
+		formData.enable_upnp=0
+	formData.adver_time=$('#adver_time').val()
+	formData.time_to_live=$('#time_to_live').val()
+	return  formData
+}
+$(document).ready(function()
+{
+	init_setting();
+	$("#target").submit(function(e) {
+		e.preventDefault();
+		var formdata = genData()
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+		});
+		location.reload()
+		//}
+		
+		
+	});
+});
+function init_setting() {
+	$.get("Getupnp.cgi",function (data){
+			const  param = $.parseJSON(JSON.stringify(data))
+			var enable_upnp = param.enable_upnp;
+			if (enable_upnp == 1 )
+				$('#upnp').attr('checked',true)
+			else 
+				$('#upnp').attr('checked',false)
+			enable_upnp_func()
+			$('#adver_time').val(param.adver_time);
+			$('#time_to_live').val(param.time_to_live);
+			var count = param.portMap.length;
+			if ( count <=0 )
+				return 
+			var tbody = $('#PortMapTable tbody')
+			var portMapArray = param.portMap.portMapTable;
+			$.each(portMapArray , function (index,item) {
+				var newRow='<tr><td>' + item.enable + '</td><td>' + item.proto  + '</td><td>' + item.inPort + '</td><td>' + item.OutPort + '</td><td>' + item.ipAddr + '</td></tr>'
+				tbody.append(newRow);
+			});
+	});
+}
+function trim(vString)
+{ 
+    var tString = vString;
+
+    //trim left spaces
+    if (tString.charAt(0) == " ")
+        tString = trim(tString.substring(1, tString.length));
+
+    //trim right spaces
+    if (tString.charAt(tString.length-1) == " ")
+        tString = trim(tString.substring(0, tString.length-1));
+
+    return(tString);
+}
+function isNumOnly(vString)
+{
+    var NUMBERS = "0123456789";
+    var valid = true;
+    for(var i=0;i<vString.length;i++)
+        if(NUMBERS.indexOf(vString.charAt(i))<0)
+            valid = false;
+            
+    return(valid);
+}
+function isNull(vField) {
+    var ret = false;
+    vField.value = trim(vField.value)
+    
+    if (vField.value.length == 0)
+        ret = true;
+    return(ret)
+}
+function CheckAdverTimeVal(vField)
+{
+    if(isNull(vField)){
+        alert("Blanks are not allowed in " + vField.name);
+        vField.value = vField.form.hiddenAdverTime.value;
+        vField.focus();
+        return false;
+    }
+    if(!isNumOnly(vField.value)){
+        alert(vField.name + " contains an invalid number.");
+        vField.value = vField.form.hiddenAdverTime.value;
+        vField.focus();
+        return false;
+    }
+    if((vField.value >1440 )||(vField.value <= 0 )){
+        alert(vField.name + " Invalid Advertisement Period value. The value must be in the range 1-1440.");
+        vField.value = vField.form.hiddenAdverTime.value;
+        vField.focus();
+        return false;
+    }    
+    return true
+}
+function CheckTimeToLiveVal(vField)
+{
+    if(isNull(vField)){
+        alert("Blanks are not allowed in " + vField.name);
+        vField.value = vField.form.hiddenTimeToLive.value;
+        vField.focus();
+        return false;
+    }
+    if(!isNumOnly(vField.value)){
+        alert(vField.name + " contains an invalid number.");
+        vField.value = vField.form.hiddenTimeToLive.value
+        vField.focus()
+        return false    
+    }
+    if((vField.value > 255 )||(vField.value <= 0 )){
+        alert(vField.name + " Invalid Advertisement Time to Live value. The value must be in the range 1-255.")
+        vField.value = vField.form.hiddenTimeToLive.value
+        vField.focus()
+        return false 
+    }
+    return true
+}
+
+function finishchech()
+{
+    var cf = document.forms[0];
+
+    if(!CheckAdverTimeVal(document.formname.AdverTime))
+        return false;
+    else if(!CheckTimeToLiveVal(document.formname.TimeToLive))
+        return false;
+    else
+    {
+        //document.formname.submit();
+        if (cf.UPnP.checked)
+            cf.hiddenTurnUPnPOn.value = 1;
+        else
+            cf.hiddenTurnUPnPOn.value = 0;
+        return true
+    }
+}
+
+function fresh()
+{
+    window.location.href="UPNP_upnp.htm";
+}
+
+function enable_upnp_func()
+{
+    //var cf = document.forms[0];
+	var slideDown =$('#upnp').attr('checked')
+    if (slideDown)
+    {
+        //cf.UPnP.checked = true;
+        $("#upnp_container").slideDown();
+    }
+    else
+    {
+       // cf.UPnP.checked = false;
+        $("#upnp_container").slideUp();
+    }
+}
+
+function enable_upnp()
+{
+    $("#apply").click();
+}
+</script>
+</html>

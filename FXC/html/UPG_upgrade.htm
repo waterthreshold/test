@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<link href="css/progress.css" rel="stylesheet">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body onload="stopAnimation();" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" action="upgrade_check.cgi" ENCTYPE="multipart/form-data">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Locate and select the upgrade file on your hard disk.</div>
+                    </div>
+                    <div class="card-body">
+                        <input class="form-control" type="file" name="mtenFWUpload" id="file" size="23" maxlength="1024" contentEditable=false onkeydown="return false;" onbeforeeditfocus="return false;" onpaste="return false;">
+                        <div id="progress_bar" style="display: none;">
+                            <p><b>Note:</b> The update process takes about 2 minutes. <br>Do not turn off the power or press the <b>Reset</b> button during the update.</p>
+                            <span class="progress-box">
+                                <progress id="progress2"></progress>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button type="SUBMIT" name="Upgrade" value="Upload" class="btn btn-primary pull-right btn-round" onClick="buttonClick(this,'Upload');return checkData();">Upload</button>
+                    </div>
+                </div>
+
+                <input type="hidden" name="IS_check_upgrade" value="0">
+                <input type="hidden" name="ver_check_enable" value="1">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function()
+{   
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function stopAnimation()
+{
+    document.forms[0].Upgrade.style.display = "block";
+    $("#progress_bar").slideUp();
+}
+
+function showAnimation()
+{
+    document.forms[0].Upgrade.style.display = "none";
+    $("#progress_bar").slideDown();
+}
+
+function checkData()
+{
+    const up_msg = "Continue?\nAll existing Internet connections will be terminated.\n";
+    let a;
+    let uploadFile = document.getElementsByName("mtenFWUpload");
+    let t_str = uploadFile[0].value;       
+
+    if (t_str.split) 
+        a = t_str.split(".");
+    else
+        a = cdisplit(t_str, ".");
+
+    if (t_str.length == 0)
+    {
+        alert("The file name is null. Locate and select the upgrade file from your hard disk, please.\n");
+        return false;
+    }
+
+    if ((a.length<2) || (a[0]=="") || (a[a.length-1].toLowerCase() != "chk"))
+    {
+        alert("Please assign the correct file. The file format is *.chk\n");
+        return false;
+    }
+
+    if (!confirm(up_msg))
+        return false;
+        
+    setTimeout("showAnimation()", 50);
+    return true;
+}
+</script>  
+</body>
+</html>
+

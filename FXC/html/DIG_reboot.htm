@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+</head>
+<link href="css/progress.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<body class="page-body" onload="show()">
+	
+	<div class="container-fluid frame-content" id="frame-content" style="overflow:auto">
+	<span id="progress_text">  </span>
+		<progress id="progressbar" max="100" class="progress" value="0" style="width=20;">
+		</progress>
+	<p  ></p>
+	</div>
+</body>
+
+<script>
+const estimate_time = 100; // secs
+progress_val = 0 
+function show() {
+	progress_val += 1
+	const delay = estimate_time/100 *1000;
+	if (progress_val > 100 )
+		window.location.href='start.htm'
+	$("#progressbar").val(progress_val)
+	$("#progress_text").text("Progress: " + progress_val + " %")
+	setTimeout("show()", delay);
+}
+</script>
+</html>

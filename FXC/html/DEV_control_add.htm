@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body onload="loadSettings();" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target" name="frmLan" method="POST" action="access_control_add.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" id="allowed_list_head">Add Device to Allowed List</div>
+                        <div class="card-title" id="blocked_list_head">Add Device to Blocked List</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input id="mac_addr" class="form-control" type="text" maxlength="17" name="mac">
+                            <label tabindex="-1"><%getstr("info_mark_mac");%></label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input id="dev_name" class="form-control" type="text" maxlength="24" name="dev_name">
+                            <label tabindex="-1"><%getstr("lan_mark_name");%></label>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" value="<%getstr("apply_mark");%>" onClick="buttonClick(this,'<%getstr("apply_mark");%>');return checkData()" type="SUBMIT" name="action" class="<%gui_get_guest_or_admin_mode("0");%> btn btn-primary pull-right btn-round"><% getstr("apply_change_mark"); %></button>
+                    </div>
+                </div>
+
+                <input name="access_control_add_type" type="hidden" value="<% nvram_get("access_control_add_type");%>">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+ 
+<script>
+$(document).ready(function() {
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function loadSettings() {
+    const access_control_add_type = document.getElementsByName("access_control_add_type")[0].value;
+
+    if (access_control_add_type === "allowed_list")
+        $("#blocked_list_head")[0].style.display = "none";
+    else
+        $("#allowed_list_head")[0].style.display = "none";
+    
+    return 0;
+}
+
+function checkData() {
+    let msg = "";
+    if (checkMacStr(document.forms[0].mac_addr) || MacStrallf(document.forms[0].mac_addr))
+        msg += "<%getstr("invalid_mac");%>\n";
+
+    if (document.forms[0].dev_name.value.match( /[^\x20-\x7E]/ ))
+        msg += "<%getstr("device_name_error");%>\n";
+
+    if (msg.length > 1) {
+        alert(msg);
+        return false;
+    }
+
+    return true;            
+}
+</script>
+</html>
+

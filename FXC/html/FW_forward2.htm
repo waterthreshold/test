@@ -1,0 +1,221 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body onload="init();" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target"  name="formname" method="POST" action="pforward.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link active">Port Forwarding</a>
+                            </li>
+                            <li class="nav-item" onclick="window.location.href='FW_pt.htm'">
+                                <a class="nav-link">Port Triggering</a>
+                            </li>
+                        </ul>
+                        <input id="serv_pf" type="hidden" name="serv_type" value="pf">
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <select class="form-control" id="svs_gm" name="svs_gm" onChange="javascript:showIP()">
+								<option value="0" selected>ALL</option>
+								<option value="1">Any(TCP)</option>
+								<option value="2">Any(UDP)</option>
+								<option value="3">FTP</option>
+								<option value="4">SSH</option>
+								<option value="5">Telnet</option>
+								<option value="6">HTTP</option>
+                            </select>
+                            <label tabindex="-1">Service Name</label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="server_ipaddress1" type="text" name="SV_IP1" class="form-control" maxlength="3" value="192" onFocus="this.select();" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input id="server_ipaddress2" type="text" name="SV_IP2" class="form-control" maxlength="3" value="168" onFocus="this.select();" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="server_ipaddress3" type="text" name="SV_IP3" class="form-control" maxlength="3" value="0" onFocus="this.select();" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="server_ipaddress4" type="text" name="SV_IP4" class="form-control" maxlength="3" value="" onFocus="this.select();" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)">
+                            <label tabindex="-1">Server IP Address</label>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <!-- <% gui_get_ga_mode_special_cases("2", "admin_btn_start"); %> -->
+                        <button id="server_add" type="Submit" value="Add" name="svAdd" class="btn btn-primary pull-right btn-round" onclick="buttonClick(this,'Add');if(!validIp()) return false; Check(0, 0);">Add</button>
+                        <!-- <% gui_get_ga_mode_special_cases("2", "admin_btn_end"); %> -->
+                        <!-- <% gui_get_ga_mode_special_cases("2", "guest_btn_start"); %>         -->
+                        <!-- <button id="inbound_add2" style="display: none;" type="Submit" value="Add" name="svAdd" class="btn btn-primary pull-right btn-round" disabled onclick="buttonClick(this,'Add');if(!validIp()) return false; Check(0, 0);">Add</button> -->
+                        <!-- <% gui_get_ga_mode_special_cases("2", "guest_btn_end"); %> -->
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-flex">
+                            <div class="card-title">Service</div>
+                            <div class="card-margin-left">
+                                <button class="btn btn-green btn-round btn-icon pull-righ" id="inbound_add" type="Submit" value="Add Custom Service" name="Add" onclick="buttonClick(this,'Add Custom Service');Check(3, 0);"><i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="20px" viewBox="0 0 24 24" width="20px" fill="#FFFFFF"><g><rect fill="none" height="24" width="24"/></g><g><g><path d="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z"/></g></g></svg><p>Add Custom Service</p></i></button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>Service Name</th>
+                                <th>External Ports</th>
+                                <th>Internal Ports</th>
+                                <th>Internal IP address</th>
+                                <th class="align-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <% fw_cgi_get_inbound_param("forward_table"); %> -->
+                            </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right" style="display: none;">
+                            <button id="inbound_edit" type="Submit" value="Edit Service" name="Edit" class="btn btn-white btn-mg-15" onclick="buttonClick(this,'Edit Service');">Edit Service</button>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="selectService" value="">
+        <!-- <input type="hidden" name="lanIP" value="<% fw_cgi_get_inbound_param("lanIP"); %>"> -->
+        <input type="hidden" name="action" value="init">
+        <input type="hidden" name="selectEntry" value="">
+        <input type="hidden" name="inputIP" value="">
+        <!-- <input type="hidden" name="entryData" value="<% fw_cgi_get_inbound_param("entryData"); %>"> -->
+        <input type="hidden" name="fwpf_enable">
+    </form>
+</div>
+</body>
+
+<script language="javascript" type="text/javascript">
+var msg_invalid_ip="Invalid IP address. Please enter it again.\n"; //temp!!
+$(document).ready(function()
+{
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function init()
+{
+    var cf = document.forms[0];
+    var lanSplit = cf.lanIP.value.split(".");
+
+    cf.SV_IP1.value=lanSplit[0];
+    cf.SV_IP2.value=lanSplit[1];
+    cf.SV_IP3.value=lanSplit[2];
+    cf.SV_IP4.value="";
+
+    parent.hide_loading();
+
+    return true;
+}
+
+function validIp()
+{
+    var cf = document.forms[0];
+    if(checkIP(cf.SV_IP1,cf.SV_IP2,cf.SV_IP3,cf.SV_IP4,254)
+        || parseInt(cf.SV_IP4.value,10) == 0)
+    return alertR(msg_invalid_ip);
+}
+
+function showIP()
+{
+    var cf = document.forms[0];
+    var num = cf.entryData.value.split("#");
+    var nowName = cf.svs_gm.options[cf.svs_gm.selectedIndex].value;
+    var i, data1, data2, data3, flag=0;
+
+    for(i=0; i<=num[1]; i++)
+    {
+        data1 = num[0].split("@");
+        if(i>0)
+        {
+            data2 = data1[i].split(";");
+            if(data2[0] == nowName)
+            {
+                data3 = data2[1].split(".");
+                cf.SV_IP1.value=data3[0];
+                cf.SV_IP2.value=data3[1];
+                cf.SV_IP3.value=data3[2];
+                cf.SV_IP4.value=data3[3];
+                flag=1;
+                break;
+            }
+        }
+    }
+    if(flag == 0)
+    {
+        var lanSplit = cf.lanIP.value.split(".");
+
+        cf.SV_IP1.value=lanSplit[0];
+        cf.SV_IP2.value=lanSplit[1];
+        cf.SV_IP3.value=lanSplit[2];
+        cf.SV_IP4.value="";
+    }
+    return true;
+}
+
+function Check(caller, index)
+{
+    var cf = document.forms[0];
+    var form_size = cf.elements.length;
+    var checkFlag = 0;
+
+    cf.selectEntry.value = "";
+
+    parent.show_loading();
+
+    if(caller == "0")
+    {
+        cf.action.value = "add";
+        cf.SV_IP1.value = parseInt(cf.SV_IP1.value,10);
+        cf.SV_IP2.value = parseInt(cf.SV_IP2.value,10);
+        cf.SV_IP3.value = parseInt(cf.SV_IP3.value,10);
+        cf.SV_IP4.value = parseInt(cf.SV_IP4.value,10);
+        cf.inputIP.value=cf.SV_IP1.value + "." + cf.SV_IP2.value+ "." + cf.SV_IP3.value+ "." + cf.SV_IP4.value;
+        cf.selectService.value=cf.svs_gm.options[cf.svs_gm.selectedIndex].value;
+    }
+    else if(caller == "1")
+    {
+        cf.selectEntry.value = index;
+        cf.action.value = "edit";
+        $("#inbound_edit").click();
+    }
+    else if(caller == "2")
+    {   cf.selectEntry.value = index;
+        cf.action.value = "delete";
+        $("#inbound_del").click();
+    }
+    else if(caller == "3")
+        cf.action.value = "custom";
+
+    return;
+}
+
+function enableFwpf()
+{
+    var cf = document.forms[0];
+    if (cf.enable.checked)
+        cf.fwpf_enable.value = 0;
+    else
+        cf.fwpf_enable.value = 1;
+}
+</script>
+</html>

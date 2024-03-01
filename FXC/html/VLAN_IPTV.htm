@@ -1,0 +1,647 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target" name="vlantag" method="POST" action="SetVlan.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <label class="card-btn card-flex" for="vlan_iptv_enable">
+                        <div class="card-title">Enable VLAN / Bridge Setup</div>
+                        <div class="card-margin-left">
+                            <div class="togglebutton">
+                                <label>
+                                    <input id="vlan_iptv_enable" type="checkbox" name="vlan_iptv_enable" value="enable" onclick="vlan_show()" >
+                                    <span class="toggle"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="card" id="vlan_container" style="display: none;">
+                    <div class="card-header">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a id="iptv-label" class="nav-link active" onclick="mode_show(0)" href="#iptv_check">By bridge group</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="vlan-label" class="nav-link" onclick="mode_show(1)" href="#vlan_check">Enable VLAN Tag</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input id="iptv_select" type="hidden" name="vlan_iptv_select" value="iptv_enable">
+                    <input id="vlan_select" type="hidden" name="vlan_iptv_select" value="vlan_enable">
+                    <div id="iptv_check">
+                        <div class="card-subheader">
+                            <div class="card-title">Selected wired ports and wireless ports will be bridged to Internet port without NAT.</div>
+                        </div>
+                        <div class="card-body">
+                            <p>Wired Ports</p>
+                            <!-- <% no2ndSwitch("start"); %> -->
+							 <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="iptv_ports_0" type="checkbox" name="iptv_ports_0">Port1
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check" >
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="iptv_ports_1" type="checkbox" name="iptv_ports_1">Port2
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                           
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="iptv_ports_2" type="checkbox" name="iptv_ports_2">Port3
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="iptv_ports_3" type="checkbox" name="iptv_ports_3">Port4
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                          
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_10" type="checkbox" name="iptv_ports_10">Port5 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_10" type="checkbox" name="iptv_ports_10"> -->
+                                    <!-- <% nvram_match("enable_2dot5g_wan", "0", " Multi-Gig(2.5G/1G) "); %> -->
+                                    <!-- <% nvram_match("enable_2dot5g_wan", "1", " Port5 "); %> -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            
+                            <!-- <% no2ndSwitch("end"); %> -->
+                            <!-- <% is2ndSwitch("start"); %> -->
+                            <!-- <div class="form-check" style="<% is_wanAggEnabled("not_wan_agg_js_start") %>display: none<% is_wanAggEnabled("not_wan_agg_js_end") %>"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_0_2" type="checkbox" name="iptv_ports_0">Port1 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_1_2" type="checkbox" name="iptv_ports_1">Port2 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_2_2" type="checkbox" name="iptv_ports_2">Port3 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_3_2" type="checkbox" name="iptv_ports_3">Port4 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_10" type="checkbox" name="iptv_ports_10">Port5 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_11" type="checkbox" name="iptv_ports_11">Port6 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            <!-- <% is2ndSwitch("end"); %> -->
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="card-body">
+                            <p>Wireless</p>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="iptv_ports_10" type="checkbox" name="iptv_ports_4">WiFi-2.4G
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="iptv_ports_11" type="checkbox" name="iptv_ports_5">WiFi-5G
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="iptv_ports_6" type="checkbox" name="iptv_ports_6">WiFi-5G-2 -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                           
+                        </div>
+                    </div>
+                    <div id="vlan_check" style="display: none;">
+                        <div class="card-subheader">
+                            <div class="card-flex">
+                                <p>Packets between ports in Internet group and Internet port are processed via NAT and firewall. Packets between ports in user defined VLAN tag group and Internet port are processed by bridge without NAT and firewall.</p>
+                                <div class="card-margin-left">
+                                    <button class="btn btn-green btn-round btn-icon pull-righ" id="add" type="button" value="Add" name="Add" onclick="window.location.href='VLAN_IPTV_add.htm'"><i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="20px" viewBox="0 0 24 24" width="20px" fill="#FFFFFF"><g><rect fill="none" height="24" width="24"></rect></g><g><g><path d="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z"></path></g></g></svg><p>Add</p></i></button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>Enable</th>
+                                    <th>Name</th>
+                                    <th>VLAN ID</th>
+                                    <th>Priority</th>
+                                    <th>Wired Ports</th>
+                                    <th>Wireless</th>
+                                    <th class="align-right">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <% vlan_cgi_get_rule_table("enable_vlan_tag"); %> -->
+                                </tbody>
+                                </table>
+                            </div>
+                            <div class="pull-right" style="display: none;">
+                                <button id="edit" type="Submit" value="Edit" name="Edit" class="btn btn-white btn-mg-15" onclick="buttonClick(this,'Edit');return checkData();" >Edit</button>
+                                <button id="delete" type="Submit" value="Delete" name="Delete" class="btn btn-red btn-mg-15" onclick="buttonClick(this,'Delete');" >Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bottom card-flow-root">
+                        <button id="apply" value="Apply"  onclick="buttonClick(this,'Apply');return checkData();"  type="submit" name="apply" class="btn btn-primary pull-right btn-round" >Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <input type="hidden" name="select" value="-1"> -->
+        <!-- <input name="vlan_enable" type="hidden" value= "NVRAM_enable_vlan"> -->
+        <!-- <input name="iptv_enable" type="hidden" value= "NVRAM_iptv_enabled"> -->
+        <!-- <input name="iptv_interfaces" type="hidden" value= "NVRAM_iptv_interfaces"> -->
+        <!-- <input type="hidden" name="vlan_rule_name" value="<% nvram_get("vlan_name") %>"> -->
+        <!-- <input type="hidden" name="vlan_rule_enable" value="<% nvram_get("vlan_rule_enable") %>"> -->
+    </form>
+</div>
+</body>
+
+<script language="javascript" type="text/javascript">
+$(document).ready(function()
+{
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+    
+    load_vlan_rule_enable();
+
+    $('.nav .nav-item').live("click", function(ev) {
+        if ($(this).children("a").hasClass("active")) {
+            return false;
+        } else {
+            var href = $(this).children("a").attr("href");
+            $('.nav .nav-item a').removeClass("active");
+            $(this).children("a").addClass("active");
+
+            $('.nav .nav-item').each(function() {
+                if ($(this).children("a").attr("href") != href) {
+                    $($(this).children("a").attr("href")).css('display', 'none');
+                } else {
+                    $($(this).children("a").attr("href")).css('display', 'block');
+                }
+            });
+
+            setTimeout(function(){ document.getElementById("frame-content").scrollTop = 0; }, 100);
+        }
+    });
+
+    $(".table-responsive input[type=checkbox]").change(function() {
+        document.forms[0].select.value = $(this).attr("index");
+        $("#apply").click();
+    });
+});
+
+function vlan_show(){
+    /*var cf = document.forms[0];
+    if (cf.vlan_iptv_enable.checked==true)
+    {
+        document.getElementById("vlan_container").style.display="block";
+
+        if (!cf.vlan_iptv_select[0].checked && !cf.vlan_iptv_select[0].checked)
+        {
+            cf.vlan_iptv_select[1].checked=true;
+            document.getElementById("iptv_check").style.display="none";
+            document.getElementById("vlan_check").style.display="block";
+
+            $('.nav .nav-item a').removeClass("active");
+            $('#vlan-label').addClass("active");
+        }
+    }
+    else
+    {
+        
+    }*/
+	if ( $('#vlan_iptv_enable').attr('checked')) {
+		document.getElementById("vlan_container").style.display="block"; 
+	} else {
+		document.getElementById("vlan_container").style.display="none"; 
+		
+	}
+}
+function edit_vlan(index)
+{
+    document.forms[0].select.value = index;
+    $("#edit").click();
+}
+
+function del_vlan(index)
+{
+    document.forms[0].select.value = index;
+
+    confirmDel();
+}
+
+var is_dual_5g=0;
+/*
+<% nvram_invmatch("dual_5g_band","1","/*"); %>
+is_dual_5g=1;*/
+//<% nvram_invmatch("dual_5g_band","1","*/"); %>
+
+function loadSettings()
+{
+    parent.hide_loading();
+
+    var cf = document.forms[0];
+    var iptv_interface=cf.iptv_interfaces.value;
+
+    if (cf.vlan_enable.value == "enable")
+    {
+        cf.vlan_iptv_enable.checked=true;
+        cf.vlan_iptv_select[1].checked=true;
+
+        $('.nav .nav-item a').removeClass("active");
+        $('#vlan-label').addClass("active");
+
+        document.getElementById("vlan_container").style.display="block";
+        document.getElementById("iptv_check").style.display="none";
+        document.getElementById("vlan_check").style.display="block";
+    }
+    else if(cf.iptv_enable.value == "1")
+    {
+        cf.vlan_iptv_enable.checked=true;
+        cf.vlan_iptv_select[0].checked=true;
+        document.getElementById("vlan_container").style.display="block";
+        document.getElementById("iptv_check").style.display="block";
+        document.getElementById("vlan_check").style.display="none";
+    }
+    else
+    {
+        cf.vlan_iptv_enable.checked=false;
+        document.getElementById("vlan_container").style.display="none";
+    }
+    
+    if(iptv_interface & 0x1)
+        cf.iptv_ports_0.checked=true;
+    else
+        cf.iptv_ports_0.checked=false;
+
+    if(iptv_interface & 0x2)
+        cf.iptv_ports_1.checked=true;
+    else
+        cf.iptv_ports_1.checked=false;
+    
+    if(iptv_interface & 0x4)
+        cf.iptv_ports_2.checked=true;
+    else
+        cf.iptv_ports_2.checked=false;
+        
+    if(iptv_interface & 0x8)
+        cf.iptv_ports_3.checked=true;
+    else
+        cf.iptv_ports_3.checked=false;
+        
+    if(iptv_interface & 0x10)
+        cf.iptv_ports_4.checked=true;
+    else
+        cf.iptv_ports_4.checked=false;
+
+    if(iptv_interface & 0x20)
+        cf.iptv_ports_5.checked=true;
+    else
+        cf.iptv_ports_5.checked=false;
+
+/*
+<% nvram_invmatch("dual_5g_band","1","/*"); %>
+    if(iptv_interface & 0x40)
+        cf.iptv_ports_6.checked=true;
+    else
+        cf.iptv_ports_6.checked=false;
+*/
+//<% nvram_invmatch("dual_5g_band","1","*/"); %>
+/*
+     <% is2ndSwitch("js_start"); %>
+    if(iptv_interface & 0x400)
+        cf.iptv_ports_10.checked=true;
+    else
+        cf.iptv_ports_10.checked=false;
+    if(iptv_interface & 0x800)
+        cf.iptv_ports_11.checked=true;
+    else
+        cf.iptv_ports_11.checked=false;
+     <% is2ndSwitch("js_end"); %>
+*/
+  //  <% nvram_invmatch("hwtype", "AX6000", "/*") %>
+  /*
+    if(iptv_interface & 0x1000)
+        cf.iptv_ports_10.checked=true;
+    else
+        cf.iptv_ports_10.checked=false;
+		*/
+    //<% nvram_invmatch("hwtype", "AX6000", "*/") %>
+	
+}
+
+function load_vlan_rule_enable()
+{   
+    var cf = document.forms[0];
+    var vlan_rule=cf.vlan_rule_name.value.split(" ");
+    var vlan_rule_enable=cf.vlan_rule_enable.value.split(" ");
+    var i = 1;
+    while(typeof vlan_rule[i] != "undefined")
+    {
+    if(i == 1)
+    {
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_1.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_1.checked = false;
+        }
+    }
+    
+    else if(i == 2)
+    {
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_2.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_2.checked = false;
+        }
+    }
+    
+    else if(i == 3)
+    {
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_3.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_3.checked = false;
+        }
+    }
+    
+    else if(i == 4)
+    {
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_4.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_4.checked = false;
+        }
+    }
+    
+    else if(i == 5)
+    {
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_5.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_5.checked = false;
+        }
+    }
+    
+    else if(i == 6)
+    {    
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_6.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_6.checked = false;
+        }
+    }
+    
+    else if(i == 7)
+    {  
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_7.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_7.checked = false;
+        }
+    }
+    
+    else if(i == 8)
+    {  
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_8.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_8.checked = false;
+        }
+    }
+    
+    else if(i == 9)
+    {  
+        if((vlan_rule_enable[i] == 1))
+        {
+            cf.vlan_tag_checked_9.checked = true;
+        }
+        else
+        {
+            cf.vlan_tag_checked_9.checked = false;
+        }
+    }
+    i++;
+    }
+
+}
+
+
+function checkData()
+{
+    var cf = document.forms[0];
+    
+    /*
+    var ptk_enable = "NVRAM_portTrunkingMode";
+
+    if(ptk_enable != "disable")
+    {
+        alert("Please disable Ethernet Port Aggregation before enabling VLAN/Bridge features.");
+        return false;
+    }
+    */
+
+   // if (cf.vlan_iptv_enable.checked && cf.vlan_iptv_select[0].checked)
+    //{
+        //if( <% is_wanAggEnabled("not_wan_agg_js_start") %>(!cf.iptv_ports_0.checked) && <% is_wanAggEnabled("not_wan_agg_js_end") %>(!cf.iptv_ports_1.checked) && (!cf.iptv_ports_2.checked) &&
+            //(!cf.iptv_ports_3.checked) && (!cf.iptv_ports_4.checked) && (!cf.iptv_ports_5.checked)
+//<% nvram_invmatch("dual_5g_band","1","/*"); %>
+            //&& (!cf.iptv_ports_6.checked)
+//<% nvram_invmatch("dual_5g_band","1","*/"); %>
+     //<% is2ndSwitch("js_start"); %>
+            //&&(!cf.iptv_ports_10.checked) && (!cf.iptv_ports_11.checked)
+     //<% is2ndSwitch("js_end"); %>
+            //<% nvram_invmatch("hwtype", "AX6000", "/*") %>
+            //&&(!cf.iptv_ports_10.checked)
+            //<% nvram_invmatch("hwtype", "AX6000", "*/") %>
+            //)
+        //{
+            //alert("<%getstr("iptv_no_port_selected")%>");
+            //return false;
+        //}
+    //}
+//
+    //if (cf.vlan_iptv_enable.checked && cf.vlan_iptv_select[0].checked)
+    //{
+        //if( <% is_wanAggEnabled("not_wan_agg_js_start") %>(cf.iptv_ports_0.checked) && <% is_wanAggEnabled("not_wan_agg_js_end") %>(cf.iptv_ports_1.checked) && (cf.iptv_ports_2.checked) &&
+            //(cf.iptv_ports_3.checked) && (cf.iptv_ports_4.checked) && (cf.iptv_ports_5.checked)
+//<% nvram_invmatch("dual_5g_band","1","/*"); %>
+            //&& (cf.iptv_ports_6.checked) 
+//<% nvram_invmatch("dual_5g_band","1","*/"); %>
+     //<% is2ndSwitch("js_start"); %>
+            //&&(cf.iptv_ports_10.checked) && (cf.iptv_ports_11.checked)
+     //<% is2ndSwitch("js_end"); %>
+            //<% nvram_invmatch("hwtype", "AX6000", "/*") %>
+            //&&(cf.iptv_ports_10.checked)
+            //<% nvram_invmatch("hwtype", "AX6000", "*/") %>
+            //)
+        //{
+            //alert("<%getstr("iptv_all_port_selected")%>");
+            //return false;
+        //}
+    //}
+    
+    parent.show_loading();
+}
+
+function confirmDel()
+{
+    var cf = document.forms[0];
+    var rule_name;
+    var vlan_rule=cf.vlan_rule_name.value.split(" ");
+    
+    if ( cf.select.value == 0)
+        rule_name = vlan_rule[0];
+    if ( cf.select.value == 1)
+        rule_name = vlan_rule[1];
+    if ( cf.select.value == 2)
+        rule_name = vlan_rule[2];
+    if ( cf.select.value == 3)
+        rule_name = vlan_rule[3];
+    if ( cf.select.value == 4)
+        rule_name = vlan_rule[4];
+    if ( cf.select.value == 5)
+        rule_name = vlan_rule[5];
+    if ( cf.select.value == 6)
+        rule_name = vlan_rule[6];
+    if ( cf.select.value == 7)
+        rule_name = vlan_rule[7];    
+    if ( cf.select.value == 8)
+        rule_name = vlan_rule[8];    
+    if ( cf.select.value == 9)
+        rule_name = vlan_rule[9];
+    if ( cf.select.value == 10)
+        rule_name = vlan_rule[10];
+   /*     
+    <% gui_cgi_check_feature_support("orange_isp", "js", "start"); %>
+    if(rule_name=="Orange_France_IPTV/VOD")
+        rule_name = "Orange France IPTV/VOD";
+    <% gui_cgi_check_feature_support("orange_isp", "js", "end"); %>
+*/
+    if(confirm("Remove Group" + rule_name + " ?"))
+    {
+        parent.show_loading();
+        $("#delete").click();
+    }
+
+}
+function mode_show(mode ){
+	$('.nav .nav-item a').removeClass("active");
+	if (mode == 1 ){
+        $('#vlan-label').addClass("active");
+		$('#vlan_check').show();
+		
+	} else if (mode == 0 ){
+		 $('#iptv-label').addClass("active");
+		 $('#vlan_check').hide();
+		
+	} else {
+		$('#vlan-label').addClass("active");
+		$('#vlan_check').show();
+		
+	}
+}
+</script>
+</html>

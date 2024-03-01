@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target" name="msg" method="POST" action="message.cgi" onSubmit="return false">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="container-fluid frame-content" id="frame-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Failure</div>
+                        </div>
+                        <div class="card-body">
+                            <p><% ipv6_cgi_get_param("ipv6_auto_err_msg");%></p>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="pull-right">
+                                <button type="button value="Back" name="Back" class="btn btn-primary btn-round" onclick="buttonClick(this,'Back');location.href='IPV6_basic.htm'">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script language="javascript" type="text/javascript"><!--
+$(document).ready(function()
+{
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content" style="overflow:auto">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  method="POST" action="SetHotspot.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Hotspot Setup</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control hotspot_ssid" name="hotspot_ssid" id="hotspot_ssid" size="18" maxlength="32">
+                            <label tabindex="-1">Hotspot SSID</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control hotspot_ip" name="hotspot_ip" id="hotspot_ip" size="18" maxlength="128">
+                            <label tabindex="-1">Hotspot Server Host</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control hotspot_id" name="hotspot_id" id="hotspot_id" size="18" maxlength="16">
+                            <label tabindex="-1">Hotspot NAS ID</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input type="password" class="form-control hotspot_key" name="hotspot_key" id="hotspot_key" size="18" maxlength="64">
+                            <label tabindex="-1">Hotspot Key</label>
+                        </div>
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-body">
+                        <div class="card-flex">
+                            <div class="card-title">3GPP MCC/MNC Settings</div>
+                            <div class="card-margin-left">
+                                <button id="add" type="button" value="Add" name="Add" class="btn btn-green btn-round" onclick="show_form(0, '', '')">Add</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive-body">
+                            <table class="table table-hover">
+                            <thead class="text-primary">
+                            <tr>
+                                <th class="align-center">#</th>
+                                <th>MCC</th>
+                                <th>MNC</th>
+                                <th class="align-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button value="Apply" onClick="buttonClick(this,'Apply');return checkData()" type="SUBMIT" name="Apply" class="btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                </div>
+
+                <input type="hidden" name="hotspot_3gpplist" value="">
+                <input type="hidden" name="hotspot_realmlist" value="">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<style type="text/css">
+    
+</style>
+<script>
+    let dialog = null;
+    let count = 0;
+
+    $(document).ready(function() {   
+        $("#target").submit(function(e) {
+			e.preventDefault();
+			var formdata = {
+				hotspot_ssid:$('#hotspot_ssid').val(),
+				hotspot_ip: $('#hotspot_ip').val(),
+				hotspot_id:$('#hotspot_id').val(),
+				hotspot_key:$('#hotspot_key').val()
+			};
+			$.ajax({
+				type: "POST",
+				url: $('#target').attr('action'), 
+				contentType: "application/json",
+				data: JSON.stringify(formdata),
+				dataType: "json",
+				success: function(response) {
+				  console.log("Success:", response);
+				},
+				error: function(error) {
+				  console.error("Error:", error);
+				}
+				
+				
+			});
+			
+			location.reload()
+		});
+
+        initial_setting()
+        
+		
+    });
+	function initial_setting (){
+		
+		$.get("GetHotspot.cgi",function (data){
+			console.log(data)
+			const  param = $.parseJSON(JSON.stringify(data))
+			$('#hotspot_ssid').val(param.hotspot_ssid);
+			$('#hotspot_ip').val(param.hotspot_ip);
+    		$('#hotspot_id').val(param.hotspot_id);
+			$('#hotspot_key').val(param.hotspot_key);
+			$('#hotspot_3gpplist').val(param.hotspot_3gpplist);
+			
+			for (let el of param.hotspot_3gpplist.split(';')) {
+				const el_s = el.split(':');
+			   if (el_s.length === 2)
+					add_form(el_s[0], el_s[1])
+			}
+		///},
+		//error: function (error){
+		//	window.location.href('400.htm')
+		//}
+
+		});
+	}
+    function show_form(index, mcc_val, mnc_val) {
+        let title;
+        let btn;
+        if (index === -1) {
+            title = `Add 3GPP`;
+            btn = `Add`;
+        } else {
+            title = `Edit 3GPP`;
+            btn = `Edit`;
+        }
+
+        let html = `<div class="card">
+                    <div class="card-header">
+                    <div class="card-title">${title}</div>
+                    </div>
+                    <div class="card-body">
+                    <div class="mui-textfield">
+                    <input type="text" class="form-control" id="input_mcc" maxlength="5" value="${mcc_val}">
+                    <label tabindex="-1">MCC</label>
+                    </div>
+                    <div class="mui-textfield">
+                    <input type="text" class="form-control" id="input_mnc" maxlength="5" value="${mnc_val}">
+                    <label tabindex="-1">MNC</label>
+                    </div>
+                    <p class="err_msg" style="display: none">Format error (3 to 5 digits).</p>
+                    </div>
+                    <div class="card-bottom">
+                    <button value="Add" type="buttom" class="btn btn-primary pull-right btn-add btn-round" data-sel="${index}">${btn}</button>
+                    </div>
+                    </div>`;
+
+        dialog = new CardDialog(html)
+                        .setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
+    function add_form(mcc_val, mnc_val) {
+        $('#tbody').append(`<tr>
+            <td class="index" align="center">${++count}</td>
+            <td class="hotspot_mcc">${mcc_val}</td>
+            <td class="hotspot_mnc">${mnc_val}</td>
+            <td class=\"td-actions align-right\">
+                <button type=\"button\" class=\"btn btn-yellow btn-round btn-edit\">
+                    <i class=\"material-icons\">
+                        <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20px\" viewBox=\"0 0 24 24\" width=\"20px\" fill=\"#FFFFFF\"><path d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z\"></path>
+                        </svg>
+                    </i>
+                </button>
+                <button type=\"button\" class=\"btn btn-red btn-round btn-remove\">
+                    <i class=\"material-icons\">
+                        <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20px\" viewBox=\"0 0 24 24\" width=\"20px\" fill=\"#FFFFFF\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z\"/>
+                        </svg>
+                    </i>
+                </button>
+            </td>
+        </tr>`);
+    }
+
+    $(".btn-add").live('click', function(event) {
+        let invalid = false;
+
+        clear_mui_textfield_error($(".dialog-container .form-control"));
+
+        if ($("#input_mcc").val().length < 3 || $("#input_mcc").val().match(/^[0-9]+$/) === null) {
+            set_mui_textfield_error($("#input_mcc"));
+            invalid = true;
+        }
+
+        if ($("#input_mnc").val().length < 3 || $("#input_mnc").val().match(/^[0-9]+$/) === null) {
+            set_mui_textfield_error($("#input_mnc"));
+            invalid = true;
+        }
+
+        if (invalid) {
+            $(".dialog-container .err_msg").slideDown();
+        } else {
+            $(".dialog-container .err_msg").slideUp();
+
+            if ($(this).attr("data-sel") === 0) {
+                add_form($("#input_mcc").val(), $("#input_mnc").val());
+            } else {
+                $('#tbody tr').eq($(this).attr("data-sel") -1).find('td').eq(1)[0].innerText = $("#input_mcc").val();
+                $('#tbody tr').eq($(this).attr("data-sel") -1).find('td').eq(2)[0].innerText = $("#input_mnc").val();
+            }
+
+            dialog.distory();
+        }
+    });
+
+    $(".btn-remove").live('click', function(event) {
+        $(this).parent().parent().remove();
+
+        count = 0
+        for (let i = 0; i < $('#tbody tr .index').length; i++)
+            $('#tbody tr .index')[i].innerHTML = "" + (++count);
+    });
+
+    $(".btn-edit").live('click', function(event) {
+        const index = $(this).parent().parent()[0].cells[0].innerText;
+        const mcc_val = $(this).parent().parent()[0].cells[1].innerText;
+        const mnc_val = $(this).parent().parent()[0].cells[2].innerText;
+        show_form(index, mcc_val, mnc_val);
+    });
+
+    function buttonFilter() {
+        let buttonElements = document.getElementsByTagName('button');
+
+        for (let i = 0; i < buttonElements.length; i++) {
+            if (buttonElements[i].type === 'submit' || buttonElements[i].type === 'button'|| buttonElements[i].type === 'reset') {
+                if ((buttonElements[i].value !== document.forms[0].buttonHit.name))
+                    buttonElements[i].disabled = 1;
+                else {
+                    const name = buttonElements[i].name;
+                    buttonElements[i].name = 'NoUse';
+                    buttonElements[i].disabled = 1;
+                    document.forms[0].buttonValue.name = name;
+                    document.forms[0].buttonHit.disabled = 1;
+                }
+            }
+        }
+    }
+
+    function checkData() {
+        let invalid = false;
+        if ($('.hotspot_ssid').val() === "") {
+            set_mui_textfield_error($('.hotspot_ssid'));
+            alert("Hostpot SSID cannot be blank.");
+            return false;
+        }
+
+        if ($('.hotspot_ip').val().match(/[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/) === null) {
+            set_mui_textfield_error($('.hotspot_ip'));
+            alert("Incorrect hostpot server IP format.");
+            return false;
+        }
+
+        if ($('.hotspot_id').val() === "") {
+            set_mui_textfield_error($('.hotspot_id'));
+            alert("Hostpot NAS ID cannot be blank.");
+            return false;
+        }
+
+        if ($('.hotspot_key').val() === "") {
+            set_mui_textfield_error($('.hotspot_key'));
+            alert("Hostpot Key cannot be blank.");
+            return false;
+        }
+
+        let val_3gpplst = "";
+        $(".hotspot_mcc, .hotspot_mnc").each(function() {
+            if ($(this).hasClass("hotspot_mcc"))
+                val_3gpplst += $(this)[0].innerText + ":";
+                
+            if ($(this).hasClass("hotspot_mnc"))
+                val_3gpplst += $(this)[0].innerText + ";";
+
+            if ($(this)[0].innerText.length < 3 || $(this)[0].innerText.match(/^[0-9]+$/) === null)
+                invalid = true;
+        });
+
+        if (invalid) {
+            alert("Format error (3 to 5 digits).");
+            return false;
+        } else {
+            document.forms[0].hotspot_3gpplist.value = val_3gpplst.substring(0, val_3gpplst.length - 1);
+
+            let val_realmlist = "dogwood120.net+0+13=5,6?Orion-Realm+0+13=5,6"
+            for (let el of document.forms[0].hotspot_3gpplist.value.split(';')) {
+                const el_s = el.split(':');
+                if (el_s.length === 2)
+                    val_realmlist += `?wlan.mnc${el_s[1]}.mcc${el_s[0]}.3gppnetwork.org+0+18=5,1#5,2`;
+            }
+
+            document.forms[0].hotspot_realmlist.value = val_realmlist;
+        }
+
+        return true;
+    }
+</script>
+</html>

@@ -1,0 +1,761 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body onload="SkipParentalControlCheck=0" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  name="formname" method="POST" action="SetBasether.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue"> 
+                <div class="card card-notify card-yellow">
+                    <div class="card-header card-flex">
+                        <div class="card-title">Does your Internet connection require a login?</div>
+                        <div class="card-margin-left">
+                            <button type="button" name="Edit" class="btn" onClick="doTypeChange(0)">NO</button>
+                            <button type="button" name="Edit" class="btn" onClick="doTypeChange(1)">YES</button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="no_loginreq" name="loginreq" value="dhcp">
+                </div>
+                <div class="card">
+                    <!--   <div class="card-header">
+                        <div class="card-title">Domain Name Setup</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input id="domain_name" type="text" class="form-control" name="domain_name" maxlength="60" size="15" value="NVRAM_domain_name">
+                            <label tabindex="-1">Domain Name (If Required)</label>
+                        </div>
+                    </div>
+                 <div class="card-btn card-flex" onClick="parent.trigger_dev_name();">
+                        <div>
+                            <div class="card-title">Device Name</div>
+                            <p>NVRAM_friendly_name</p>
+                        </div>
+                        <div class="card-margin-left">
+                            <i class="material-icons">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#888888"><path d="M10 17l5-5-5-5v10z"/><path d="M0 24V0h24v24H0z" fill="none"/></svg>
+                            </i>
+                        </div>
+                    </div> -->
+                    <div class="card-divider"></div>
+                    <div class="card-subheader">
+                        <div class="card-title">IP Address Setup</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Internet IP Address</p>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="wan_assign_dhcp" type="radio" name="WANAssign" value="dhcp" onClick="ui_show_wanproto('dhcp');">
+                                Get Dynamically from ISP
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio form-check-next">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="wan_assign_static" type="radio" name="WANAssign" value="static" onClick="ui_show_wanproto('static');">
+                                Use Static IP Address
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="wpethr1" type="text" name="WPethr1" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wpethr2" type="text" name="WPethr2" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)" >.
+                            <input id="wpethr3" type="text" name="wPethr3" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wpethr4" type="text" name="WPethr4" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)">
+                            <label tabindex="-1">IP Address</label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="wmask1" type="text" name="WMask1" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wmask2" type="text" name="WMask2" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wmask3" type="text" name="WMask3" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wmask4" type="text" name="WMask4" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)">
+                            <label tabindex="-1">IP Subnet Mask</label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="wgateway1" type="text" name="WGateway1" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wgateway2" type="text" name="WGateway2" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wgateway3" type="text" name="WGateway3" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="wgateway4" type="text" name="WGateway4" class="form-control" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)">
+                            <label tabindex="-1">Gateway IP Address</label>
+                        </div>
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-subheader">
+                        <div class="card-title">DNS Address Setup</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Domain Name Server (DNS) Address</p>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="dns_assign_auto" type="radio" name="DNSAssign" value="0" onClick="ui_show_wan_dns_sel('0');setDNS()">
+                                Get Automatically from ISP
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio form-check-next">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="dns_assign_static" type="radio" name="DNSAssign" value="1" onClick="ui_show_wan_dns_sel('1');setDNS()">
+                                Use These DNS Servers
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="daddr1" type="text" name="DAddr1" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,1)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,0)">.
+                            <input id="daddr2" type="text" name="DAddr2" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,0)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,0)">.
+                            <input id="daddr3" type="text" name="DAddr3" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,0)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,0)">.
+                            <input id="daddr4" type="text" name="DAddr4" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,0)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,1)">
+                            <label tabindex="-1">Primary DNS</label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="pdaddr1" type="text" name="PDAddr1" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,1)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,0)">.
+                            <input id="pdaddr2" type="text" name="PDAddr2" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,0)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,0)">.
+                            <input id="pdaddr3" type="text" name="PDAddr3" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,0)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,0)">.
+                            <input id="pdaddr4" type="text" name="PDAddr4" class="form-control" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onkeydown="if(isParentalControlEnable()) return false;bscheck(event,this,0)" onkeyup="if(isParentalControlEnable()){ alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');return false;} jumpcheck(this,1)">
+                            <label tabindex="-1">Secondary DNS</label>
+                        </div>
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-subheader">
+                        <div class="card-title">MAC Address Setup</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Router MAC Address</p>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="mac_assign_default" type="radio" name="MACAssign" value="0" onClick="setMAC()">
+                                Use Default Address
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio form-check-next">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="mac_assign_computer" type="radio" name="MACAssign" value="1" onClick="setMAC()">
+                                Use Computer MAC Address
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio form-check-next">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="mac_assign_define" type="radio" name="MACAssign" value="2" onClick="setMAC()">
+                                Use This MAC Address
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <input id="spoof_mac" type="text" class="form-control form-check-next" name="Spoofmac" maxlength="17" value="" onFocus="if(DisableFixedMAC) this.blur()">
+                    </div>
+                    <div class="card-bottom">
+                        <div class="pull-right">
+                            <button id="apply" type="submit" value="SUBMIT"  onClick="buttonClick(this,'Apply');" name="apply" class="btn btn-primary btn-mg-15 btn-round">Apply</button>
+                        </div>
+                    </div>
+                </div>
+<!--
+                <input type="hidden" name="runtest" value="<% basic_cgi_get_param("runtest"); %>">
+                <input name=test type=hidden value= "0">
+                <input name=wan_proto type=hidden value= "NVRAM_wan_proto">
+                <input name=wan_ipaddr type=hidden value= "NVRAM_wan_ipaddr">
+                <input name=wan_netmask type=hidden value= "NVRAM_wan_netmask">
+                <input name=wan_gateway type=hidden value= "NVRAM_wan_gateway">
+                <input name=wan_dns_sel type=hidden value= "NVRAM_wan_dns_sel">
+                <input name=wan_dns1_pri type=hidden value= "<% nvram_list("wan_dns1", 0); %>">
+                <input name=wan_dns1_sec type=hidden value= "<% nvram_list("wan_dns1", 1); %>">
+                <input name=wan_hwaddr_sel type=hidden value= "NVRAM_wan_hwaddr_sel">
+                <input name=wan_hwaddr_def type=hidden value= "NVRAM_wan_hwaddr">
+                <input name=wan_hwaddr2 type=hidden value= "NVRAM_wan_hwaddr2">
+                <input name=wan_hwaddr_pc type=hidden value= "<% basic_cgi_get_param("pcmac"); %>">
+                <input name=lan_ipaddr type=hidden value= "NVRAM_lan_ipaddr">
+                <input name=lan_netmask type=hidden value= "NVRAM_lan_netmask">
+                <input name=parental_control type=hidden value= "NVRAM_ParentalControl">
+                <input name=parental_circle type=hidden value= "NVRAM_enable_circle_control">
+                <input name=ipv6_proto type=hidden value= "NVRAM_ipv6_proto">
+                <input name=wan_auto_dns_pri type=hidden value= "<% nvram_list("wan_dns", 0); %>">
+                <input name=wan_auto_dns_sec type=hidden value= "<% nvram_list("wan_dns", 1); %>">
+                <input name="wan_aggr" type=hidden value="NVRAM_bond_wan">
+                <input name=spc_provisioned type=hidden value= "<% d2_match("CircleStatus.activationStatus","provisioned","1"); %>">
+                <input name=enable_ap_mode type=hidden value= "NVRAM_enable_ap_mode">
+				-->
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+var MacAddress;
+var DisableFixedIP = false;
+var DisableFixedDNS = false;
+var DisableFixedMAC = false;
+var SkipParentalControlCheck=1;
+
+$(document).ready(function()
+{
+	init_setting ();
+    $("#target").submit(function(e) {
+		e.preventDefault();
+		var formdata = getData()
+		console.log (formdata)
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+      });
+        buttonFilter();
+		setTimeout(function(){
+			location.reload();
+		},3000);
+
+		
+    });
+	
+});
+/*
+{
+        "wan_proto":    "dhcp",
+        "wan_ipaddr":   "0.0.0.0",
+        "wan_netmask":  "0.0.0.0",
+        "wan_gateway":  "0.0.0.0",
+        "wan_dns_sel":  "0",
+        "wan_dns1_pri": "0.0.0.0",
+        "wan_dns1_sec": "0.0.0.0",
+        "wan_hwaddr_sel":       "0",
+        "wan_hwaddr_def":       "",
+        "wan_hwaddr2":  "",
+        "wan_hwaddr_pc":        "",
+        "lan_ipaddr":   "192.168.1.1",
+        "lan_netmask":  "255.255.255.0",
+        "parental_control":     "",
+        "parental_circle":      "",
+        "ipv6_proto":   "",
+        "wan_auto_dns_pri":     "0.0.0.0",
+        "wan_auto_dns_sec":     "0.0.0.0",
+        "":     ""
+}
+
+*/
+function iptocol (ip ,preffix) {
+	var arr_ip = ip.split('.')
+	for (var i = 0 ;i < arr_ip.length; i++) {
+		let id_item =  preffix+ (i+1)
+		document.getElementById(id_item).value = arr_ip[i]
+	}
+}
+function coltoip(preffix) {
+	var ip =""
+	for (var i=1; i<=4 ;i++ ) {
+		idname= preffix+i
+		 ip += document.getElementById(idname).value
+		 if (i!=4)
+			ip+="."
+	}
+	
+	return ip;
+}
+function getData (){
+	var formdata = {};
+	if ($('#wan_assign_static').attr('checked'))
+		formdata.wan_proto= "static"
+	else 
+		formdata.wan_proto= "dhcp"
+	
+	formdata.wan_ipaddr=coltoip("wpethr")
+	formdata.wan_netmask = coltoip( "wmask")
+	formdata.wan_gateway=coltoip( "wgateway")
+	if ($('#dns_assign_static').attr('checked') )
+		formdata.wan_dns_sel="1";
+	else 		
+		formdata.wan_dns_sel="0";
+	formdata.wan_dns1_pri =coltoip('daddr')
+	formdata.wan_dns1_sec=coltoip('pdaddr')
+		
+	return formdata
+}
+function init_setting (){
+	 var cf = document.forms[0];
+	 $.get("GetBasether.cgi",function (data){
+			
+			const  param = $.parseJSON(JSON.stringify(data))
+			
+			wan_proto = param.wan_proto;
+			if ( wan_proto == "dhcp")
+				$('#wan_assign_dhcp').attr("checked",true)
+			else 
+				$('#wan_assign_static').attr("checked",true)
+			//ui_show(wan_proto)
+			wan_ipaddr = param.wan_ipaddr;
+			iptocol(wan_ipaddr, "wpethr");
+			wan_netmask = param.wan_netmask;
+			iptocol(wan_netmask, "wmask");
+			wan_gateway = param.wan_gateway;
+			iptocol(wan_gateway, "wgateway");
+			wan_dns_sel= param.wan_dns_sel;
+			if ( wan_dns_sel == "1")
+				$('#dns_assign_static').attr("checked",true)
+			
+			else {
+				$('#dns_assign_auto').attr("checked",true)
+			}
+			wan_hwaddr_sel= param.wan_hwaddr_sel; //MACAssign
+			if ( wan_hwaddr_sel == "1"){
+				$('#mac_assign_computer').attr("checked",true)
+				$('#spoof_mac').attr('disabled',true)
+			}
+			else if (wan_hwaddr_sel == "2")
+				$('#mac_assign_define').attr("checked",true)
+			else {
+				$('#mac_assign_default').attr("checked",true)
+				$('#spoof_mac').attr('disabled',true)
+			}
+			wan_hwaddr_def= param.wan_hwaddr_def;
+			wan_hwaddr2= param.wan_hwaddr2;
+			wan_hwaddr_pc=param.wan_hwaddr_pc;
+			$('#spoof_mac').val(wan_hwaddr_pc)
+		/*
+			lan_ipaddr= param.lan_ipaddr;
+			lan_netmask=param.lan_netmask;
+			parental_control=param.parental_control;
+			parental_circle= param.parental_circle;
+			ipv6_proto = param.ipv6_proto;
+		*/
+			wan_auto_dns_pri=param.wan_auto_dns_pri;
+			iptocol(wan_auto_dns_pri, "daddr");
+			wan_auto_dns_sec=param.wan_auto_dns_sec;
+			iptocol(wan_auto_dns_sec, "pdaddr");
+			wan_aggr=param.wan_aggr;
+			//ui_show(wan_proto,wan_dns_sel)
+			ui_show_wanproto(wan_proto)
+			ui_show_wan_dns_sel(wan_dns_sel)
+	});
+	
+	 
+}
+
+function checkType(wan_proto,) // called from basictop.htm
+{
+  //  if (1)
+  //  {
+        if (wan_proto == "pppoe")
+            window.location.href = "BAS_pppoe.htm";
+        /*else if (wan_proto == "pptp")
+            window.location.href = "BAS_pptp.htm";
+        else if (wan_proto == "bpa")
+            window.location.href = "BAS_bpa.htm";
+        else if (wan_proto == "l2tp")
+            window.location.href = "BAS_l2tp.htm";*/
+        else
+            window.location.href = "BAS_ether.htm";
+  //  }
+  //  else 
+      //  window.setTimeout(checkType(),300);
+}
+function ui_show_wan_dns_sel (wan_dns_sel){
+	var prefix_dns = ["daddr" ,"pdaddr"]
+	if (wan_dns_sel != "1"){
+		for (let i=0;i < prefix_dns.length;i++){
+			for ( let j=1 ; j <=4 ; j++ ){
+				let id_name = prefix_dns[i]+j
+				document.getElementById(id_name).disabled  = true
+			}
+		}
+	} else {
+		for (let i=0;i < prefix_dns.length;i++){
+			for ( let j=1 ; j <=4 ; j++ ){
+				let id_name = prefix_dns[i]+j
+				document.getElementById(id_name).disabled  = false
+			}
+		}
+	}
+	
+}
+function ui_show_wanproto (wan_proto) {
+	var prefix = [ "wpethr" ,"wmask","wgateway"] ;
+	
+	
+	for (let i=0;i < prefix.length;i++){
+		for ( let j=1 ; j <=4 ; j++ ){
+			let id_name = prefix[i]+j
+			if (wan_proto == "dhcp")
+				document.getElementById(id_name).disabled  = true
+			else 
+				document.getElementById(id_name).disabled  = false
+		}
+	}
+	
+	
+}
+function loadcheck(wan_proto)
+{
+    var cf = document.forms[0];
+	
+    MacAddress=cf.Spoofmac.value;
+    setIP();
+    setDNS();
+    setMAC();
+}
+
+function setIP()
+{
+    var cf = document.forms[0];
+    var dflag = cf.WANAssign[0].checked;
+    setDisabled(dflag,cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4,cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,cf.WGateway1,cf.WGateway2,cf.WGateway3,cf.WGateway4);
+    if (cf.WANAssign[1].checked)
+    {
+        cf.DNSAssign[1].checked = true;
+        setDNS();
+    }
+    DisableFixedIP = dflag;
+}
+
+function isParentalControlEnable()
+{
+    var cf = document.forms[0];
+    if(((cf.parental_control.value=='1')) && (SkipParentalControlCheck==0))
+        return true;
+    else
+        return false;
+}
+
+function isCircleControlEnable()
+{
+    var cf = document.forms[0];
+    if(( (cf.parental_circle.value=='1')) && (SkipParentalControlCheck==0))
+        return true;
+    else
+        return false;
+}
+
+function isSPCEnable()
+{
+    var cf = document.forms[0];
+    if(( (cf.spc_provisioned.value=='1')) && (cf.enable_ap_mode.value!='1'))
+        return true;
+    else
+        return false;
+}
+
+function setDNS()
+{
+    var cf = document.forms[0];
+    var dflag = cf.DNSAssign[0].checked;
+    if(isParentalControlEnable() && cf.DNSAssign[0].checked)
+    {
+        alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');
+        cf.DNSAssign[1].checked=true;
+        dflag=false;      
+    }
+  
+    if(isCircleControlEnable() && cf.DNSAssign[1].checked)
+    {
+        alert('The DNS Server setup will not take effect due to Parental Controls is enabled. If you need to configure DNS manually, please disable the Parental Controls.');
+        cf.DNSAssign[0].checked=true;
+    }
+
+    if(isSPCEnable())
+    {
+        dflag=true; 
+    }
+
+    setDisabled(dflag,cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4);
+    DisableFixedDNS = dflag;
+}
+
+function setMAC()
+{
+    var cf = document.forms[0];
+
+    if (cf.MACAssign[0].checked)
+        cf.Spoofmac.value = cf.wan_hwaddr_def.value;
+    else if(cf.MACAssign[1].checked)
+        cf.Spoofmac.value = cf.wan_hwaddr_pc.value;
+    else if (cf.MACAssign[2].checked)
+        cf.Spoofmac.value = cf.wan_hwaddr2.value;
+        
+    if (cf.MACAssign[2].checked)
+        cf.Spoofmac.disabled = false;
+    else
+        cf.Spoofmac.disabled = true;
+    DisableFixedMAC = cf.Spoofmac.disabled;
+}
+
+function isValidStr(str, start_char, end_char)
+{
+    for (i=0; i<str.length; i++)
+    {
+        var c = str.substring(i, i+1);
+        if (c < start_char || c > end_char)
+            return false;
+    }
+    return true;
+}
+
+function checkData()
+{
+    var cf = document.forms[0];
+    var msg = "";
+    var lan_ipaddr = cf.lan_ipaddr.value.split(".");
+    var lan_netmask = cf.lan_netmask.value.split(".");
+    var l_ipaddr = (lan_ipaddr[0] << 24) | (lan_ipaddr[1] << 16) | (lan_ipaddr[2] << 8)| (lan_ipaddr[3]);
+    var l_netmask = (lan_netmask[0]<< 24) | (lan_netmask[1]<< 16) | (lan_netmask[2]<< 8)| (lan_netmask[3]);
+    var w_ipaddr = (cf.WPethr1.value << 24) | (cf.WPethr2.value << 16) | (cf.WPethr3.value << 8)| (cf.WPethr4.value);
+    var w_netmask = (cf.WMask1.value<< 24) | (cf.WMask2.value<< 16) | (cf.WMask3.value<< 8)| (cf.WMask4.value);
+    var wan_ip  = "NVRAM_wan_ipaddr";
+    var openvpnEnable = "NVRAM_openvpnActive";
+
+    var wan_proto = "NVRAM_wan_proto";
+    var pppoe_single_login = "NVRAM_single_pppoe_login";
+    if (wan_proto == "pppoe" && cf.ipv6_proto.value == "pppoe" && pppoe_single_login == 1)
+    {
+        if (!confirm("IPv4 PPPoE configuration is shared with IPv6 PPPoE. Apply the change will disable the IPv6. Do you want to proceed?"))
+            return false;
+    }
+
+    /*if (cf.system_name.value.match( /[^\x20-\x7E]/ ))
+    {
+        alert("Invalid account name.");
+        return false;
+    }*/
+    
+    if (cf.domain_name.value.match( /[^\x20-\x7E]/ ))
+    {
+        alert("Invalid domain name.");
+        return false;
+    }
+
+    if(cf.WANAssign[1].checked)
+    {
+        if(checkIP(cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4,255))
+            msg+= "Invalid IP address. Please enter it again.";
+        else
+        {
+            cf.WPethr1.value = parseInt(cf.WPethr1.value,10);
+            cf.WPethr2.value = parseInt(cf.WPethr2.value,10);
+            cf.WPethr3.value = parseInt(cf.WPethr3.value,10);
+            cf.WPethr4.value = parseInt(cf.WPethr4.value,10);
+        }
+        if(checkIP(cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,255))
+            msg+= "Invalid subnet mask. Please enter it again.n";
+        else
+        {
+            cf.WMask1.value = parseInt(cf.WMask1.value,10);
+            cf.WMask2.value = parseInt(cf.WMask2.value,10);
+            cf.WMask3.value = parseInt(cf.WMask3.value,10);
+            cf.WMask4.value = parseInt(cf.WMask4.value,10);
+        }
+        if(checkIP(cf.WGateway1,cf.WGateway2,cf.WGateway3,cf.WGateway4,255))
+            msg+= "Invalid gateway IP address. Please enter it again.";
+        else
+        {
+            cf.WGateway1.value = parseInt(cf.WGateway1.value,10);
+            cf.WGateway2.value = parseInt(cf.WGateway2.value,10);
+            cf.WGateway3.value = parseInt(cf.WGateway3.value,10);
+            cf.WGateway4.value = parseInt(cf.WGateway4.value,10);
+        }
+
+        var w_gateway = (cf.WGateway1.value<< 24) | (cf.WGateway2.value<< 16) | (cf.WGateway3.value<< 8)| (cf.WGateway4.value);
+        var tmpip = cf.WPethr1.value+'.'+cf.WPethr2.value+'.'+cf.WPethr3.value+'.'+cf.WPethr4.value;
+        var tmpgwip = cf.WGateway1.value+'.'+cf.WGateway2.value+'.'+cf.WGateway3.value+'.'+cf.WGateway4.value;
+        //if((w_ipaddr&w_netmask) != (w_gateway&w_netmask))
+        //{
+        //    alert("Error: IP Address" + tmpip + "is in a different subnet as the gateway address" + tmpgwip);
+        //    return false;
+        //}
+    }
+    if(cf.DNSAssign[1].checked)
+    {
+        //if(checkIP(cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,254)||(parseInt(cf.DAddr4.value,10)==0))
+        if(checkIP(cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,254))
+            msg+= "Invalid primary DNS address. Please enter it again.n";
+        else
+        {
+            cf.DAddr1.value = parseInt(cf.DAddr1.value,10);
+            cf.DAddr2.value = parseInt(cf.DAddr2.value,10);
+            cf.DAddr3.value = parseInt(cf.DAddr3.value,10);
+            cf.DAddr4.value = parseInt(cf.DAddr4.value,10);
+        }
+        if(cf.PDAddr1.value.length>0 || cf.PDAddr2.value.length>0 || cf.PDAddr3.value.length>0 || cf.PDAddr4.value.length>0)
+        {
+            //if(checkIP(cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4,254)||(parseInt(cf.PDAddr4.value,10)==0))
+            if(checkIP(cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4,254))
+                msg+= "Invalid secondary DNS address. Please enter it again.n";
+            else
+            {
+                cf.PDAddr1.value = parseInt(cf.PDAddr1.value,10);
+                cf.PDAddr2.value = parseInt(cf.PDAddr2.value,10);
+                cf.PDAddr3.value = parseInt(cf.PDAddr3.value,10);
+                cf.PDAddr4.value = parseInt(cf.PDAddr4.value,10);
+            }
+        }
+    }
+    
+    if( checkMacStr(cf.Spoofmac) || MacStrallf(cf.Spoofmac) )
+        msg+= "Invalid MAC address.";
+    
+    if (msg.length > 1)
+    {
+        alert(msg);
+        return false;
+    }
+    //if (!isValidStr(cf.system_name.value, ' ', '~') || !isValidStr(cf.domain_name.value, '!', '~'))
+    if (!isValidStr(cf.domain_name.value, '!', '~'))
+    {
+        if (!confirm("The Account Name or Domain Name contains illegal characters. This may cause the system to behave unexpectedly. Do you want to continue?"))
+            return false;
+    }
+    
+    if ((w_ipaddr != 0) && 
+        (((l_netmask & w_netmask ) & l_ipaddr) == ((l_netmask & w_netmask ) & w_ipaddr)))
+    {
+//        alert("IP address is conflicted with LAN IP subnet.\nPlease do ipconfig /release and ipconfig /renew and enter the new IP in the browser in order to access the GUI again.");
+    }
+
+    cf.wan_ipaddr.value = cf.WPethr1.value+'.'+cf.WPethr2.value+'.'+cf.WPethr3.value+'.'+cf.WPethr4.value;
+    if(openvpnEnable == "enable"){
+        if(wan_ip != cf.wan_ipaddr.value){
+            alert("You have changed your Static IP address for the Internet connection, which is being used by the VPN Service. Please follow the Step 2 and Step 3 for VPN client installation to download and install the configuration files on each of your VPN client devices (overwrite existing configuration files).");
+        }
+    }
+    cf.wan_netmask.value = cf.WMask1.value+'.'+cf.WMask2.value+'.'+cf.WMask3.value+'.'+cf.WMask4.value;
+    cf.wan_gateway.value = cf.WGateway1.value+'.'+cf.WGateway2.value+'.'+cf.WGateway3.value+'.'+cf.WGateway4.value;
+    cf.wan_dns1_pri.value = cf.DAddr1.value+'.'+cf.DAddr2.value+'.'+cf.DAddr3.value+'.'+cf.DAddr4.value;
+    cf.wan_dns1_sec.value = cf.PDAddr1.value+'.'+cf.PDAddr2.value+'.'+cf.PDAddr3.value+'.'+cf.PDAddr4.value;
+    cf.wan_hwaddr2.value = cf.Spoofmac.value.toUpperCase;
+    cf.wan_aggr.value = "0";
+
+    cf.submit();
+    return sumvalue(cf);
+}
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+    var wan_proto = cf.wan_proto.value;
+    var wan_ipaddr = cf.wan_ipaddr.value.split(".");
+    var wan_netmask = cf.wan_netmask.value.split(".");
+    var wan_gateway = cf.wan_gateway.value.split(".");
+    var wan_dns_sel = cf.wan_dns_sel.value;
+    var wan_dns1_pri = cf.wan_dns1_pri.value.split(".");
+    var wan_dns1_sec = cf.wan_dns1_sec.value.split(".");
+    var wan_hwaddr_sel = cf.wan_hwaddr_sel.value;
+    var wan_auto_dns_pri = cf.wan_auto_dns_pri.value.split(".");
+    var wan_auto_dns_sec = cf.wan_auto_dns_sec.value.split(".");
+    
+    if (wan_proto == "static")
+        cf.WANAssign[1].checked = true;
+    else
+        cf.WANAssign[0].checked = true;
+    setIP();
+    cf.WPethr1.value = wan_ipaddr[0];
+    cf.WPethr2.value = wan_ipaddr[1];
+    cf.WPethr3.value = wan_ipaddr[2];
+    cf.WPethr4.value = wan_ipaddr[3];
+    cf.WMask1.value = wan_netmask[0];
+    cf.WMask2.value = wan_netmask[1];
+    cf.WMask3.value = wan_netmask[2];
+    cf.WMask4.value = wan_netmask[3];
+    cf.WGateway1.value = wan_gateway[0];
+    cf.WGateway2.value = wan_gateway[1];
+    cf.WGateway3.value = wan_gateway[2];
+    cf.WGateway4.value = wan_gateway[3];
+
+    cf.DNSAssign[wan_dns_sel].checked = true;
+    setDNS();
+    if(wan_dns_sel=="1")
+    {
+        if (cf.wan_dns1_pri.value != "")
+        {
+            cf.DAddr1.value = wan_dns1_pri[0];
+            cf.DAddr2.value = wan_dns1_pri[1];
+            cf.DAddr3.value = wan_dns1_pri[2];
+            cf.DAddr4.value = wan_dns1_pri[3];
+        }
+        if (cf.wan_dns1_sec.value != "")
+        {
+            cf.PDAddr1.value = wan_dns1_sec[0];
+            cf.PDAddr2.value = wan_dns1_sec[1];
+            cf.PDAddr3.value = wan_dns1_sec[2];
+            cf.PDAddr4.value = wan_dns1_sec[3];
+        }
+    } else
+    {
+        if (cf.wan_auto_dns_pri.value != "")
+        {
+            cf.DAddr1.value = wan_auto_dns_pri[0];
+            cf.DAddr2.value = wan_auto_dns_pri[1];
+            cf.DAddr3.value = wan_auto_dns_pri[2];
+            cf.DAddr4.value = wan_auto_dns_pri[3];
+        }
+        if (cf.wan_auto_dns_sec.value != "")
+        {
+            cf.PDAddr1.value = wan_auto_dns_sec[0];
+            cf.PDAddr2.value = wan_auto_dns_sec[1];
+            cf.PDAddr3.value = wan_auto_dns_sec[2];
+            cf.PDAddr4.value = wan_auto_dns_sec[3];
+        }
+    }
+
+    if (wan_hwaddr_sel == 0)
+        cf.Spoofmac.value = cf.wan_hwaddr_def.value;
+    else if (wan_hwaddr_sel == 2)
+        cf.Spoofmac.value = cf.wan_hwaddr2.value;
+    cf.MACAssign[wan_hwaddr_sel].checked = true;
+}
+
+function show_test()
+{
+    var cf = document.forms[0];
+    cf.test.value = "1";
+}
+
+function doTypeChange( newIndex )
+{
+   // var cf = document.forms[0];
+    //var wan_proto = cf.wan_proto.value;
+
+    if (newIndex == 0)
+    {
+        window.location.href = "BAS_ether.htm";
+    } 
+    else if (newIndex == 1)
+    {
+        /*if (wan_proto == "pptp")
+            window.location.href = "BAS_pptp.htm";
+        else if (wan_proto == "l2tp")
+            window.location.href = "BAS_l2tp.htm";   
+        else*/
+            window.location.href = "BAS_pppoe.htm";
+    }
+}
+</script>
+</html>

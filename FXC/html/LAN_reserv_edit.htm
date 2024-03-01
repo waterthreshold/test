@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body onload="loadSettings();" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  method="POST" action="reserv.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Address Reservation</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield input-ip">
+                            <input id="rsv_ipaddress1" type="text" name="rsv_ip1" class="form-control" maxlength="3" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input id="rsv_ipaddress2" type="text" name="rsv_ip2" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="rsv_ipaddress3" type="text" name="rsv_ip3" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="rsv_ipaddress4" type="text" name="rsv_ip4" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)">
+                            <label tabindex="-1">IP Address</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input id="rsv_mac" type="text" name="rsv_mac" class="form-control" size="17" maxlength="17">
+                            <label tabindex="-1">MAC Address</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input id="device_name" type="text" name="dv_name" class="form-control" size="20" maxlength="15">
+                            <label tabindex="-1">Device Name</label>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="pull-right">
+                            <button id="apply" value="Apply"  onClick="buttonClick(this,'Apply');if(!checkData()) return false;" type="SUBMIT" name="apply" class="btn btn-primary btn-mg-15 btn-round">Apply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <input name=rsv_ip type=hidden value= "<% lan_cgi_get_rsvip_param("rsv_ip"); %>">
+                <input name=rsv_mode type=hidden value="edit">
+                <input type="hidden" name="reserved_ips" value="<% lan_cgi_get_rsv_content("rsv_ip"); %>">
+                <input type="hidden" name="reserved_macs" value="<% lan_cgi_get_rsv_content("rsv_mac"); %>">
+                <input type="hidden" name="reserved_devname" value="<% lan_cgi_get_rsv_content("dv_name"); %>">
+                <input type="hidden" name="orig_rsv_ip" value="">
+                <input type="hidden" name="orig_rsv_mac" value="">
+                <input type="hidden" name="orig_dv_name" value="<% lan_cgi_get_rsvip_param("dv_name"); %>">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+$(document).ready(function()
+{   
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function checkData()
+{
+    var cf = document.forms[0];
+    var msg = "";
+    var rv_ip = cf.reserved_ips.value.split(" ");
+    var rv_mac = cf.reserved_macs.value.split(" ");
+    var rv_dv_name=cf.reserved_devname.value.split("|");
+    var i, conflict, reply;
+
+    var str_dhcp_start = "NVRAM_dhcp_start";
+    var str_dhcp_end = "NVRAM_dhcp_end"
+    var dhcp_startaddr = str_dhcp_start.split(".");
+    var dhcp_endaddr = str_dhcp_end.split(".");
+
+    if(checkIP(cf.rsv_ip1,cf.rsv_ip2,cf.rsv_ip3,cf.rsv_ip4,254)
+        || (parseInt(cf.rsv_ip4.value, 10) == 0))
+        msg+= "Invalid IP address. Please enter it again.";
+
+    if(checkMacStr(cf.rsv_mac))
+        msg+= "Invalid MAC address.\n";
+    msg+= checkBlank(cf.dv_name, "Device Name");
+    if (cf.dv_name.value.match( /[^\x20-\x7E]/ ))
+        msg+="Invalid device name.\n";
+    if (msg.length > 1)
+    {
+        alert(msg);
+        return false;
+    }
+    cf.rsv_ip.value =  parseInt(cf.rsv_ip1.value, 10)+'.'+ parseInt(cf.rsv_ip2.value, 10)+'.'
+                     + parseInt(cf.rsv_ip3.value, 10)+'.'+ parseInt(cf.rsv_ip4.value, 10);
+    cf.rsv_mac.value = cf.rsv_mac.value.replace(/:/g,"");
+    cf.rsv_mac.value = cf.rsv_mac.value.replace(/-/g,"");
+    i = 0;
+    while (typeof rv_ip[i] != "undefined") {
+        if ((rv_ip[i] == cf.orig_rsv_ip.value) && (rv_mac[i] == cf.orig_rsv_mac.value)) {
+            i++;
+            continue;
+        }
+        rv_mac[i]=rv_mac[i].replace(/:/g,"");
+        rv_mac[i]=rv_mac[i].replace(/-/g,"");
+        if ((rv_ip[i] == cf.rsv_ip.value) || (rv_mac[i] == cf.rsv_mac.value)||(rv_dv_name[i]==cf.dv_name.value)) {
+            conflict = true;
+            break;
+        }
+        i++;
+    }
+    if (conflict) {
+        reply = confirm("The input data is duplicated with current record,ncontinue to overwrite?");
+        if (!reply)
+            return false;
+    }
+    return true;
+}
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+    var rsv_ip;
+    
+    cf.orig_rsv_ip.value = cf.rsv_ip.value;    
+    rsv_ip = cf.rsv_ip.value.split(".");
+    cf.rsv_ip1.value = rsv_ip[0];
+    cf.rsv_ip2.value = rsv_ip[1];
+    cf.rsv_ip3.value = rsv_ip[2];
+    cf.rsv_ip4.value = rsv_ip[3];
+
+    cf.rsv_mac.value = "<% lan_cgi_get_rsvip_param("rsv_mac"); %>";
+    cf.orig_rsv_mac.value = cf.rsv_mac.value;
+    cf.dv_name.value = cf.orig_dv_name.value;
+}
+</script>
+</html>

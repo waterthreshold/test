@@ -1,0 +1,419 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body onload="loadSettings();" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target"  name="frmLan" method="POST" action="access_control.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <label class="card-btn card-flex" for="enable_acl">
+                        <div>
+                            <div class="card-title">You can use Access Control to allow or block computers or electronic devices from accessing your network.</div>
+                            <p>Turn on Access Control</p>
+                        </div>
+                        <div class="card-margin-left">
+                            <div class="togglebutton">
+                                <label>
+                                    <input type="checkbox" type="checkbox" id="enable_acl" name="enable_acl" value="enable_acl" onclick="enable_access();">
+                                    <span class="toggle"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </label>
+                    <div id="access_container" style="display: none;">
+                        <div class="card-divider"></div>
+                        <div class="card-body">
+                            <p>device access rule</p>
+                            <div class="form-check form-check-radio access_all">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="allow_all" type="radio" name="access_all" value="allow_all">
+                                    Allow all new devices to connect
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-radio form-check-next access_all">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="block_all" type="radio" name="access_all" value="block_all">
+                                    Block all new devices from connecting
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-bottom card-flow-root">
+                            <button id="apply" value="Apply"  onClick="buttonClick(this,'Apply');return checkData()" type="SUBMIT" name="action" class="btn btn-primary pull-right btn-round">Apply</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">You can use Access Control to allow or block computers or electronic devices from accessing your network.</div>
+                        <div class="table-responsive">
+                            <table id="control_table" class="table table-hover">
+                            <thead class="text-primary">
+                            <tr>
+                                <th>Status</th>
+                                <th>Device Name</th>
+                                <th>IP Address</th>
+                                <th>MAC Address</th>
+                                <th>Connection Type</th>
+                                <th class="align-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <!-- <%devices_cgi_get_acl_device_table("DEV_control");%>-->
+                            </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right" style="display: none;">
+                            <button type="submit" value="allow" name="allow" class="btn btn-white btn-mg-15" id="allow" onclick="buttonClick(this,'allow');return checkData();" >Allow</button>
+                            <button type="submit" value="block" name="block" class="btn btn-white btn-mg-15" id="block" onclick="buttonClick(this,'block');return checkData();" >Block</button>
+                            <button type="SUBMIT" value="edit" id="edit" name="edit_attached" class="btn btn-white btn-mg-15" onclick="buttonClick(this,'edit');" >Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-flex">
+                            <div class="card-title">View list of allowed devices not currently connected to the network</div>
+                            <div class="card-margin-left">
+                                <button type="SUBMIT" value="add" id="add_white" name="add_white" class="btn btn-green btn-round access-btn" onclick="buttonClick(this,'add_white');" >Add</button>
+                            </div>
+                        </div>
+                        <div id="white_list_body" class="table-responsive">
+                            <table id="white_control_table" class="table table-hover">
+                            <thead class="text-primary">
+                            <tr>
+                                <th>Device Name</th>
+                                <th>MAC Address</th>
+                                <th>Connection Type</th>
+                                <th class="align-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <!-- <%devices_cgi_get_acl_white_table();%> -->
+                            </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right" style="display: none;">
+                            <button type="SUBMIT" value="Delete" id="delete_black" name="delete_black" class="btn btn-white" onclick="buttonClick(this,'Delete');" >Remove from the list</button>
+                            <button type="SUBMIT" value="edit" id="edit_black" name="edit_black" class="btn btn-white" onclick="buttonClick(this,'edit');" >Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-flex">
+                            <div class="card-title">View list of blocked devices not currently connected to the network</div>
+                            <div class="card-margin-left">
+                                <button type="SUBMIT" value="add" id="add_black" name="add_black" class="btn btn-green btn-round access-btn" onclick="buttonClick(this,'add_black');" >Add</button>
+                            </div>
+                        </div>
+                        <div id="black_list_body" class="table-responsive">
+                            <table id="black_control_table" class="table table-hover">
+                            <thead class="text-primary">
+                            <tr>
+                                <th>Device Name</th>
+                                <th>MAC Address</th>
+                                <th>Connection Type</th>
+                                <th class="align-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <!-- <%devices_cgi_get_acl_black_table();%> -->
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="pull-right" style="display: none;">
+                        <button type="SUBMIT" value="Delete" id="delete_white" name="delete_white" class="btn btn-white" onclick="buttonClick(this,'Delete');" >Remove from the list</button>
+                        <button type="SUBMIT" value="edit" id="edit_white" name="edit_white" class="btn btn-white" onclick="buttonClick(this,'edit');" >Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="select" value="-1">
+        <input name="enable_access_control" type="hidden" value= "NVRAM_access_control_mode">
+        <input name="access_all_setting" type="hidden" value= "NVRAM_access_all_new_devices">
+        <input name="allowed_text" type="hidden" value="Allowed">
+        <input name="blocked_text" type="hidden" value="Blocked">
+        <input name="rule_settings" type="hidden" value="">
+        <input name="delete_white_lists" type="hidden" value="">
+        <input name="delete_black_lists" type="hidden" value="">
+        <input name="edit_lists" type="hidden" value=""> 
+        <input name="edit_device_name" type="hidden" value="">
+        <input name="router_access_user" type="hidden" value="NVRAM_cur_access_user_ip">
+        <input name="is_edit_itself" type="hidden" value="">
+   
+        <input name="enable_ap_mode" type="hidden" value= "NVRAM_enable_ap_mode">
+    </form>
+</div>
+</body>
+ 
+<script>
+$(document).ready(function()
+{
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+   
+function grayout_all_items()
+{
+    grayout_button("add_white");
+    grayout_button("add_black");
+
+    $("#access_container").slideUp();
+
+    $("#allow_all")[0].disabled = true;
+    $("#block_all")[0].disabled = true;
+
+    $(".access_all").addClass("disabled");
+    $(".access-btn").css("display","none");
+}
+
+function ungrayout_all_items()
+{
+    ungrayout_button("add_white");
+    ungrayout_button("add_black");
+
+    $("#access_container").slideDown();
+
+    $("#allow_all")[0].disabled = false;
+    $("#block_all")[0].disabled = false;
+
+    $(".access_all").removeClass("disabled");
+    $(".access-btn").css("display","inline-block")
+}
+
+function enable_access()
+{
+    handle_all_items($("#enable_acl")[0]);
+    $("#apply").click();
+}
+
+function handle_all_items(checkbox)
+{
+    var i;
+    var rule_status = getElementsByName_iefix("span", "rule_status");
+    var rule_status_org = document.getElementsByName("rule_status_org");
+    var allowed_text = document.getElementsByName("allowed_text")[0].value;
+    var blocked_text = document.getElementsByName("blocked_text")[0].value;
+    
+    for(i=0; i<rule_status_org.length ; i++) {
+        if(rule_status_org[i].value == "allow") {
+            $(rule_status[i]).addClass("acl_allowed");
+            $(rule_status[i]).removeClass("acl_blocked");
+            rule_status[i].innerHTML = allowed_text;
+        } else {
+            $(rule_status[i]).addClass("acl_blocked");
+            $(rule_status[i]).removeClass("acl_allowed");
+            rule_status[i].innerHTML = blocked_text;
+        }
+    }
+}
+
+function set_all_items(checkbox)
+{
+    if (checkbox.checked) {
+        ungrayout_all_items();
+    } else {
+        grayout_all_items();
+    }
+}
+
+function handle_checkboxElements(checkbox)
+{
+    var i,checked_count=0;
+    var checkboxElements = document.getElementsByName(checkbox.name);    
+    for(i=0 ; i<checkboxElements.length ; i++) {
+        if(checkboxElements[i].checked==true)
+        checked_count++;
+    }
+    if(checked_count==1){
+        if(checkbox.name=="checkbox")
+        ungrayout_button("edit_attached");
+        else if(checkbox.name=="checkbox_white")
+        ungrayout_button("edit_white");
+        else if(checkbox.name=="checkbox_black")
+        ungrayout_button("edit_black");
+    }else{
+        if(checkbox.name=="checkbox")
+        grayout_button("edit_attached");
+        else if(checkbox.name=="checkbox_white")
+        grayout_button("edit_white");
+        else if(checkbox.name=="checkbox_black")
+        grayout_button("edit_black");  
+    }
+    
+}
+
+function set_rule_style(id, style)
+{
+    var ruleStatus = getElementsByName_iefix("span", "rule_status")[id];
+    var allowed_text = document.getElementsByName("allowed_text")[0].value;
+    var blocked_text = document.getElementsByName("blocked_text")[0].value;
+    
+    if(style == "allow") {
+        ruleStatus.innerHTML = allowed_text;
+        $(ruleStatus).addClass("acl_allowed");
+        $(ruleStatus).removeClass("acl_blocked");
+    } else if(style == "block") {
+        ruleStatus.innerHTML = blocked_text;
+        $(ruleStatus).addClass("acl_blocked");
+        $(ruleStatus).removeClass("acl_allowed");
+    }
+}
+
+function allow_devices(index)
+{
+    set_rule_style(index, "allow"); 
+    $("#allow").click();
+}
+
+function block_devices()
+{
+    var i;
+    var checkboxElements = document.getElementsByName("checkbox"); 
+    var router_user = document.getElementsByName("router_access_user")[0].value;
+    var rule_ip = getElementsByName_iefix("span", "rule_ip");
+    var ip_checked = 0;
+    var block_checked = 0;
+
+    if (router_user == rule_ip[index].innerHTML)
+        alert("device block");
+    else {
+        if (confirm("device block")) {
+            set_rule_style(index, "block");
+            $("#block").click();
+        }
+    }
+}
+
+function isSPCEnable()
+{
+    var cf = document.forms[0];
+    if(( (cf.spc_provisioned.value=='1')) && (cf.enable_ap_mode.value!='1'))
+        return true;
+    else
+        return false;
+}
+
+function loadSettings()
+{
+    var i;
+    var enable_access_control = document.getElementsByName("enable_access_control");
+    var access_all_setting = document.getElementsByName("access_all_setting");
+    var access_all_radio = document.getElementsByName("access_all"); 
+
+    var circlev2_hide_acl = document.getElementById("circlev2_hide_acl");
+    var subhead2_table = document.getElementsByClassName("subhead2-table");
+
+    parent.hide_loading();
+    
+    if(isSPCEnable())
+    {
+        circlev2_hide_acl.style.display = "block";
+        subhead2_table[0].style.visibility = "hidden";
+    }
+
+    if(enable_access_control[0].value == "1")
+        $("#enable_acl")[0].checked = true;
+    else
+        $("#enable_acl")[0].checked = false;
+    
+    if(access_all_setting[0].value == "0")
+        access_all_radio[1].checked = true;
+    else
+        access_all_radio[0].checked = true;
+
+    handle_all_items($("#enable_acl")[0]);
+    set_all_items($("#enable_acl")[0])
+}
+
+function checkData()
+{
+    var i, del_num = 0;
+    var tmp_settings; 
+    var macElements = getElementsByName_iefix("span", "rule_mac"); 
+    var statusElements = getElementsByName_iefix("span", "rule_status"); 
+    var rule_settings = document.getElementsByName("rule_settings")[0];
+
+    tmp_settings = macElements.length + ":";
+    
+    for(i=0;i<macElements.length;i++) {
+        if($(statusElements[i]).attr("class") == "acl_allowed")
+            tmp_settings = tmp_settings + macElements[i].innerHTML + ":" + "1:";
+        else 
+            tmp_settings = tmp_settings + macElements[i].innerHTML + ":" + "0:";
+    }   
+    rule_settings.value = tmp_settings;
+
+    parent.show_loading();
+    
+    return true;
+}
+
+function delete_items(type, index)
+{
+    var i, del_num = 0;
+    var tmp_settings = "";
+    // var checkbox = document.getElementsByName("checkbox_" + type);
+    var row_rules = $('tr[name=row_rules_'+ type + ']');
+    var rule_mac = getElementsByName_iefix("span", "rule_mac" + type); 
+    var delete_lists = document.getElementsByName("delete" + type + "_lists")[0];
+
+    tmp_settings = tmp_settings + rule_mac[index].innerHTML + ":";
+    delete_lists.value = "1:" + tmp_settings;
+
+    $("#delete" + type).click();
+}
+function edit_items(type, index)
+{
+    var i;
+    var tmp_settings = "";
+    var tmp_device_name_settings = "";
+    var router_user = document.getElementsByName("router_access_user")[0].value;
+    // var checkbox = document.getElementsByName("checkbox" + type);
+    var row_rules = $('tr[name=row_rules'+ type + ']');
+    var rule_mac = getElementsByName_iefix("span", "rule_mac" + type); 
+    var edit_lists = document.getElementsByName("edit_lists")[0];
+    var edit_device_name = document.getElementsByName("edit_device_name")[0];
+    var rule_ip = getElementsByName_iefix("span", "rule_ip");
+
+    if (type == "")
+        var rule_device_name = $("span[name=rule_device_name]");
+    else if(type ==  "_white")
+        var rule_device_name = $("#white_list_body").find("span[name=rule_device_name]");
+    else
+        var rule_device_name = $("#black_list_body").find("span[name=rule_device_name]");
+
+    tmp_settings += rule_mac[index].innerHTML;
+    tmp_device_name_settings = tmp_device_name_settings + rule_device_name.eq(index).html();
+    if (typeof rule_ip[index] !== 'undefined') {
+        if (router_user == rule_ip[index].innerHTML && type == '') {
+            document.getElementsByName("is_edit_itself")[0].value = 1; 
+        } 
+    }
+
+    edit_lists.value = tmp_settings;    
+    edit_device_name.value = tmp_device_name_settings;
+
+    $("#edit" + type).click();
+}
+</script> 
+</html>
+

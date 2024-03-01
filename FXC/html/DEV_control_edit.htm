@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target" name="frmLan" method="POST" action="access_control_edit.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Edit Access Control</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield" id="rip_auth_id">
+                            <select class="form-control" id="<%devices_cgi_get_edit_option("id","id")%>" name="access_control_option">
+                                <option value='allow' <%devices_cgi_get_edit_option("status","allow")%> > <%getstr("allow_mark");%> </option>
+                                <option value='block' <%devices_cgi_get_edit_option("status","block")%> > <%getstr("block_mark");%> </option>
+                            </select>
+                            <label tabindex="-1"><%getstr("dev_acl_title");%></label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input id="mac_addr" class="form-control" type="text" maxlength="17" name="mac" disabled="disable" value="<%devices_cgi_get_edit_option("mac")%>">
+                            <label tabindex="-1"><%getstr("info_mark_mac");%></label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input id="dev_name" class="form-control" type="text" maxlength="24" name="dev_name" value="<%devices_cgi_get_edit_option("name")%>">
+                            <label tabindex="-1"><%getstr("lan_mark_name");%></label>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="button" value="<%getstr("apply_mark");%>" onClick="buttonClick(this,'<%getstr("apply_mark");%>');return checkData()" type="SUBMIT" name="action" class="<%gui_get_guest_or_admin_mode("0");%> btn btn-primary pull-right btn-round"><% getstr("apply_change_mark"); %></button>
+                    </div>
+                </div>
+
+                <input name="access_control_add_type" type="hidden" value="allowed_list">
+                <input name="is_edit_itself" type="hidden" value="<% nvram_get("access_control_edit_itself");%>">
+                <input name="dev_mac" type="hidden" value="">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+ 
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function checkData() {
+    let msg = "";
+
+    if (document.forms[0].dev_name.value.match( /[^\x20-\x7E]/ ))
+        msg += "<%getstr("device_name_error");%>\n";
+
+    if (document.forms[0].is_edit_itself.value.length > 0 && document.forms[0].access_control_option.value.match("block")) {
+        msg += "<%getstr("dev_acl_alert_block");%>\n";
+        document.forms[0].access_control_option.selectedIndex=0;
+    }
+
+    if (msg.length > 1) {
+        alert(msg);
+        return false;
+    }
+    
+    document.forms[0].dev_mac.value = document.forms[0].mac.value.replace(/:/g,"");
+
+    return true;            
+}
+</script>
+</html>
+

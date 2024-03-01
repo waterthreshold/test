@@ -1,0 +1,386 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target"  action="SetSystemLog.cgi" method="POST">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-flex">
+                            <div class="card-title">Logs</div>
+                            <div class="card-margin-left">
+                                <button class="btn btn-green btn-round btn-icon pull-righ" id="action_clear" type=button value="Clear Log" name="action_Clear""><i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"></path><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg><p>Clear Log</p></i></button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>Log</th>
+                                <th class="align-right">Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+							<tr>
+                               <!-- <% fw_cgi_get_log_param("fwLogContent"); %>-->
+							   <th> [test] test </th>
+							   <th class="align-right">2024/1/9</th>
+                            </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Current Time</div>
+                        <div id="current_time" class="card-info"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Include in Log</div>
+                    </div>
+                    <div class="card-body">
+                      
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_asites" name="log_cat_1" type=checkbox value=checkboxValue>Attempted access to allowed sites
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_block" name="log_cat_2" type=checkbox value=checkboxValue>Attempted access to blocked sites and services
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_conn" name="log_cat_3" type=checkbox value=checkboxValue>Connections to the Web-based interface of this Router
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_router" name="log_cat_4" type=checkbox value=checkboxValue>Router operation (startup, get time etc)
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_dosport" name="log_cat_5" type=checkbox value=checkboxValue>Known DoS attacks and Port Scans
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_port" name="log_cat_6" type=checkbox value=checkboxValue> Port Forwarding / Port Triggering
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_wlan" name="log_cat_7" type=checkbox value=checkboxValue>Wireless access
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_conn_reset_ch" name="log_cat_8" type=checkbox value=checkboxValue>Automatic Internet connection reset
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_wire_sched_ch" name="log_cat_9" type=checkbox value=checkboxValue>Turn off wireless signal by schedule
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check" style="display: none;">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_readyshare_ch" name="log_cat_10" type=checkbox value=checkboxValue>ReadySHARE
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check" style="display: none;">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_mobile_conn_ch" name="log_cat_11" type=checkbox value=checkboxValue>ReadyShare Mobile Connect
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check" style="display: none;">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="log_vpn_head_ch" name="log_cat_12" type=checkbox value=checkboxValue>VPN Service
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" type="submit" value="SUBMIT"  onClick="buttonClick(this,'Apply');" name="apply" class="btn btn-primary btn-mg-15 btn-round">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <input name=email_on type=hidden value="<% fw_cgi_get_log_param("fwLogMailOn"); %>"> -->
+        <!-- <input name=log_refresh type=hidden value= 0> -->
+        <!-- <input name=log_send type=hidden value= "<% fw_cgi_get_log_param("log_send"); %>"> -->
+        <!-- <input name=log_clear type=hidden value= 0> -->
+        <!-- <input name=log_enable type=hidden value= "<% fw_cgi_get_log_param("log_enable"); %>"> -->
+        <!-- <input name=log_filter type=hidden value="<% fw_cgi_get_log_param("log_filter"); %>"> -->
+    </form>
+</div>
+<script>
+let isInited = 0;
+function  ui_get_checked(id) {
+	id = '#'+id
+	if ( $(id).attr('checked') ){
+		return "1";
+	} else {
+		return "0"
+	}
+}
+function getData (){
+	var jsonData ={
+		"log_asites" : ui_get_checked('log_asites'),
+		"log_block" : ui_get_checked('log_block'),
+		"log_conn" : ui_get_checked('log_conn'),
+		"log_router" : ui_get_checked('log_router'),
+		"log_dosport" : ui_get_checked('log_dosport'),
+		"log_port" : ui_get_checked('log_port'),
+		"log_wlan" : ui_get_checked('log_wlan'),
+		"log_conn_reset_ch" : ui_get_checked('log_conn_reset_ch'),
+		"log_wire_sched_ch" : ui_get_checked('log_wire_sched_ch'),
+		"log_mobile_conn_ch" : ui_get_checked('log_mobile_conn_ch'),
+		"log_vpn_head_ch" : ui_get_checked('log_vpn_head_ch')
+		
+	}
+	
+	return jsonData
+}
+function ui_check(id, flag) {
+	if (flag == "1")
+	{
+		id = '#'+id
+		$(id).attr('checked',true)
+	}
+	
+}
+
+$(document).ready(function() {
+		init_setting()
+	   $("#target").submit(function(e) {
+		
+			e.preventDefault();
+			var formdata = getData()
+			console.log (formdata)
+			$.ajax({
+				type: "POST",
+				url: $('#target').attr('action'), 
+				contentType: "application/json",
+				data: JSON.stringify(formdata),
+				dataType: "json",
+				success: function(response) {
+				  console.log("Success:", response);
+				},
+				error: function(error) {
+				  console.error("Error:", error);
+				}
+				
+			});
+			buttonFilter();
+			location.reload()
+	  });
+	  
+	 $("#action_clear").click(function(e) {
+		var result = confirm ('Are you sure clear the log?') 
+		if (result){ 
+			$.ajax({
+				type: "GET",
+				url: $('#target').attr('action'), 
+				contentType: "application/json",
+				data: JSON.stringify(formdata),
+				dataType: "json",
+				success: function(response) {
+				  console.log("Success:", response);
+				},
+				error: function(error) {
+				  console.error("Error:", error);
+				}
+				//buttonFilter();
+				//location.reload()
+		  });
+		} 
+  });
+	
+});
+function init_setting() {
+	$.get("GetSystemLog.cgi",function (data){
+		const  param = $.parseJSON(JSON.stringify(data))
+		if (param.log_asites == "1"){
+			$('#log_asites').attr('checked',true)
+		}
+		ui_check ('log_block',param.log_block)
+		ui_check ('log_conn',param.log_conn)
+		ui_check ('log_router',param.log_router)
+		ui_check('log_dosport',param.log_dosport)
+		ui_check('log_port',param.log_port)
+		ui_check('log_wlan',param.log_wlan)
+		ui_check('log_conn_reset_ch',param.log_conn_reset_ch)
+		ui_check('log_wire_sched_ch',param.log_wire_sched_ch)
+		ui_check('log_mobile_conn_ch',param.log_mobile_conn_ch)
+		ui_check('log_vpn_head_ch',param.log_vpn_head_ch)
+	});
+	
+	setInterval(updatetime, 1000 )
+	updatetime()
+}
+
+function updatetime (){
+	var currenttime = new Date ()
+	var hours = currenttime.getHours()
+	var mins = currenttime.getMinutes()
+	var seconds =currenttime.getSeconds()
+	
+	var formattedTime = hours + ":" + mins + ":" + seconds;
+
+	var month = currenttime.getMonth() + 1; 
+	var day = currenttime.getDate();
+	var year = currenttime.getFullYear();
+
+	var formattedDate = year + "/" + month + "/" + day ;
+
+	var dateTimeString = formattedDate + " " + formattedTime;
+
+	document.getElementById('current_time').innerText = dateTimeString;
+}
+/*
+function init_setting() {
+    let cf = document.forms[0];
+
+    if (typeof(cf.enable_log) != "undefined") {
+        if(cf.log_enable.value == "1")
+           cf.enable_log.checked = true;
+        else if(cf.log_enable.value != "111")
+            cf.enable_log.checked = false;
+    }
+
+    if (cf.log_filter.value & 1)
+        cf.log_cat_1.checked = true;
+    if (cf.log_filter.value & 2)
+        cf.log_cat_2.checked = true;
+    if (cf.log_filter.value & 4)
+        cf.log_cat_3.checked = true;
+    if (cf.log_filter.value & 8)
+        cf.log_cat_4.checked = true;
+    if (cf.log_filter.value & 16)
+        cf.log_cat_5.checked = true;
+    if (cf.log_filter.value & 32)
+        cf.log_cat_6.checked = true;
+    if (cf.log_filter.value & 64)
+        cf.log_cat_7.checked = true;
+    if (cf.log_filter.value & 128)
+        cf.log_cat_8.checked = true;
+    if (cf.log_filter.value & 256)
+        cf.log_cat_9.checked = true;        
+    if (cf.log_filter.value & 512)
+        cf.log_cat_10.checked = true;
+    if (cf.log_filter.value & 1024)
+        cf.log_cat_11.checked = true;
+    if (cf.log_filter.value & 2048)
+        cf.log_cat_12.checked = true;  
+
+    isInited = 1;
+
+    return true;
+}
+*/
+function check_log_category() {
+    let cf = document.forms[0];
+    let value = 0;
+
+    if (cf.log_cat_1.checked)
+        value = value + 1;
+    if (cf.log_cat_2.checked)
+        value = value + 2;
+    if (cf.log_cat_3.checked)
+        value = value + 4;
+    if (cf.log_cat_4.checked)
+        value = value + 8;
+    if (cf.log_cat_5.checked)
+        value = value + 16;
+    if (cf.log_cat_6.checked)
+        value = value + 32;
+    if (cf.log_cat_7.checked)
+        value = value + 64;
+    if (cf.log_cat_8.checked)
+        value = value + 128;
+    if (cf.log_cat_9.checked)
+        value = value + 256;
+    if (cf.log_cat_10.checked)
+        value = value + 512;
+    if (cf.log_cat_11.checked)
+        value = value + 1024;
+    if (cf.log_cat_12.checked)
+        value = value + 2048;        
+    cf.log_filter.value = value;
+
+    return true;
+}
+
+function clearLog() {
+    let cf = document.forms[0];
+    cf.log_clear.value = 1;
+    cf.log_send.value = 0;
+}
+
+function SetEnableValue() {
+    let cf = document.forms[0];
+    if (cf.enable_log.checked == true)
+        cf.log_enable.value = "1";
+    if (cf.enable_log.checked == false)
+        cf.log_enable.value = "0";
+    cf.submit();
+}
+</script>
+</body>
+
+
+</html>

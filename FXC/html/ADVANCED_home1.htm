@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+</head>
+
+<script language="javascript" type="text/javascript">
+function showADVHome()
+{
+    <%nvram_invmatch("enable_sta_mode", "1", "/*");%>
+    window.location.replace("./RST_bridge_status.htm");
+    <%nvram_invmatch("enable_sta_mode", "1", "*/");%>
+    <%nvram_match("enable_sta_mode", "1", "/*");%>
+    window.location.replace("./<% mnu_cgi_get_router_status_page(); %>");
+    <%nvram_match("enable_sta_mode", "1", "*/");%>
+}
+</script>
+<body class="page-body" onload="showADVHome();">
+</body>
+</html>

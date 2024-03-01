@@ -1,0 +1,363 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body onload="loadSettings();" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target" method="POST" action="vlan_rule.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Edit Vlan Rule</div>
+                    </div>
+                    <div class="card-body">
+                        <% gui_cgi_check_feature_support("orange_isp", "html", "start"); %>
+                        <div class="mui-textfield" id="isp_profile">
+                            <select class="form-control" id="vlan_type" name="vlan_isp" size="1" onChange="setISPProfile()">
+                                <option value=1>Orange France IPTV/VOD</option>
+                                <option value=2>Others</option>
+                                <!-- <% vlan_cgi_get_rule_param("vlan_isp_options"); %> -->
+                            </select>
+                            <label tabindex="-1">ISP Profile</label>
+                        </div>
+                        <% gui_cgi_check_feature_support("orange_isp", "html", "end"); %>
+                        <div class="mui-textfield" id="vlanname1">
+                            <input class="form-control" type="text" id="vlan_name" name="vlan_name" value="" maxlength="32">
+                            <label tabindex="-1">Name</label>
+                        </div>
+                        <div class="mui-textfield" id="vlanid">
+                            <input class="form-control" id="vlan_id" type="text" name="vlan_id" value="" maxlength="4">
+                            <label tabindex="-1">(1~4094)</label>
+                        </div>
+                        <div class="mui-textfield" id="vlanpro">
+                            <input class="form-control" id="vlan_priority" type="text" name="vlan_prio" value="" maxlength="1">
+                            <label tabindex="-1">Priority (0~7)</label>
+                        </div>
+                        <p>Select Vlan Ports</p>
+                        <div class="form-check" style="<% is_wanAggEnabled("not_wan_agg_js_start") %>display: none<% is_wanAggEnabled("not_wan_agg_js_end") %>">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_0" type="checkbox" name="vlan_ports_0">Port1
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_1" type="checkbox" name="vlan_ports_1">Port2
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_2" type="checkbox" name="vlan_ports_2">Port3
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_3" type="checkbox" name="vlan_ports_3">Port4
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <% nvram_invmatch("hwtype", "AX6000", "<!--") %>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_10_2" type="checkbox" name="vlan_ports_10">Port5
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <% nvram_invmatch("hwtype", "AX6000", "-->") %>
+                        <% nvram_invmatch("support_2dot5g_wan", "1", "<!--") %>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_10_3" type="checkbox" name="vlan_ports_10">
+                                <% nvram_match("enable_2dot5g_wan", "0", " Multi-Gig(2.5G/1G) "); %>
+                                <% nvram_match("enable_2dot5g_wan", "1", " Port5 "); %>
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <% nvram_invmatch("support_2dot5g_wan", "1", "-->") %>
+                        <% is2ndSwitch("start"); %>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_10" type="checkbox" name="vlan_ports_10">Port5
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_11" type="checkbox" name="vlan_ports_11">Port6
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <% is2ndSwitch("end"); %>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="iptv_ports_10" type="checkbox" name="vlan_ports_4">WiFi-2.4G
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="iptv_ports_11" type="checkbox" name="vlan_ports_5">WiFi-5G
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <% nvram_invmatch("dual_5g_band","1","<!--"); %>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="vlan_ports_6" type="checkbox" name="vlan_ports_6">WiFi-5G-2
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <% nvram_invmatch("dual_5g_band","1","-->"); %>
+                        <% gui_cgi_check_feature_support("orange_isp", "html", "start"); %>
+                        <div class="mui-textfield" id="customer_login_tr1">
+                            <input class="form-control" type="text" id="orange_username" name="customer_login" value="" maxlength="64">
+                            <label tabindex="-1">Customer Login</label>
+                        </div>
+                        <% gui_cgi_check_feature_support("orange_isp", "html", "end"); %>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" value="Apply"  onClick="buttonClick(this,'Apply');if(!checkData()) return false;" type="SUBMIT" name="apply" class="<%gui_get_guest_or_admin_mode("0");%> btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="vlan_rule_name" value="<% nvram_get("vlan_name") %>">
+        <input type="hidden" name="orig_vlan_name" value="<% vlan_cgi_get_rule_param("vlan_name"); %>">
+        <input name="vlan_enable" type="hidden" value= "NVRAM_enable_vlan">
+        <input name="vlan_mode" type="hidden" value="edit">
+        <% gui_cgi_check_feature_support("orange_isp", "html", "start"); %>
+        <input name="vlan_customer_login" type="hidden" value="NVRAM_orange_auth_id">
+        <input name="orig_vlan_isp" type="hidden" value="<% vlan_cgi_get_rule_param("vlan_isp"); %>">
+        <% gui_cgi_check_feature_support("orange_isp", "html", "end"); %>
+    </form>
+</div>
+</body>
+
+<script language="javascript" type="text/javascript">
+$(document).ready(function()
+{
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function checkData()
+{
+    var cf = document.forms[0];
+    var msg = "";
+    var vlan_id = parseInt(cf.vlan_id.value,10);
+    var vlan_prio = parseInt(cf.vlan_prio.value,10);
+    var vlan_rule=cf.vlan_rule_name.value.split(" ");
+    var i = 0, conflict, reply;
+
+    //console.log("vlan_rule="+vlan_rule);
+    // prevent "&#32;" can not be split by " "
+    if(cf.vlan_rule_name.value.indexOf("&#32;")!=-1)
+    {
+        vlan_rule=cf.vlan_rule_name.value.split("&#32;");
+        //console.log("cf.vlan_rule_name.value="+cf.vlan_rule_name.value);
+        //console.log("vlan_rule="+vlan_rule);
+    }
+
+    if (cf.vlan_name.value == "" || (cf.vlan_name.value.match( /[^\x21-\x7E]/ )))
+    {
+        msg+="Group name must consists of printable ASCII characters (ASCII 0x21 ~ 0x7E, space is not allowed) and is up to 10 characters!\n";
+        alert(msg);
+        return false;
+    }
+    if ((!_isNumeric(cf.vlan_id.value)) || isNaN(vlan_id) || vlan_id > 4094 || vlan_id < 1) {
+        alert("Incorrect VLAN ID value; correct values are from 1 to 4094.");
+        return false;
+    }
+        
+    if ((!_isNumeric(cf.vlan_prio.value)) || isNaN(vlan_prio) || vlan_prio > 7 || vlan_prio < 0) {
+        alert("Incorrect 802.1p value.");
+        return false;
+    }
+    while(typeof vlan_rule[i] != "undefined")
+    {
+        if (vlan_rule[i]==cf.vlan_name.value)
+        {
+            if(cf.orig_vlan_name.value == cf.vlan_name.value)
+            {
+                i++;
+                continue;
+            }
+            else{
+                conflict = true;
+                break;
+            }
+        }
+        i++;
+    }
+    if (conflict) {
+        alert("Group Name "+cf.vlan_name.value+" already exists.");
+        return false;
+    }
+    
+    if (cf.vlan_name.value == "Internet")
+        return true;
+    
+    if(<% is_wanAggEnabled("not_wan_agg_js_start") %>(!cf.vlan_ports_0.checked) && <% is_wanAggEnabled("not_wan_agg_js_end") %>(!cf.vlan_ports_1.checked) && (!cf.vlan_ports_2.checked)
+         && (!cf.vlan_ports_3.checked) && (!cf.vlan_ports_4.checked) && (!cf.vlan_ports_5.checked)
+<% nvram_invmatch("dual_5g_band","1","/*"); %>
+         && (!cf.vlan_ports_6.checked)
+<% nvram_invmatch("dual_5g_band","1","*/"); %>
+    <% is2ndSwitch("js_start") %>
+         && (!cf.vlan_ports_10.checked) && (!cf.vlan_ports_11.checked)
+    <% is2ndSwitch("js_end") %>
+        <% nvram_invmatch("hwtype", "AX6000", "/*") %>
+        && (!cf.vlan_ports_10.checked)
+        <% nvram_invmatch("hwtype", "AX6000", "*/") %>
+         )
+    {
+        alert("At least one port MUST be chosen.");
+        return false;
+    }
+    
+    if(<% is_wanAggEnabled("not_wan_agg_js_start") %>(cf.vlan_ports_0.checked) && <% is_wanAggEnabled("not_wan_agg_js_end") %>(cf.vlan_ports_1.checked) && (cf.vlan_ports_2.checked)
+         && (cf.vlan_ports_3.checked) && (cf.vlan_ports_4.checked) && (cf.vlan_ports_5.checked)
+<% nvram_invmatch("dual_5g_band","1","/*"); %>
+         && (cf.vlan_ports_6.checked)
+<% nvram_invmatch("dual_5g_band","1","*/"); %>
+    <% is2ndSwitch("js_start") %>
+         && (cf.vlan_ports_10.checked) && (cf.vlan_ports_11.checked)
+    <% is2ndSwitch("js_end") %>
+        <% nvram_invmatch("hwtype", "AX6000", "/*") %>
+        && (cf.vlan_ports_10.checked)
+        <% nvram_invmatch("hwtype", "AX6000", "*/") %>
+         )
+    {
+        alert("At least one port MUST be unchecked.");
+        return false;
+    }
+
+    parent.show_loading();
+
+    return true;
+}
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+    cf.vlan_name.value = "<% vlan_cgi_get_rule_param("vlan_name"); %>";
+    
+    if(cf.vlan_name.value == "Internet")
+    {
+        document.getElementById("vlan_name").readOnly = true
+        document.getElementById("vlan_support_lan").style.display = "none";
+    }
+    cf.vlan_id.value = "<% vlan_cgi_get_rule_param("vlan_id"); %>";
+    cf.vlan_prio.value = "<% vlan_cgi_get_rule_param("vlan_prio"); %>";
+    
+    var vlan_ports= "<% vlan_cgi_get_rule_param("vlan_ports"); %>";
+    
+    if (vlan_ports & 0x1)
+        cf.vlan_ports_0.checked = true;
+    if (vlan_ports & 0x2)
+        cf.vlan_ports_1.checked = true;
+    if (vlan_ports & 0x4)
+        cf.vlan_ports_2.checked = true;
+    if (vlan_ports & 0x8)
+        cf.vlan_ports_3.checked = true;
+    if (vlan_ports & 0x10)
+        cf.vlan_ports_4.checked = true;
+    if (vlan_ports & 0x20)
+        cf.vlan_ports_5.checked = true;
+<% nvram_invmatch("dual_5g_band","1","/*"); %>
+    if (vlan_ports & 0x40)
+        cf.vlan_ports_6.checked = true;
+<% nvram_invmatch("dual_5g_band","1","*/"); %>
+
+
+<% gui_cgi_check_feature_support("orange_isp", "js", "start"); %>
+    cf.customer_login.value = cf.vlan_customer_login.value.substring(3);
+    setISPProfile(0);
+<% gui_cgi_check_feature_support("orange_isp", "js", "end"); %>
+    
+    <% is2ndSwitch("js_start") %>
+    if (vlan_ports & 0x400)
+        cf.vlan_ports_10.checked = true;
+    if (vlan_ports & 0x800)
+        cf.vlan_ports_11.checked = true; 
+    <% is2ndSwitch("js_end") %>
+    <% nvram_invmatch("hwtype", "AX6000", "/*") %>
+    if (vlan_ports & 0x1000)
+        cf.vlan_ports_10.checked = true; 
+    <% nvram_invmatch("hwtype", "AX6000", "*/") %>
+
+    parent.hide_loading();
+}
+
+function setISPProfile(mode)
+{
+    var cf = document.forms[0];
+    var stype = cf.vlan_isp.selectedIndex;
+    var org_isp = cf.orig_vlan_isp.value;
+
+    if(mode==0)
+    {
+        if(org_isp==1) /* other */
+            cf.vlan_isp.selectedIndex = 1;
+        else
+            cf.vlan_isp.selectedIndex = 0;
+    
+        stype = cf.vlan_isp.selectedIndex;
+    }   
+    if(stype==0 && org_isp!="0") /* orange IPTV */
+    {
+        document.getElementById("vlan_name").readOnly = true;
+        if(mode=="1")
+            cf.vlan_name.value = "Orange France IPTV/VOD";
+    }
+    else
+    {
+        document.getElementById("vlan_name").readOnly = false;
+        if(mode=="1") 
+            cf.vlan_name.value = cf.orig_vlan_name.value;
+    }
+    
+    if(stype==0 && org_isp=="0")  /* orange Internet */
+    {
+        document.getElementById("customer_login_tr1").style.display="block";
+    }
+    else
+    {
+        document.getElementById("customer_login_tr1").style.display="none";
+    }
+}
+</script>
+</html>

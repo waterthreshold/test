@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="script/opmode.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body  class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  name="formname" method="POST" action="SetRouterMode.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-pills nav-pills-icons">
+                            <li class="nav-item">
+                                <a class="nav-link active">
+                                    <i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" height="54px" viewBox="0 0 24 24" width="54px" fill="#ffffff"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.2 5.9l.8-.8C19.6 3.7 17.8 3 16 3s-3.6.7-5 2.1l.8.8C13 4.8 14.5 4.2 16 4.2s3 .6 4.2 1.7zm-.9.8c-.9-.9-2.1-1.4-3.3-1.4s-2.4.5-3.3 1.4l.8.8c.7-.7 1.6-1 2.5-1 .9 0 1.8.3 2.5 1l.8-.8zM19 13h-2V9h-2v4H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zM8 18H6v-2h2v2zm3.5 0h-2v-2h2v2zm3.5 0h-2v-2h2v2z"/></svg></i>
+                                    Router Mode
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="select_type(1)">
+                                <a class="nav-link">
+                                    <i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" height="54px" viewBox="0 0 24 24" width="54px" fill="#555555"><path d="M0 0h24v24H0z" fill="none"></path><path d="M4.93,3.93C3.12,5.74 2,8.24 2,11C2,13.76 3.12,16.26 4.93,18.07L6.34,16.66C4.89,15.22 4,13.22 4,11C4,8.79 4.89,6.78 6.34,5.34L4.93,3.93M19.07,3.93L17.66,5.34C19.11,6.78 20,8.79 20,11C20,13.22 19.11,15.22 17.66,16.66L19.07,18.07C20.88,16.26 22,13.76 22,11C22,8.24 20.88,5.74 19.07,3.93M7.76,6.76C6.67,7.85 6,9.35 6,11C6,12.65 6.67,14.15 7.76,15.24L9.17,13.83C8.45,13.11 8,12.11 8,11C8,9.89 8.45,8.89 9.17,8.17L7.76,6.76M16.24,6.76L14.83,8.17C15.55,8.89 16,9.89 16,11C16,12.11 15.55,13.11 14.83,13.83L16.24,15.24C17.33,14.15 18,12.65 18,11C18,9.35 17.33,7.85 16.24,6.76M12,9A2,2 0 0,0 10,11A2,2 0 0,0 12,13A2,2 0 0,0 14,11A2,2 0 0,0 12,9M11,15V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H22V20H15A1,1 0 0,0 14,19H13V15H11Z"></path></svg></i>
+                                    AP Mode
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item" onclick="select_type(2)" show="is_rax_show"> -->
+                                <!-- <a class="nav-link"> -->
+                                    <!-- <i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" height="54px" viewBox="0 0 24 24" width="54px" fill="#555555"><path d="M0 0h24v24H0z" fill="none"></path><path d="M4.93,3.93C3.12,5.74 2,8.24 2,11C2,13.76 3.12,16.26 4.93,18.07L6.34,16.66C4.89,15.22 4,13.22 4,11C4,8.79 4.89,6.78 6.34,5.34L4.93,3.93M19.07,3.93L17.66,5.34C19.11,6.78 20,8.79 20,11C20,13.22 19.11,15.22 17.66,16.66L19.07,18.07C20.88,16.26 22,13.76 22,11C22,8.24 20.88,5.74 19.07,3.93M7.76,6.76C6.67,7.85 6,9.35 6,11C6,12.65 6.67,14.15 7.76,15.24L9.17,13.83C8.45,13.11 8,12.11 8,11C8,9.89 8.45,8.89 9.17,8.17L7.76,6.76M16.24,6.76L14.83,8.17C15.55,8.89 16,9.89 16,11C16,12.11 15.55,13.11 14.83,13.83L16.24,15.24C17.33,14.15 18,12.65 18,11C18,9.35 17.33,7.85 16.24,6.76M12,9A2,2 0 0,0 10,11A2,2 0 0,0 12,13A2,2 0 0,0 14,11A2,2 0 0,0 12,9M11,15V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H22V20H15A1,1 0 0,0 14,19H13V15H11Z"></path></svg></i> -->
+                                    <!-- Bridge Mode -->
+                                <!-- </a> -->
+                            <!-- </li> -->
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>This mode allows you to take advantage of router functions. The router is set up as a normal WiFi router behind your existing router or gateway. This mode requires that all of your devices be connected to the new router and not to your existing gateway.</p>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" value="Apply"  type="submit" name="Apply" class=" btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                </div>
+                <input type="hidden" name="operation_type" value="0">
+                <!-- <input type="hidden" name="pre_mode" value="<%GUI_get_opmode_param("pre_mode");%>" > -->
+                <input type="hidden" name="enable_operation_mode" value="router" >
+                <!-- <input type="hidden" name="enable_smart_mesh" value="NVRAM_enable_smart_mesh" > -->
+                <!-- <input type="hidden" name="enable_band_steering" value="NVRAM_enable_band_steering" > -->
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+var module_data = {
+    //is_rax_show: <% gui_cgi_check_feature_support("is_rax_show"); %>
+}
+
+$(document).ready(function()
+{	
+	init_setting();
+	$("#target").submit(function(e) {
+		e.preventDefault();
+		var formdata = {router_mode:"router"}
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+		});
+		location.reload()
+		//}
+		
+		
+	});
+
+    //bind_view(module_data);
+});
+
+function init_setting (){
+	$.get("GetRouterMode.cgi",function (data){
+		const  param = $.parseJSON(JSON.stringify(data))
+		enable_ap_mode = param.enable_ap_mode
+		if (enable_ap_mode != "0")	{
+			 parent.loadPage2("WLG_opmode_ap_dual_band.htm");
+		}
+		
+	});
+}
+function goto_wireless()
+{
+    parent.loadPage2("WLG_wireless_dual_band_r10.htm");
+}
+
+function goto_internet()
+{
+    parent.loadPage2("BAS_basic.htm");
+}
+
+
+function checkData(){
+    var cf = document.forms[0];
+
+    parent.nav_enable();
+
+    if(cf.pre_mode.value == "router")
+        return false;
+    else
+        return true;
+}
+</script>
+</html>

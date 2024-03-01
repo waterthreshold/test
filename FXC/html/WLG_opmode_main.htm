@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="script/opmode.js"></script>
+</head>
+
+<body onload="loadSettings();" class="page-body">
+<form id="target"  method="POST" action="opmode.cgi" NAME=general>
+    <input type="hidden" name="pre_mode" value="<%GUI_get_opmode_param("pre_mode");%>" >
+    <input type="hidden" name="enable_smart_mesh" value="NVRAM_enable_smart_mesh" >
+    <input type="hidden" name="enable_band_steering" value="NVRAM_enable_band_steering" >
+</form>
+</body>
+
+<script>
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+    
+    /* Get operation modes */
+    /* TODO: use asp function to get nvram values */
+    var operation_mode = cf.pre_mode.value;
+    if ( operation_mode == "ap" )
+        select_type(1);
+    else if(operation_mode == "bridge")
+        select_type(2);
+    else if(operation_mode == "repeating")
+        select_type(3);
+    else
+        select_type(0);
+    
+    return;
+}
+
+</script>
+</html>

@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target"  name="formname" method="POST" action="ipv6_passthrough.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <ul class="nav nav-pills flex-column">
+                                    <li class="nav-item" onclick="window.location.href='IPV6_disable.htm'">
+                                        <a class="nav-link">Disabled</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_auto.htm'">
+                                        <a class="nav-link">Auto Detect</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_tunnel.htm'">
+                                        <a class="nav-link">6to4 Tunnel</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active">Pass Through</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_fixed.htm'">
+                                        <a class="nav-link">Fixed</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_dhcp.htm'">
+                                        <a class="nav-link">DHCP</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_pppoe.htm'">
+                                        <a class="nav-link">PPPoE</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_autoconfig.htm'">
+                                        <a class="nav-link">Auto Config</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_6rd.htm'">
+                                        <a class="nav-link">6rd</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card-body">
+                                    <div class="card-title">The setting is "IPv6 Passthrouth", which turns on the IPv6 function.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" type="submit" value="SUBMIT"  onClick="buttonClick(this,'Apply');return checkData()" name="apply" class="btn btn-primary btn-mg-15 btn-round pull-right">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input name="ipv6_proto" type=hidden value= "disable">
+    </form>
+</div>
+</body>
+
+<script>
+$(document).ready(function() {
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+
+    parent.hide_loading();
+});
+
+function checkData() {
+    parent.show_loading();
+}
+</script>
+</html>

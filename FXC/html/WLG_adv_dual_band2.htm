@@ -1,0 +1,212 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body  class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target"  name="formname" method="POST" action="wlg_adv.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <!-- <%wlg_hide_5g_ssid("0","start");%> -->
+                                Wireless Advanced Settings (2.4GHz b/g/n/ax & 5GHz a/n/ac/ax)
+                            <!-- <%wlg_hide_5g_ssid("0","end");%> -->
+                            <!-- <%wlg_hide_5g_ssid("1","start");%> -->
+                                <!-- Wireless Advanced Settings (2.4GHz b/g/n/ax) -->
+                            <!-- <%wlg_hide_5g_ssid("1","end");%> -->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input id="rts" type="text" class="form-control" name="set_rts_2g" maxlength=4 value="">
+                            <label tabindex="-1">CTS/RTS Threshold (1-2347)</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <select class="form-control" id="enable_short_preamble" name="set_preamble_2g">
+                                <option value="Long Preamble">Long Preamble</option>
+                                <option value="Short Preamble">Short Preamble</option>
+                            </select>
+                            <label tabindex="-1">Preamble Mode</label>
+                        </div>
+                    </div>
+                    <div id="5g_wifi_settings">
+                        <div class="card-divider"></div>
+                        <div class="card-subheader">
+                            <div class="card-title">Wireless Advanced Settings (5GHz a/n/ac/ax)</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mui-textfield">
+                                <input id="rts_an" type="text" class="form-control" name="set_rts_5g" maxlength=4 value="">
+                                <label tabindex="-1">CTS/RTS Threshold (1-2347)</label>
+                            </div>
+                        </div>
+                        <div class="card-divider"></div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="enable_fronthaul_2g" type="checkbox" name="enable_fronthaul_2g" value="enable" >Enable 2G fronthaul bss.
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="enable_fronthaul_5g" type="checkbox" name="enable_fronthaul_5g" value="enable" >Enable 5G fronthaul bss.
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <!-- <% Check_Performance_Boost("html", "start"); %> -->
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="performance_boost_sel" type="checkbox" name="performance_boost_sel" value=""  onclick="boost_check_function();">Performance Boost
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <!-- <% Check_Performance_Boost("html", "end"); %> -->
+                            <!-- <% wifi_features_support("implicit_beamforming","start"); %> -->
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="enable_implicit_beamforming" type="checkbox" name="enable_implicit_beamforming" value="enable" >Enable Implicit BEAMFORMING - Boosts WiFi speed, reliability, range for all mobile devices.
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <!-- <% wifi_features_support("implicit_beamforming","end"); %> -->
+                            <!-- <% wifi_features_support("airtime_fairness","start"); %> -->
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" id="enable_atf" type="checkbox" name="enable_atf" value="enable">Enable AIRTIME FAIRNESS - Prevent network lag when slower devices connect
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <!-- <% wifi_features_support("airtime_fairness","end"); %> -->
+                            <!-- <% wifi_features_support("clear_channel_selector","start"); %> -->
+                            <!-- <div class="form-check"> -->
+                                <!-- <label class="form-check-label"> -->
+                                    <!-- <input class="form-check-input" id="enable_ccs" type="checkbox" name="enable_ccs" value="enable" <% nvram_match("enable_ccs", "1", "checked"); %>>Enable Clear Channel Selector -->
+                                    <!-- <span class="form-check-sign"> -->
+                                        <!-- <span class="check"></span> -->
+                                    <!-- </span> -->
+                                <!-- </label> -->
+                            <!-- </div> -->
+                            <!-- <% wifi_features_support("clear_channel_selector","end"); %> -->
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button value="Apply" id="apply" type="submit" name="Apply" class="btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="enable_band_steering" value="NVRAM_enable_band_steering">
+        <input type="hidden" name="init_preamble_2g" value="NVRAM_wla_preamble">
+        <input type=hidden name=ruleSelect_2g value= "0">
+        <input type=hidden name=ruleSelect_5g value= "0">
+    </form>
+</div>
+</body>
+
+<script>
+$(document).ready(function()
+{
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function hide_5g_div(hide)
+{
+    var cf = document.forms[0];
+    var target = "block";
+    if(hide)
+        target = "none";
+    //document.getElementById("5g_wifi_settings").style.display = target;
+}
+
+function sync_setting_from_2g()
+{
+    var cf = document.forms[0];
+    cf.rts_an.value = cf.rts.value;
+}
+
+function checkData()
+{
+    var cf = document.forms[0];
+    var msg = "";
+    var rts = parseInt(cf.rts.value,10);
+    var rts_an = parseInt(cf.rts_an.value,10);
+
+    if(cf.enable_band_steering.value == "1")
+    {
+        //sync_setting_from_2g();
+        //alert("aaa"); /*debug purpose*/
+        //return false;
+    }
+
+    if ((!_isNumeric(cf.rts.value)) || isNaN(rts) || rts > 2347 || rts < 1) {
+        alert("CTS/RTS Threshold value is outside the range 1-2347.");
+        return false;
+    }
+    else
+        cf.rts.value = parseInt(cf.rts.value,10);
+
+    if ((!_isNumeric(cf.rts_an.value)) || isNaN(rts_an) || rts_an > 2347 || rts_an < 1) {
+        alert("CTS/RTS Threshold value is outside the range 1-2347.");
+        return false;
+    }
+    else
+        cf.rts_an.value = parseInt(cf.rts_an.value,10);
+
+    if (msg.length > 1)
+    {
+        alert(msg);
+        return false;
+    }
+
+    return true;
+}
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+	var i;
+
+    if(cf.enable_band_steering.value == "1")
+        hide_5g_div(1);
+    else
+        hide_5g_div(0);
+}
+/*
+<% Check_Performance_Boost("java", "start"); %>
+function boost_check_function()
+{
+    var cf = document.forms[0];
+    if(cf.performance_boost_sel.checked==true)
+        cf.performance_boost_sel.value="1";
+    else
+        cf.performance_boost_sel.value="0";
+}
+<% Check_Performance_Boost("java", "end"); %>
+*/
+</script>
+</html>

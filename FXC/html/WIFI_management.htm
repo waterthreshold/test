@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content" style="overflow:auto">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  method="POST" action="set_wifi_management.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Setup</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control mqtt_host" name="mqtt_host" id="mqtt_host" maxlength="128">
+                            <label tabindex="-1">Server host</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control mqtt_username" name="mqtt_username" id="mqtt_username" maxlength="32">
+                            <label tabindex="-1">User Name</label>
+                        </div>
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control mqtt_password" name="mqtt_password" id="mqtt_password" maxlength="32">
+                            <label tabindex="-1">Password</label>
+                        </div>
+                        <p>Connection status:</p>
+                        <p class="mqtt_stutus" name="mqtt_stutus" id="mqtt_stutus"></p>
+                    </div>
+                    <div class="card-bottom">
+                        <button value="Apply" onClick="buttonClick(this,'Apply');return checkData()" type="SUBMIT" name="Apply" class="btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {   
+    $("#target").submit(function(e) {
+		e.preventDefault();
+		var formdata = {
+			mqtt_host:$('.mqtt_host').val(),
+			mqtt_username: $('.mqtt_username').val(),
+			mqtt_password:$('.mqtt_password').val()
+		};
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+      });
+        buttonFilter();
+		location.reload()
+		
+    });
+
+   
+	initial_setting();
+    bind_mui_textfield();
+});
+function initial_setting (){
+	$.get("GetWifiManagement.cgi",function (data){
+			const  param = $.parseJSON(JSON.stringify(data))
+			$('.mqtt_host').val(param.mqtt_host);
+			$('.mqtt_username').val(param.mqtt_username);
+    		$('.mqtt_password').val(param.mqtt_password);
+			$('.mqtt_stutus').html(param.mqtt_status_msg);
+
+    		switch(param.mqtt_status) {
+        	case 0:
+			case 1:
+				$('.mqtt_stutus').css("color","#2C262D");
+            	break;
+        	case 2:
+          	  $('.mqtt_stutus').css("color","#00d76f");
+            	break;
+			default:
+          	  $('.mqtt_stutus').css("color","#F44336");
+            	break;
+    		}
+		///},
+		//error: function (error){
+		//	window.location.href('400.htm')
+		//}
+
+	});
+}
+function buttonFilter() {
+    let buttonElements = document.getElementsByTagName('button');
+
+    for (let i = 0; i < buttonElements.length; i++) {
+        if (buttonElements[i].type === 'submit' || buttonElements[i].type === 'button'|| buttonElements[i].type === 'reset') {
+            if ((buttonElements[i].value !== document.forms[0].buttonHit.name))
+                buttonElements[i].disabled = 1;
+            else {
+                const name = buttonElements[i].name;
+                buttonElements[i].name = 'NoUse';
+                buttonElements[i].disabled = 1;
+                document.forms[0].buttonValue.name = name;
+                document.forms[0].buttonHit.disabled = 1;
+            }
+        }
+    }
+}
+
+function checkData() {
+    if ($('.mqtt_host').val().match(/[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/) == null) {
+        set_mui_textfield_error($('.mqtt_host'));
+        alert("Incorrect server host format.");
+        return false;
+    }
+
+	return true;
+}
+</script>
+</html>
+

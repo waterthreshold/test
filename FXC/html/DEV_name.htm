@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  name="formname" method="POST" action="SetDevName.cgi" >
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Device</div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="mui-textfield">
+                            <input type="text" name="device_name"  id="device_name" maxlength="15" class="form-control" value="" onkeypress="return nospaces(event)">
+                            <label tabindex="-1">Device Name</label>
+                        </div>
+                        
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" value="apply"   type="SUBMIT" name="cfAlert_Apply" class="btn btn-primary pull-right btn-round" >Apply</button>
+                    </div>
+                </div>
+
+               
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+$(document).ready(function() {   
+	init_setting();
+    $("#target").submit(function(e) {
+		e.preventDefault();
+        
+		if (checkData() ){
+			buttonFilter();
+			var formdata = {
+				device_name:$('#device_name').val()
+			
+			};
+			$.ajax({
+				type: "POST",
+				url: $('#target').attr('action'), 
+				contentType: "application/json",
+				data: JSON.stringify(formdata),
+				dataType: "json",
+				success: function(response) {
+				  console.log("Success:", response);
+				},
+				error: function(error) {
+				  console.error("Error:", error);
+				}
+			});
+			location.reload()
+		}
+		
+		
+    });
+});
+function init_setting (){
+	$.get("GetDevName.cgi",function (data){
+			const  param = $.parseJSON(JSON.stringify(data))
+			$('#device_name').val(param.device_name);
+			
+
+	});
+	
+}
+function checkData() {
+    let cf = document.forms[0];
+    let msg = "";
+    
+    if (cf.device_name.value === "")
+        msg += "Device name can not be null.\n";
+
+    
+    if (cf.device_name.value.match( /[^\x20-\x7E]/ )) {
+        cf.device_name.focus();
+        msg += "Invalid device name.\n";
+    }
+    
+    if (msg.length > 1) {
+        alert(msg);
+        return false;
+    }
+    
+    return true;
+}
+
+function nospaces(evt) {
+    const charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode === 32)
+        return false;
+
+    return true;
+}
+</script>
+</html>

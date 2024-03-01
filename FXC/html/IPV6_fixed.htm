@@ -1,0 +1,467 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body onload="loadSettings();" class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target" name="formname" method="POST" action="ipv6_fix.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <ul class="nav nav-pills flex-column">
+                                    <li class="nav-item" onclick="window.location.href='IPV6_disable.htm'">
+                                        <a class="nav-link">Disabled</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_auto.htm'">
+                                        <a class="nav-link">Auto Detect</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_tunnel.htm'">
+                                        <a class="nav-link">6to4 Tunnel</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_passthrough.htm'">
+                                        <a class="nav-link">Pass Through</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active">Fixed</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_dhcp.htm'">
+                                        <a class="nav-link">DHCP</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_pppoe.htm'">
+                                        <a class="nav-link">PPPoE</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_autoconfig.htm'">
+                                        <a class="nav-link">Auto Config</a>
+                                    </li>
+                                    <li class="nav-item" onclick="window.location.href='IPV6_6rd.htm'">
+                                        <a class="nav-link">6rd</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card-body">
+                                    <div class="card-title p-d-20">WAN Setup</div>
+                                    <div class="mui-textfield input-ip">
+                                        <input id="ipv6wanaddr1" type="text" name="IPv6WanAddr1" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6wanaddr2" type="text" name="IPv6WanAddr2" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6wanaddr3" type="text" name="IPv6WanAddr3" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6wanaddr4" type="text" name="IPv6WanAddr4" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6wanaddr5" type="text" name="IPv6WanAddr5" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6wanaddr6" type="text" name="IPv6WanAddr6" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6wanaddr7" type="text" name="IPv6WanAddr7" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6wanaddr8" type="text" name="IPv6WanAddr8" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,1)">/
+                                        <input id="profixwanlength" type="text" name="ProfixWanLength" class="form-control" maxlength="3" onFocus="">
+                                        <label tabindex="-1"><%getstr("ipv6_prefix_length");%></label>
+                                    </div>
+                                    <div class="mui-textfield input-ip">
+                                        <input id="ipv6gateway1" type="text" name="IPv6Gateway1" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6gateway2" type="text" name="IPv6Gateway2" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6gateway3" type="text" name="IPv6Gateway3" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6gateway4" type="text" name="IPv6Gateway4" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6gateway5" type="text" name="IPv6Gateway5" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6gateway6" type="text" name="IPv6Gateway6" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6gateway7" type="text" name="IPv6Gateway7" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6gateway8" type="text" name="IPv6Gateway8" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,1)">
+                                        <label tabindex="-1">Default IPv6 Gateway</label>
+                                    </div>
+                                    <div class="mui-textfield input-ip">
+                                        <input id="daddr1" type="text" name="DAddr1" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="daddr2" type="text" name="DAddr2" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="daddr3" type="text" name="DAddr3" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="daddr4" type="text" name="DAddr4" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="daddr5" type="text" name="DAddr5" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="daddr6" type="text" name="DAddr6" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="daddr7" type="text" name="DAddr7" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="daddr8" type="text" name="DAddr8" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,1)">
+                                        <label tabindex="-1">Primary DNS</label>
+                                    </div>
+                                    <div class="mui-textfield input-ip">
+                                        <input id="pdaddr1" type="text" name="PDAddr1" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="pdaddr2" type="text" name="PDAddr2" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="pdaddr3" type="text" name="PDAddr3" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="pdaddr4" type="text" name="PDAddr4" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="pdaddr5" type="text" name="PDAddr5" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="pdaddr6" type="text" name="PDAddr6" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="pdaddr7" type="text" name="PDAddr7" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="pdaddr8" type="text" name="PDAddr8" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,1)">
+                                        <label tabindex="-1">Secondary DNS</label>
+                                    </div>
+                                    <div class="card-divider"></div>
+                                    <div class="card-title p-d-20">LAN Setup</div>
+                                    <div class="form-check form-check-radio">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" id="ipassign_dhcp" type="radio" name="IpAssign" value="dhcp" <% nvram_match("lan_dhcpsv6_enable","1", checked); %>>
+                                            Use DHCP Server
+                                            <span class="circle">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-radio form-check-next">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" id="ipassign_auto" type="radio" name="IpAssign" value="auto" <% nvram_match("lan_dhcpsv6_enable","0", checked); %>>
+                                            Auto Config
+                                            <span class="circle">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" id="ipassign_ripng" <% nvram_match("ripng_enable", "1", "CHECKED"); %> name="ipassign_ripng" value="">Enable RIPng
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="mui-textfield input-ip">
+                                        <input id="ipv6_lan1" type="text" name="IPv6LanAddr1" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6_lan2" type="text" name="IPv6LanAddr2" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6_lan3" type="text" name="IPv6LanAddr3" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6_lan4" type="text" name="IPv6LanAddr4" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6_lan5" type="text" name="IPv6LanAddr5" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6_lan6" type="text" name="IPv6LanAddr6" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6_lan7" type="text" name="IPv6LanAddr7" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,0)">:
+                                        <input id="ipv6_lan8" type="text" name="IPv6LanAddr8" class="form-control" maxlength="4" onFocus="" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheckv6(this,1)">/
+                                        <input id="ipv6_lan_prefix" type="text" name="ProfixLanLength" class="form-control" maxlength="3" onFocus="">
+                                        <label tabindex="-1"><%getstr("ipv6_prefix_length");%></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" type="submit" value="SUBMIT"  onClick="buttonClick(this,'Apply');return checkData()" name="apply" class="btn btn-primary btn-mg-15 btn-round pull-right">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="ipv6_wan_ipaddr" value="<% ipv6_cgi_get_param("ipv6_wan_ipaddr"); %>">
+        <input type="hidden" name="ipv6_lan_ipaddr" value="<% ipv6_cgi_get_param("ipv6_lan_ipaddr"); %>">
+        <input type="hidden" name="ipv6_wan_length" value="NVRAM_ipv6_wan_length">
+        <input type="hidden" name="ipv6_lan_length" value="NVRAM_ipv6_lan_length">
+        <input type="hidden" name="ipv6_pri_dns" value="<% ipv6_cgi_get_param("ipv6_pri_dns"); %>">
+        <input type="hidden" name="ipv6_sec_dns" value="<% ipv6_cgi_get_param("ipv6_sec_dns"); %>">
+        <input type="hidden" name="ipv6_wan_gateway" value="<% ipv6_cgi_get_param("ipv6_wan_gateway"); %>">
+        <input type="hidden" name="ipv6_enable_dhcp" value="">
+        <input type="hidden" name="ipv6_proto" value= "fixed">
+        <input type="hidden" name="ipv6_ripng_enable" value="">
+    </form>
+</div>
+</body>
+
+<script>
+$(document).ready(function()
+{
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function isSameSubnet(src,des,pre_len)
+{
+    var srcArr=convert2CompleteIpV6(src).split(":");
+    var desArr=convert2CompleteIpV6(des).split(":");
+    for(var i=0;i<8;i++)
+    {
+        if (pre_len > 16)
+        {
+            if(parseInt(srcArr[i],16)!=parseInt(desArr[i],16))
+            {
+                return false;
+            }
+            pre_len = pre_len - 16; 
+        }
+        else
+        {
+            var mask = 0;
+            for (var j=0;j<pre_len;j++)
+            {
+                mask = mask >> 1;
+                mask = mask | 0x8000;
+            }
+            if((parseInt(srcArr[i],16) & mask)!=(parseInt(desArr[i],16) & mask))
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+    }
+}
+
+function checkData()
+{
+    var cf = document.forms[0];    
+    var pri_dns = 0;
+    var sec_dns = 0;
+    var openvpnEnable = "NVRAM_openvpnActive";
+    //if (cf.EnableDhcp.checked)
+    //  cf.ipv6_enable_dhcp.value = 1;
+    //else
+    //  cf.ipv6_enable_dhcp.value = 0;  
+    
+    /* I don't allow all fileds blank */
+    if (cf.IPv6WanAddr1.value == "" && cf.IPv6WanAddr2.value == "" && cf.IPv6WanAddr3.value == "" && cf.IPv6WanAddr4.value =="" &&
+        cf.IPv6WanAddr5.value == "" && cf.IPv6WanAddr6.value == "" && cf.IPv6WanAddr7.value == "" && cf.IPv6WanAddr8.value == "")
+    {
+        alert("IPv6 Address and Prefix Length are required for the WAN Setup.");
+        return false;
+    }
+    else if (checkFiled(cf.IPv6WanAddr1) || checkFiled(cf.IPv6WanAddr2) || checkFiled(cf.IPv6WanAddr3) || checkFiled(cf.IPv6WanAddr4) ||
+        checkFiled(cf.IPv6WanAddr5) || checkFiled(cf.IPv6WanAddr6) || checkFiled(cf.IPv6WanAddr7) || checkFiled(cf.IPv6WanAddr8))
+    {
+        alert("IPv6 Address for the WAN Setup is not valid, only hexdigits are allowed.");
+        return false;
+    }
+    else if (checkUnicast(cf.IPv6WanAddr1))
+    {
+        alert("The WAN IPv6 Address is not valid;it has to be a global unicast address.");
+        return false;
+    }
+
+    if (cf.ProfixWanLength.value == "" || (parseInt(cf.ProfixWanLength.value, 10)<4))
+    {
+        alert("Prefix Length for the WAN Setup is not valid; it has to be a number between 4 ~ 126");
+        return false;
+    }
+
+    if (cf.IPv6Gateway1.value=="" && cf.IPv6Gateway2.value=="" && 
+        cf.IPv6Gateway3.value=="" && cf.IPv6Gateway4.value=="" &&
+        cf.IPv6Gateway5.value=="" && cf.IPv6Gateway6.value=="" &&
+        cf.IPv6Gateway7.value=="" && cf.IPv6Gateway8.value=="")
+    {
+        alert("Gateway IPv6 Address is required for the WAN Setup.");
+        return false;
+    }
+    else if (checkFiled(cf.IPv6Gateway1) || checkFiled(cf.IPv6Gateway2) || 
+             checkFiled(cf.IPv6Gateway3) || checkFiled(cf.IPv6Gateway4) || 
+             checkFiled(cf.IPv6Gateway5) || checkFiled(cf.IPv6Gateway6) || 
+             checkFiled(cf.IPv6Gateway7) || checkFiled(cf.IPv6Gateway8))
+    {
+        alert("Gateway IPv6 Address is not valid, only hexdigits are allowed.");
+        return false;
+    }
+    else if (checkUnicast(cf.IPv6Gateway1))
+    {
+        alert("The Gateway IPv6 Address is not valid;it has to be a global unicast address.");
+        return false;
+    }
+    if (cf.IPv6LanAddr1.value == "" && cf.IPv6LanAddr2.value == "" && cf.IPv6LanAddr3.value == "" && cf.IPv6LanAddr4.value =="" &&
+        cf.IPv6LanAddr5.value == "" && cf.IPv6LanAddr6.value == "" && cf.IPv6LanAddr7.value == "" && cf.IPv6LanAddr8.value == "")
+    {
+        alert("IPv6 Address and Prefix Length are required for the LAN Setup.");
+        return false;
+    }
+    else if (checkFiled(cf.IPv6LanAddr1) || checkFiled(cf.IPv6LanAddr2) || checkFiled(cf.IPv6LanAddr3) || checkFiled(cf.IPv6LanAddr4) ||
+        checkFiled(cf.IPv6LanAddr5) || checkFiled(cf.IPv6LanAddr6) || checkFiled(cf.IPv6LanAddr7) || checkFiled(cf.IPv6LanAddr8))
+    {
+        alert("IPv6 Address for the LAN Setup is not valid, only hexdigits are allowed.");
+        return false;
+    }
+    else if (checkUnicast(cf.IPv6LanAddr1))
+    {
+        alert("LAN IPv6 Address is not valid. Only global unicast address is allowed.");
+        return false;
+    }
+    
+    if (cf.ProfixLanLength.value == "" || (parseInt(cf.ProfixLanLength.value, 10)<4))
+    {
+        alert("Prefix Length for the LAN Setup is not valid; it has to be a number between 4 ~ 126");
+        return false;
+    }
+
+    if (cf.DAddr1.value == "" && cf.DAddr2.value == "" && cf.DAddr3.value == "" && cf.DAddr4.value =="" &&
+        cf.DAddr5.value == "" && cf.DAddr6.value == "" && cf.DAddr7.value == "" && cf.DAddr8.value == "")
+    {
+        pri_dns = 1;
+    }
+    else if (checkFiled(cf.DAddr1) || checkFiled(cf.DAddr2) || checkFiled(cf.DAddr3) || checkFiled(cf.DAddr4) ||
+        checkFiled(cf.DAddr5) || checkFiled(cf.DAddr6) || checkFiled(cf.DAddr7) || checkFiled(cf.DAddr8))
+    {
+        alert("Primary DNS Server setting is the IPv6 address of the primary DNS server; only hex digits are required.");
+        return false;
+    }
+    else if (checkUnicast(cf.DAddr1))
+    {
+        alert("The Primary DNS Server is not valid;it has to be a global unicast address.");
+        return false;
+    }
+    
+    if (cf.PDAddr1.value == "" && cf.PDAddr2.value == "" && cf.PDAddr3.value == "" && cf.PDAddr4.value =="" &&
+        cf.PDAddr5.value == "" && cf.PDAddr6.value == "" && cf.PDAddr7.value == "" && cf.PDAddr8.value == "")
+    {
+        sec_dns=1;
+    }
+    else if (checkFiled(cf.PDAddr1) || checkFiled(cf.PDAddr2) || checkFiled(cf.PDAddr3) || checkFiled(cf.PDAddr4) ||
+        checkFiled(cf.PDAddr5) || checkFiled(cf.PDAddr6) || checkFiled(cf.PDAddr7) || checkFiled(cf.PDAddr8))
+    {
+        alert("Secondary DNS Server setting is the IPv6 address of the secondary DNS server; only hex digits are required.");
+        return false;
+    }
+    else if (checkUnicast(cf.PDAddr1))
+    {
+        alert("The Secondary DNS Server is not valid;it has to be a global unicast address.");
+        return false;
+    }
+
+    cf.ipv6_wan_ipaddr.value = cf.IPv6WanAddr1.value+':'+cf.IPv6WanAddr2.value+':'+cf.IPv6WanAddr3.value+':'+cf.IPv6WanAddr4.value+':'+cf.IPv6WanAddr5.value+':'+cf.IPv6WanAddr6.value+':'+cf.IPv6WanAddr7.value+':'+cf.IPv6WanAddr8.value;
+    cf.ipv6_wan_gateway.value = cf.IPv6Gateway1.value+':'+cf.IPv6Gateway2.value+':'+cf.IPv6Gateway3.value+':'+cf.IPv6Gateway4.value+':'+cf.IPv6Gateway5.value+':'+cf.IPv6Gateway6.value+':'+cf.IPv6Gateway7.value+':'+cf.IPv6Gateway8.value;
+    cf.ipv6_lan_ipaddr.value = cf.IPv6LanAddr1.value+':'+cf.IPv6LanAddr2.value+':'+cf.IPv6LanAddr3.value+':'+cf.IPv6LanAddr4.value+':'+cf.IPv6LanAddr5.value+':'+cf.IPv6LanAddr6.value+':'+cf.IPv6LanAddr7.value+':'+cf.IPv6LanAddr8.value;
+    cf.ipv6_pri_dns.value = cf.DAddr1.value+':'+cf.DAddr2.value+':'+cf.DAddr3.value+':'+cf.DAddr4.value+':'+cf.DAddr5.value+':'+cf.DAddr6.value+':'+cf.DAddr7.value+':'+cf.DAddr8.value;
+    cf.ipv6_sec_dns.value = cf.PDAddr1.value+':'+cf.PDAddr2.value+':'+cf.PDAddr3.value+':'+cf.PDAddr4.value+':'+cf.PDAddr5.value+':'+cf.PDAddr6.value+':'+cf.PDAddr7.value+':'+cf.PDAddr8.value;
+    cf.ipv6_wan_length.value = cf.ProfixWanLength.value;
+    cf.ipv6_lan_length.value = cf.ProfixLanLength.value;
+    
+    //gateway should in the same subnet with wan ip
+    if (!isSameSubnet(cf.ipv6_wan_ipaddr.value,cf.ipv6_wan_gateway.value,cf.ipv6_wan_length.value))
+    {
+        alert("The Gateway IPv6 Address has to be in the same subnet as the WAN IPv6 address.");
+        return false;
+    }
+    else if (isIPv6Equals(cf.ipv6_wan_ipaddr.value, cf.ipv6_wan_gateway.value))
+    {
+        alert("WAN IPv6 address must different from Default IPv6 Gateway.");
+        return false;
+    }
+    
+    //lan ip and wan ip should not be in the same subnet
+    var tmpPreLen = (parseInt(cf.ipv6_wan_length.value, 10) > parseInt(cf.ipv6_lan_length.value, 10))? cf.ipv6_lan_length.value : cf.ipv6_wan_length.value;
+    if (isSameSubnet(cf.ipv6_wan_ipaddr.value,cf.ipv6_lan_ipaddr.value,tmpPreLen))
+    {
+        alert("The WAN IPv6 Address and the LAN IPv6 address has to be in different subnet.");
+        return false;
+    }
+    
+    if (isIPv6Equals(cf.ipv6_pri_dns.value, cf.ipv6_wan_ipaddr.value) ||
+        isIPv6Equals(cf.ipv6_sec_dns.value, cf.ipv6_wan_ipaddr.value))
+    {
+        alert("<%getstr("dns_wan_dup");%>");
+        return false;
+    }
+    else if(isIPv6Equals(cf.ipv6_pri_dns.value, cf.ipv6_lan_ipaddr.value) ||
+            isIPv6Equals(cf.ipv6_sec_dns.value, cf.ipv6_lan_ipaddr.value))
+    {
+        alert("<%getstr("dns_lan_dup");%>");
+        return false;
+    }
+    else
+    {
+        if ((pri_dns != 1) && (sec_dns != 1))
+        {
+            if (isIPv6Equals(cf.ipv6_pri_dns.value, cf.ipv6_sec_dns.value))
+            {
+                alert("The Primary DNS Server has to be different from Secondary DNS Server.");
+                return false;
+            }
+        }
+    }
+
+    if (cf.ipassign_ripng.checked)
+        cf.ipv6_ripng_enable.value = 1;
+    else
+        cf.ipv6_ripng_enable.value = 0;
+
+    parent.show_loading();
+
+    return true;
+}
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+
+    var wan_ipaddr = cf.ipv6_wan_ipaddr.value.split(":");
+    var wan_gateway = cf.ipv6_wan_gateway.value.split(":");
+    var lan_ipaddr = cf.ipv6_lan_ipaddr.value.split(":");
+    var wan_length = cf.ipv6_wan_length.value;
+    var lan_length = cf.ipv6_lan_length.value;
+    var pri_dns = cf.ipv6_pri_dns.value.split(":");
+    var sec_dns = cf.ipv6_sec_dns.value.split(":");
+    var ipv6_proto_pre = "NVRAM_ipv6_proto";
+    var lan_dhcpsv6_enable_pre = "NVRAM_lan_dhcpsv6_enable";
+    
+    if (cf.ipv6_wan_ipaddr.value != "")
+    {
+        cf.IPv6WanAddr1.value = wan_ipaddr[0];
+        cf.IPv6WanAddr2.value = wan_ipaddr[1];
+        cf.IPv6WanAddr3.value = wan_ipaddr[2];
+        cf.IPv6WanAddr4.value = wan_ipaddr[3];
+        cf.IPv6WanAddr5.value = wan_ipaddr[4];
+        cf.IPv6WanAddr6.value = wan_ipaddr[5];
+        cf.IPv6WanAddr7.value = wan_ipaddr[6];
+        cf.IPv6WanAddr8.value = wan_ipaddr[7];
+        
+        cf.ProfixWanLength.value = wan_length;
+    }
+
+    if (cf.ipv6_wan_gateway.value != "")
+    {
+        cf.IPv6Gateway1.value = wan_gateway[0];
+        cf.IPv6Gateway2.value = wan_gateway[1];
+        cf.IPv6Gateway3.value = wan_gateway[2];
+        cf.IPv6Gateway4.value = wan_gateway[3];
+        cf.IPv6Gateway5.value = wan_gateway[4];
+        cf.IPv6Gateway6.value = wan_gateway[5];
+        cf.IPv6Gateway7.value = wan_gateway[6];
+        cf.IPv6Gateway8.value = wan_gateway[7];
+    }
+
+    if (cf.ipv6_lan_ipaddr.value != "")
+    {
+        cf.IPv6LanAddr1.value = lan_ipaddr[0];
+        cf.IPv6LanAddr2.value = lan_ipaddr[1];
+        cf.IPv6LanAddr3.value = lan_ipaddr[2];
+        cf.IPv6LanAddr4.value = lan_ipaddr[3];
+        cf.IPv6LanAddr5.value = lan_ipaddr[4];
+        cf.IPv6LanAddr6.value = lan_ipaddr[5];
+        cf.IPv6LanAddr7.value = lan_ipaddr[6];
+        cf.IPv6LanAddr8.value = lan_ipaddr[7];
+        
+        cf.ProfixLanLength.value = lan_length;
+    }
+    
+    if (cf.ipv6_pri_dns.value != "")
+    {
+        cf.DAddr1.value = pri_dns[0];
+        cf.DAddr2.value = pri_dns[1];
+        cf.DAddr3.value = pri_dns[2];
+        cf.DAddr4.value = pri_dns[3];
+        cf.DAddr5.value = pri_dns[4];
+        cf.DAddr6.value = pri_dns[5];
+        cf.DAddr7.value = pri_dns[6];
+        cf.DAddr8.value = pri_dns[7];
+    }    
+    
+    if (cf.ipv6_sec_dns.value != "")
+    {
+        cf.PDAddr1.value = sec_dns[0];
+        cf.PDAddr2.value = sec_dns[1];
+        cf.PDAddr3.value = sec_dns[2];
+        cf.PDAddr4.value = sec_dns[3];
+        cf.PDAddr5.value = sec_dns[4];
+        cf.PDAddr6.value = sec_dns[5];
+        cf.PDAddr7.value = sec_dns[6];
+        cf.PDAddr8.value = sec_dns[7];
+    }
+
+    //if ( (ipv6_proto_pre == "disable") || (lan_dhcpsv6_enable_pre == "1") )
+    //    cf.EnableDhcp.checked = true;
+
+    parent.hide_loading();
+}
+</script>
+</html>

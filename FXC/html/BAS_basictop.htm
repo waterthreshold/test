@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<script src="jquery.js"></script>
+</head>
+
+<script>
+// called from basictop.htm
+function checkType(wan_proto) {
+   
+	/*if (wan_proto === "pptp")
+		window.location.href = "BAS_pptp.htm";
+	else if (wan_proto === "l2tp")
+		window.location.href = "BAS_l2tp.htm";
+	else */if (wan_proto === "pppoe") {
+		window.location.href = "BAS_pppoe.htm";         
+	} else {
+		window.location.href = "BAS_ether.htm";
+	}
+	
+}
+
+</script>
+
+</head>
+<body onload="checkType(document.forms[0].wan_protowan_proto.value);">
+<form name="basic" method="POST" action="basictop.cgi"> 
+
+
+    <input name=wan_proto type=hidden value= "NVRAM_wan_proto">
+
+
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="script/opmode.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body  class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target" name="formname" method="POST" action="SetRouterMode.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-pills nav-pills-icons">
+                            <li class="nav-item" onclick="select_type(0)">
+                                <a class="nav-link">
+                                    <i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" height="54px" viewBox="0 0 24 24" width="54px" fill="#555555"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.2 5.9l.8-.8C19.6 3.7 17.8 3 16 3s-3.6.7-5 2.1l.8.8C13 4.8 14.5 4.2 16 4.2s3 .6 4.2 1.7zm-.9.8c-.9-.9-2.1-1.4-3.3-1.4s-2.4.5-3.3 1.4l.8.8c.7-.7 1.6-1 2.5-1 .9 0 1.8.3 2.5 1l.8-.8zM19 13h-2V9h-2v4H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2zM8 18H6v-2h2v2zm3.5 0h-2v-2h2v2zm3.5 0h-2v-2h2v2z"/></svg></i>
+                                    Router Mode
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active">
+                                    <i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" height="54px" viewBox="0 0 24 24" width="54px" fill="#ffffff"><path d="M0 0h24v24H0z" fill="none"></path><path d="M4.93,3.93C3.12,5.74 2,8.24 2,11C2,13.76 3.12,16.26 4.93,18.07L6.34,16.66C4.89,15.22 4,13.22 4,11C4,8.79 4.89,6.78 6.34,5.34L4.93,3.93M19.07,3.93L17.66,5.34C19.11,6.78 20,8.79 20,11C20,13.22 19.11,15.22 17.66,16.66L19.07,18.07C20.88,16.26 22,13.76 22,11C22,8.24 20.88,5.74 19.07,3.93M7.76,6.76C6.67,7.85 6,9.35 6,11C6,12.65 6.67,14.15 7.76,15.24L9.17,13.83C8.45,13.11 8,12.11 8,11C8,9.89 8.45,8.89 9.17,8.17L7.76,6.76M16.24,6.76L14.83,8.17C15.55,8.89 16,9.89 16,11C16,12.11 15.55,13.11 14.83,13.83L16.24,15.24C17.33,14.15 18,12.65 18,11C18,9.35 17.33,7.85 16.24,6.76M12,9A2,2 0 0,0 10,11A2,2 0 0,0 12,13A2,2 0 0,0 14,11A2,2 0 0,0 12,9M11,15V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H22V20H15A1,1 0 0,0 14,19H13V15H11Z"></path></svg></i>
+                                    AP Mode
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item" onclick="select_type(2)" show="is_rax_show"> -->
+                                <!-- <a class="nav-link"> -->
+                                    <!-- <i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" height="54px" viewBox="0 0 24 24" width="54px" fill="#555555"><path d="M0 0h24v24H0z" fill="none"></path><path d="M4.93,3.93C3.12,5.74 2,8.24 2,11C2,13.76 3.12,16.26 4.93,18.07L6.34,16.66C4.89,15.22 4,13.22 4,11C4,8.79 4.89,6.78 6.34,5.34L4.93,3.93M19.07,3.93L17.66,5.34C19.11,6.78 20,8.79 20,11C20,13.22 19.11,15.22 17.66,16.66L19.07,18.07C20.88,16.26 22,13.76 22,11C22,8.24 20.88,5.74 19.07,3.93M7.76,6.76C6.67,7.85 6,9.35 6,11C6,12.65 6.67,14.15 7.76,15.24L9.17,13.83C8.45,13.11 8,12.11 8,11C8,9.89 8.45,8.89 9.17,8.17L7.76,6.76M16.24,6.76L14.83,8.17C15.55,8.89 16,9.89 16,11C16,12.11 15.55,13.11 14.83,13.83L16.24,15.24C17.33,14.15 18,12.65 18,11C18,9.35 17.33,7.85 16.24,6.76M12,9A2,2 0 0,0 10,11A2,2 0 0,0 12,13A2,2 0 0,0 14,11A2,2 0 0,0 12,9M11,15V19H10A1,1 0 0,0 9,20H2V22H9A1,1 0 0,0 10,23H14A1,1 0 0,0 15,22H22V20H15A1,1 0 0,0 14,19H13V15H11Z"></path></svg></i> -->
+                                    <!-- Bridge Mode -->
+                                <!-- </a> -->
+                            <!-- </li> -->
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p>The router will function as a wireless access point.This mode is appropriate for easy setup if devices are already connected to your existing router or gateway, or if you just want to use this new router to extend your WiFi coverage. Some router functions are not available in access point mode.</p>
+                    </div>
+                    <div class="card-btn card-flex" onClick="parent.trigger_wireless();">
+                        <div class="card-title">Wireless Settings</div>
+                        <div class="card-margin-left">
+                            <i class="material-icons">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#888888"><path d="M10 17l5-5-5-5v10z"/><path d="M0 24V0h24v24H0z" fill="none"/></svg>
+                            </i>
+                        </div>
+                    </div>
+                    <div class="card-btn card-flex" onClick="parent.trigger_dev_name();">
+                        <div>
+                            <div class="card-title">Device Name</div>
+                            <p id="dev_name"></p>
+                        </div>
+                        <div  class="card-margin-left">
+                            <i class="material-icons">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#888888"><path d="M10 17l5-5-5-5v10z"/><path d="M0 24V0h24v24H0z" fill="none"/></svg>
+                            </i>
+							
+                        </div>
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-subheader">
+                        <div class="card-title">AP mode setup</div>
+                    </div>
+                    <div class="card-body">
+                        <p>Choose IP Address settings on this access point</p>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" id="ap_proto_dynamic" name="enable_fixed_ip_setting" value="enable_dynamic_ip_setting" checked onclick="display_fixed_ip_setting(0)">Get dynamically from existing router
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio form-check-next">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" id="ap_proto_static" name="enable_fixed_ip_setting" value="enable_fixed_ip_setting" onclick="display_fixed_ip_setting(1)">Enable fixed IP settings on this device (not recommended)
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div style="display:none" id="fixed_ip_setting_display">
+                            <div id=ap_addr class="mui-textfield">
+                                <input id="APaddr1" type="text" name="WPethr" class="form-control" autocomplete="off" maxlength="20" onFocus="this.select();"  onKeyPress="return getkey1();" >
+                                <label tabindex="-1">IP Address</label>
+                            </div>
+                            <div id=ap_mask class="mui-textfield">
+                                <input id="APmask1" type="text" name="WMask" class="form-control" autocomplete="off" maxlength="20" onFocus="this.select();" onKeyPress="return getkey1();" >
+                                <label tabindex="-1">IP Subnet Mask</label>
+                            </div>
+                            <div id=ap_gateway class="mui-textfield">
+                                <input id="APgateway1" type="text" name="WGateway" class="form-control" autocomplete="off" maxlength="20" onFocus="this.select();"  onKeyPress="return getkey1();" >
+                                <label tabindex="-1">Gateway IP Address</label>
+                            </div>
+                            <div id=ap_daddr class="mui-textfield">
+                                <input id="APDAddr1" type="text" name="DAddr" class="form-control" autocomplete="off" maxlength="20" onFocus="this.select();" onKeyPress="return getkey1();">
+                                <label tabindex="-1">Primary DNS</label>
+                            </div>
+                            <!-- <div id=ap_pdaddr class="mui-textfield"> -->
+                                <!-- <input id="APPDAddr1" type="text" name="PDAddr" class="form-control" autocomplete="off" maxlength="20" onFocus="this.select();" onKeyPress="return getkey1();"> -->
+                                <!-- <label tabindex="-1">Primary DNS</label> -->
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="apply" value="Apply"  type="submit" name="Apply" class="btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="operation_type" value="1">
+        <!-- <input type="hidden" name="pre_mode" value="<%GUI_get_opmode_param("pre_mode");%>" > -->
+        <input name=enable_operation_mode type=hidden value="ap">
+        <input name=enable_ap_mode type=hidden value= "1">
+        <!-- <input name=apmode_ipaddr type=hidden value= "<% wlg_cgi_get_param("apmode_ipaddr"); %>"> -->
+        <!-- <input name=apmode_netmask type=hidden value= "<% wlg_cgi_get_param("apmode_netmask"); %>"> -->
+        <input name=apmode_gateway type=hidden value= "NVRAM_apmode_gateway">
+        <input name=apmode_dns_sel type=hidden value= "NVRAM_apmode_dns_sel">
+        <!-- <input name=apmode_dns1_pri type=hidden value= "<% nvram_list("apmode_dns1", 0); %>"> -->
+        <!-- <input name=apmode_dns1_sec type=hidden value= "<% nvram_list("apmode_dns1", 1); %>"> -->
+        <input type="hidden" name="enable_smart_mesh" value="NVRAM_enable_smart_mesh" >
+        <input type="hidden" name="enable_band_steering" value="NVRAM_enable_band_steering" >
+        <input name=WPethr1 type=hidden value= "">
+        <input name=WPethr2 type=hidden value= "">
+        <input name=WPethr3 type=hidden value= "">
+        <input name=WPethr4 type=hidden value= "">
+        <input name=WMask1 type=hidden value= "">
+        <input name=WMask2 type=hidden value= "">
+        <input name=WMask3 type=hidden value= "">
+        <input name=WMask4 type=hidden value= "">
+        <input name=WGateway1 type=hidden value= "">
+        <input name=WGateway2 type=hidden value= "">
+        <input name=WGateway3 type=hidden value= "">
+        <input name=WGateway4 type=hidden value= "">
+        <input name=DAddr1 type=hidden value= "">
+        <input name=DAddr2 type=hidden value= "">
+        <input name=DAddr3 type=hidden value= "">
+        <input name=DAddr4 type=hidden value= "">
+        <input name=PDAddr1 type=hidden value= "">
+        <input name=PDAddr2 type=hidden value= "">
+        <input name=PDAddr3 type=hidden value= "">
+        <input name=PDAddr4 type=hidden value= "">
+        <input name=apmode_page type=hidden value= "1">
+    </form>
+</div>
+</body>
+
+<script >
+var module_data = {
+    <!-- is_rax_show: <% gui_cgi_check_feature_support("is_rax_show"); %> -->
+}
+function genData (){
+	var formData = {}
+	var ifconfigData = {}
+	formData.router_mode=  "AP";
+	if ($('#ap_proto_dynamic').attr('checked') ) {
+		formData.ap_proto= "dynamic"
+	} else if ($('#ap_proto_static').attr('checked') ) {
+	
+		formData.ap_proto= "static"
+	} else {
+		formData.ap_proto= "dynamic"
+	}
+	ifconfigData.ipaddr = $('#APaddr1').val()
+	ifconfigData.netmask = $('#APmask1').val()
+	ifconfigData.geteway = $('#APgateway1').val()
+	ifconfigData.dns1_pri = $('#APDAddr1').val()
+	formData.ifconfig = ifconfigData		
+	
+	return formData
+	
+}
+$(document).ready(function()
+{
+	init_setting()
+    $("#target").submit(function(e) {
+		e.preventDefault();
+        
+		//if (checkData() ){
+		buttonFilter();
+		var formdata = genData()
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+		});
+		location.reload()
+		//}
+		
+		
+    });
+
+   // bind_view(module_data);
+});
+function init_setting (){
+
+	$.get("GetRouterMode.cgi",function (data){
+		const  param = $.parseJSON(JSON.stringify(data))
+		$('#dev_name').text(param.device_name);
+		enable_ap_mode = param.enable_ap_mode
+		ap_proto = param.ap_proto
+		if (ap_proto =="dynamic" ) {
+			display_fixed_ip_setting(0)
+			$('#ap_proto_dynamic').attr ('checked' ,true)
+		} else if (ap_proto =="static" ) {
+			display_fixed_ip_setting(1)
+			$('#ap_proto_static').attr('checked' ,true)
+		} else {
+			display_fixed_ip_setting(0)
+			$('#ap_proto_dynamic').attr (checked ,true)
+		}
+		ipaddr = $('#APaddr1').val(param.ifconfig.ipaddr);
+		netmask= $('#APmask1').val(param.ifconfig.netmask );  
+		geteway=$('#APgateway1').val(param.ifconfig.geteway);  
+		dns1_pri=$('#APDAddr1').val(param.ifconfig.dns1_pri); 
+	});
+}
+
+function getkey1()
+{
+    var keycode, event;
+
+    if (window.event) 
+    {
+        event = window.event;
+        keycode = window.event.keyCode;
+    }   
+    else if (e)
+    {
+        event = e;
+        keycode = e.which;
+    }   
+    else 
+        return true;
+    if  (((keycode>47) && (keycode<58)) || (keycode==8)||(keycode==0) || (keycode==46))
+            return true;        
+        else 
+            return false;
+}
+
+function split_value()
+{
+    var cf = document.forms[0];
+    var apmode_ipaddr = cf.WPethr.value.split(".");
+    var apmode_netmask = cf.WMask.value.split(".");
+    var apmode_gateway = cf.WGateway.value.split(".");
+    var apmode_dns1_pri = cf.DAddr.value.split(".");
+    var apmode_dns1_sec = cf.PDAddr.value.split(".");
+
+    cf.WPethr1.value = apmode_ipaddr[0];
+    cf.WPethr2.value = apmode_ipaddr[1];
+    cf.WPethr3.value = apmode_ipaddr[2];
+    cf.WPethr4.value = apmode_ipaddr[3];
+    
+    cf.WMask1.value = apmode_netmask[0];
+    cf.WMask2.value = apmode_netmask[1];
+    cf.WMask3.value = apmode_netmask[2];
+    cf.WMask4.value = apmode_netmask[3];
+    
+    cf.WGateway1.value = apmode_gateway[0];
+    cf.WGateway2.value = apmode_gateway[1];
+    cf.WGateway3.value = apmode_gateway[2];
+    cf.WGateway4.value = apmode_gateway[3];
+    
+    cf.DAddr1.value = apmode_dns1_pri[0];
+    cf.DAddr2.value = apmode_dns1_pri[1];
+    cf.DAddr3.value = apmode_dns1_pri[2];
+    cf.DAddr4.value = apmode_dns1_pri[3];
+    
+    cf.PDAddr1.value = apmode_dns1_sec[0];
+    cf.PDAddr2.value = apmode_dns1_sec[1];
+    cf.PDAddr3.value = apmode_dns1_sec[2];
+    cf.PDAddr4.value = apmode_dns1_sec[3];
+    
+    return true;
+}
+
+function checkData()
+{
+    var cf = document.forms[0];
+    var msg = "";
+
+    split_value();
+    
+    /* last GUI design does not have enable checkbox */
+    //if (cf.enable_ap_mode.checked == true)
+    if (1)
+    {
+        var ap_ipaddr = (cf.WPethr1.value << 24) | (cf.WPethr2.value << 16) | (cf.WPethr3.value << 8)| (cf.WPethr4.value);
+        var ap_netmask = (cf.WMask1.value<< 24) | (cf.WMask2.value<< 16) | (cf.WMask3.value<< 8)| (cf.WMask4.value);    
+    
+        if(cf.enable_fixed_ip_setting[1].checked == true)
+        {
+            if(checkIP(cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4,255)
+                ||checkIPMatchWithNetmask(cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4))
+                msg+= "Invalid IP address. Please enter it again.";
+            else
+            {
+                cf.WPethr1.value = parseInt(cf.WPethr1.value,10);
+                cf.WPethr2.value = parseInt(cf.WPethr2.value,10);
+                cf.WPethr3.value = parseInt(cf.WPethr3.value,10);
+                cf.WPethr4.value = parseInt(cf.WPethr4.value,10);
+            }
+            if(checkIP(cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,255))
+                msg+= "Invalid subnet mask. Please enter it again.\n";
+            else
+            {
+                cf.WMask1.value = parseInt(cf.WMask1.value,10);
+                cf.WMask2.value = parseInt(cf.WMask2.value,10);
+                cf.WMask3.value = parseInt(cf.WMask3.value,10);
+                cf.WMask4.value = parseInt(cf.WMask4.value,10);
+            }
+            if(checkIP(cf.WGateway1,cf.WGateway2,cf.WGateway3,cf.WGateway4,255)
+                ||checkIPMatchWithNetmask(cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,cf.WGateway1,cf.WGateway2,cf.WGateway3,cf.WGateway4))
+                msg+= "Invalid gateway IP address. Please enter it again.";
+            else
+            {
+                cf.WGateway1.value = parseInt(cf.WGateway1.value,10);
+                cf.WGateway2.value = parseInt(cf.WGateway2.value,10);
+                cf.WGateway3.value = parseInt(cf.WGateway3.value,10);
+                cf.WGateway4.value = parseInt(cf.WGateway4.value,10);
+            }
+    
+            var ap_gateway = (cf.WGateway1.value<< 24) | (cf.WGateway2.value<< 16) | (cf.WGateway3.value<< 8)| (cf.WGateway4.value);
+            var tmpip = cf.WPethr1.value+'.'+cf.WPethr2.value+'.'+cf.WPethr3.value+'.'+cf.WPethr4.value;
+            var tmpgwip = cf.WGateway1.value+'.'+cf.WGateway2.value+'.'+cf.WGateway3.value+'.'+cf.WGateway4.value;
+            if((ap_ipaddr&ap_netmask) != (ap_gateway&ap_netmask))
+            {
+                alert("Error: IP Address" + tmpip + "is in a different subnet as the gateway address" + tmpgwip);
+                return false;
+            }
+
+            if(checkIP(cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,254)||(parseInt(cf.DAddr4.value,10)==0))
+                msg+= "Invalid primary DNS address. Please enter it again.\n";
+            else
+            {
+                cf.DAddr1.value = parseInt(cf.DAddr1.value,10);
+                cf.DAddr2.value = parseInt(cf.DAddr2.value,10);
+                cf.DAddr3.value = parseInt(cf.DAddr3.value,10);
+                cf.DAddr4.value = parseInt(cf.DAddr4.value,10);
+            }
+            if(cf.PDAddr1.value.length>0 && cf.PDAddr2.value.length>0 && cf.PDAddr3.value.length>0 && cf.PDAddr4.value.length>0 )
+            {
+                if(checkIP(cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4,254)||(parseInt(cf.PDAddr4.value,10)==0))
+                    msg+= "Invalid secondary DNS address. Please enter it again.\n";
+                else
+                {
+                    cf.PDAddr1.value = parseInt(cf.PDAddr1.value,10);
+                    cf.PDAddr2.value = parseInt(cf.PDAddr2.value,10);
+                    cf.PDAddr3.value = parseInt(cf.PDAddr3.value,10);
+                    cf.PDAddr4.value = parseInt(cf.PDAddr4.value,10);
+                }
+            }
+        }
+
+        parent.ap_mode_disabled();
+        
+        cf.apmode_ipaddr.value = cf.WPethr1.value+'.'+cf.WPethr2.value+'.'+cf.WPethr3.value+'.'+cf.WPethr4.value;
+        cf.apmode_netmask.value = cf.WMask1.value+'.'+cf.WMask2.value+'.'+cf.WMask3.value+'.'+cf.WMask4.value;
+        cf.apmode_gateway.value = cf.WGateway1.value+'.'+cf.WGateway2.value+'.'+cf.WGateway3.value+'.'+cf.WGateway4.value;
+        cf.apmode_dns1_pri.value = cf.DAddr1.value+'.'+cf.DAddr2.value+'.'+cf.DAddr3.value+'.'+cf.DAddr4.value;
+        cf.apmode_dns1_sec.value = cf.PDAddr1.value+'.'+cf.PDAddr2.value+'.'+cf.PDAddr3.value+'.'+cf.PDAddr4.value;
+    }
+
+    if (msg.length > 1)
+    {
+        alert(msg);
+        return false;
+    }
+    
+    return true;
+}
+
+function display_fixed_ip_setting(display)
+{
+    var cf = document.forms[0];
+    if (display == 1)
+        $("#fixed_ip_setting_display").slideDown();
+    else
+        $("#fixed_ip_setting_display").slideUp();
+}
+
+function handle_fixip_ok()
+{
+    display_fixed_ip_setting(0);
+}
+
+function handle_fixip_cancel()
+{
+    display_fixed_ip_setting(0);
+    loadFixIPSettings();
+}
+
+function loadFixIPSettings()
+{
+    var cf = document.forms[0];
+
+    var apmode_ipaddr = cf.apmode_ipaddr.value;
+    var apmode_netmask = cf.apmode_netmask.value;
+    var apmode_gateway = cf.apmode_gateway.value;
+    var apmode_dns1_pri = cf.apmode_dns1_pri.value;
+    var apmode_dns1_sec = cf.apmode_dns1_sec.value;
+
+    cf.WPethr.value = apmode_ipaddr;
+    cf.WMask.value = apmode_netmask;
+    cf.WGateway.value = apmode_gateway;
+    
+    if (cf.apmode_dns1_pri.value != "")
+    {
+        cf.DAddr.value = apmode_dns1_pri;
+    }
+    if (cf.apmode_dns1_sec.value != "")
+    {
+        cf.PDAddr.value = apmode_dns1_sec;
+    }       
+}
+
+function loadSettings()
+{
+    display_fixed_ip_setting(0);
+    loadFixIPSettings();
+}
+</script>
+</html>

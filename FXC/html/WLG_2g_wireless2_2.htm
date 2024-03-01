@@ -1,0 +1,497 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+<style>
+hr {
+	color:#333;
+	height: 2px;
+	magin-top: 20px;
+	margin-bottom: 20px;
+}
+</style>
+<body  class="page-body">
+<div class="container-fluid frame-content" id="frame-content" style="overflow:auto">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" id="target" action="SetWireless.cgi"  method="POST">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+				<!-- 2.4G -->
+                <div style="display:none" class="card_24G">
+                    <div class="card-header">
+                        <div class="card-title">2.4G Wireless Network</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control ssid" name="ssid" id="ssid_1" maxlength="18" value="">
+                            <label tabindex="-1">Name (SSID)</label>
+                        </div>
+                        <p>Security Options</p>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_disable_1" type="radio" name="security_type_1" value="Disable" onClick="securityGUI(0,1);">None
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_wpa2_1" type="radio" name="security_type_1" value="WPA2-PSK"  onClick="securityGUI(1,1);">WPA2-Personal [AES]
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_auto_1" type="radio" name="security_type_1" value="AUTO-PSK"  onClick="securityGUI(2,1);">WPA-Personal [TKIP] + WPA2-Personal [AES]
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_wpa3_1" type="radio" name="security_type_1" value="WPA3-Personal"  onClick="securityGUI(3,1);">WPA3-Personal
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div id="wpa_key_1" style="display: none;">
+                            <div class="mui-textfield mui-textfield-pwd" id="sec_863_or_64h_1">
+                                <input id="passphrase_wpa2_1" class="form-control" type="password" name="passphrase_wpa2" maxLength=64 value="NVRAM_wla_passphrase_2">
+                                <label tabindex="-1">Password (Network Key)</label>
+                                <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('passphrase_wpa2_1');">
+                                <i id="passphrase_wpa2Slash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                                <p id="passphrase_wpa2SlashText">(8-63 characters or 64 hex digits)</p>
+                            </div>
+                            <div class="mui-textfield mui-textfield-pwd" id="sec_8127_or_128h_1">
+                                <input id="passphrase_wpa3_1" class="form-control" type="password" name="passphrase_wpa3" maxLength=128 value="NVRAM_wla_passphrase_2">
+                                <label tabindex="-1">Password (Network Key)</label>
+                                <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('passphrase_wpa3_1');">
+                                <i id="passphrase_wpa3_1Slash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                                <p id="passphrase_wpa3SlashText">(8-127 characters or 128 hex digits)</p>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+				<!-- 2.4G end -->
+				<hr>
+				<!-- 5G start -->
+				<div style="display:none" class="card_5G">
+                    <div class="card-header">
+                        <div class="card-title">5G Wireless Network</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control ssid" name="ssid" id="ssid_2" maxlength="18" value="">
+                            <label tabindex="-1">Name (SSID)</label>
+                        </div>
+                        <p>Security Options</p>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_disable_2" type="radio" name="security_type_2" value="Disable" onClick="securityGUI(0,2);">None
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_wpa2_2" type="radio" name="security_type_2" value="WPA2-PSK"  onClick="securityGUI(1,2);">WPA2-Personal [AES]
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_auto_2" type="radio" name="security_type_2" value="AUTO-PSK"  onClick="securityGUI(2,2);">WPA-Personal [TKIP] + WPA2-Personal [AES]
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_wpa3_2" type="radio" name="security_type_2" value="WPA3-Personal"  onClick="securityGUI(3,2);">WPA3-Personal
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div id="wpa_key_2" style="display: none;">
+                            <div class="mui-textfield mui-textfield-pwd" id="sec_863_or_64h_2">
+                                <input id="passphrase_wpa2_2" class="form-control" type="password" name="passphrase_wpa2" maxLength=64 value="NVRAM_wla_passphrase_2">
+                                <label tabindex="-1">Password (Network Key)</label>
+                                <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('passphrase_wpa2_2');">
+                                <i id="passphrase_wpa2Slash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                                <p id="passphrase_wpa2SlashText">(8-63 characters or 64 hex digits)</p>
+                            </div>
+                            <div class="mui-textfield mui-textfield-pwd" id="sec_8127_or_128h_2">
+                                <input id="passphrase_wpa3_2" class="form-control" type="password" name="passphrase_wpa3" maxLength=128 value="NVRAM_wla_passphrase_2">
+                                <label tabindex="-1">Password (Network Key)</label>
+                                <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('passphrase_wpa3_2');">
+                                <i id="passphrase_wpa3_2Slash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                                <p id="passphrase_wpa3SlashText">(8-127 characters or 128 hex digits)</p>
+                            </div>
+                        </div>
+                    </div>
+                             
+                </div>
+				<!-- 5G end -->
+				<hr>
+				<!-- 6G start -->
+					<div style="display:none" class="card_6G">
+                    <div class="card-header">
+                        <div class="card-title">6G Wireless Network</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield">
+                            <input type="text" class="form-control ssid" name="ssid" id="ssid_3" maxlength="18" value="">
+                            <label tabindex="-1">Name (SSID)</label>
+                        </div>
+                        <p>Security Options</p>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_disable_3" type="radio" name="security_type_3" value="Disable" onClick="securityGUI(0,3);">None
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_wpa2_3" type="radio" name="security_type_3" value="WPA2-PSK"  onClick="securityGUI(1,3);">WPA2-Personal [AES]
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_auto_3" type="radio" name="security_type_3" value="AUTO-PSK"  onClick="securityGUI(2,3);">WPA-Personal [TKIP] + WPA2-Personal [AES]
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-radio">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="security_wpa3_3" type="radio" name="security_type_3" value="WPA3-Personal"  onClick="securityGUI(3,3);">WPA3-Personal
+                                <span class="circle">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div id="wpa_key_3" style="display: none;">
+                            <div class="mui-textfield mui-textfield-pwd" id="sec_863_or_64h_3">
+                                <input id="passphrase_wpa2_3" class="form-control" type="password" name="passphrase_wpa2" maxLength=64 value="NVRAM_wla_passphrase_2">
+                                <label tabindex="-1">Password (Network Key)</label>
+                                <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('passphrase_wpa2_3');">
+                                <i id="passphrase_wpa2_3Slash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                                <p id="passphrase_wpa2SlashText">(8-63 characters or 64 hex digits)</p>
+                            </div>
+                            <div class="mui-textfield mui-textfield-pwd" id="sec_8127_or_128h_3">
+                                <input id="passphrase_wpa3_3" class="form-control" type="password" name="passphrase_wpa3" maxLength=128 value="NVRAM_wla_passphrase_2">
+                                <label tabindex="-1">Password (Network Key)</label>
+                                <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('passphrase_wpa3_3');">
+                                <i id="passphrase_wpa3_3Slash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                                <p id="passphrase_wpa3SlashText">(8-127 characters or 128 hex digits)</p>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+				<!-- 6G end -->
+				 <div class="card-bottom">
+                        <button id="apply" type="submit" value="SUBMIT"  onClick="buttonClick(this,'Apply');" name="apply" class="btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                <input type="hidden" name="passphrase" id="passphrase_hidden" value="">
+                <input type="hidden" name="secu_type" value="NVRAM_wla_secu_type_2">
+                <!-- <input type="hidden" name="enable_bssid" value="<% wlg_get_sec_profile_enable(0); %>"> -->
+                <input type="hidden" name="enable_ssid_bc" value="">
+                <input type="hidden" name="load_2g_frame" value="0">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script language="javascript" type="text/javascript">
+var initialized = false;
+function getWifiName(idx) {
+	if (idx== 0)
+		return "2.4G"
+	else if (idx== 1)
+		return "5G"
+	else if (idx== 2)
+		return "6G"
+	else 
+		return 'unknown'
+}
+function show_band (name){
+	if (name == "2_4G") {
+		$('.card_24G').show()
+	} else if (name == "5G"){
+		$('.card_5G').show()
+	} else if (name == "6G"){ 
+		$('.card_6G').show()
+	}
+	
+}
+function getData (){
+	var data_array=[];
+	
+	for (i=0 ;i<=2; i++) {
+		var data = {}
+		data.name = getWifiName(i)
+		data.ssid = $('#ssid_'+ (i+1)).val()
+		
+		data.security_type = $("input[name='security_type_"+ (i+1) +"']:checked").val()
+	
+		data.passphrase =$('#passphrase_wpa2_'+ (i+1)).val()
+		data_array.push(data)
+	}
+	
+	return data_array
+}
+$(document).ready(function() {   
+	$("#target").submit(function(e) {
+		e.preventDefault();
+		var formdata = getData()
+		console.log (formdata)
+		//if (c)
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+		});
+        buttonFilter();
+		location.reload()
+		
+    });
+	init_setting ()
+    bind_mui_textfield();
+});
+function init_setting (){
+		$.get("GetWireless.cgi",function (data){
+			const  param = $.parseJSON(JSON.stringify(data))
+			var wireless_count = param.wireless_band_count
+			console.log(wireless_count)
+			for (var i=0 ;i< wireless_count;i++){
+				if (param.wireless[i].enable) {
+					show_band(param.wireless[i].name)
+					console.log(param.wireless[i].ssid)
+					$('#ssid_'+ (i+1)).val(param.wireless[i].ssid)
+					$('#passphrase_wpa2_'+ (i+1)).val(param.wireless[i].passphrase)
+					$('#passphrase_wpa3_'+ (i+1)).val(param.wireless[i].passphrase)
+					var type = param.wireless[i].security_type //None WP WPA2-PSK  WPA-AUTO-PSK WPA3-SAE 
+					var type_code =0 
+					if ( type == "None") {
+						$('#security_disable_'+ (i+1)).attr("checked",true)
+					} else if (type == "WPA2-PSK") {
+						$('#security_wpa2_'+ (i+1)).attr("checked",true)
+						type_code=1
+					}
+					else if (type == "WPA-AUTO-PSK") {
+						$('#security_auto_'+ (i+1)).attr("checked",true)
+						type_code=2
+					}
+					else if (type == "WPA3-SAE") {
+						$('#security_wpa3_'+ (i+1)).attr("checked",true)
+						type_code=3
+					} else {
+						$('#security_disable_'+ (i+1)).attr("checked",true)
+					}
+					securityGUI(type_code,i+1);
+					
+				} 
+				//else {
+					
+				//}
+				
+			}
+	
+	});
+	
+}
+function initScrn() {
+    const secu_type = document.forms[0].secu_type.value;
+
+    switch (secu_type) {
+        case 'None':
+            securityGUI(0);
+            break;
+        case 'WPA2-PSK':
+            securityGUI(1);
+            break;
+        case 'WPA-AUTO-PSK':
+            securityGUI(2);
+            break;
+        case 'WPA3-SAE':
+            securityGUI(3);
+            break;
+        default:
+            securityGUI(0);
+            break;
+    }
+
+    initialized = true;
+}
+
+function checkData_wpa(KEY, secoption) {
+    if (KEY.value.length < 8) {
+        alert("Insufficient password length. It should be a minimum of 8 characters long.");
+        return false;    
+    }
+
+    if (KEY.value.match( /[^\x20-\x7E]/ )) {
+        alert("Character is not allowed in password.");
+        KEY.focus();
+        return false;
+    }
+    
+    switch(secoption) {
+        case 0: // wpa2
+            if (KEY.value.length > 63) {
+                if (isHex(KEY.value) === false) {
+                    alert("The password is too long. The maximum length is 63 characters.");
+                    KEY.value = "";
+                    return false;
+                }    
+            }
+
+            break;
+        case 1: // wpa3
+            if (KEY.value.length > 127) {
+                if ( isHex(KEY.value) === false) {
+                    alert("");
+                    KEY.value = "";
+                    return false;
+                }    
+            }
+
+            break;
+    }
+
+    return true;
+}
+
+function checkData() {
+    let cf = document.forms[0];
+    let non_sec_check = 0;
+    let passphrase_check = true;
+    let passphrase_key;
+
+    if (document.getElementsByName("security_type")[0].checked === true) {
+        non_sec_check = 1;
+    }
+    
+    if (cf.ssid.value === "") {
+        set_mui_textfield_error($('.ssid'));
+        alert("SSID cannot be blank.");
+        return false;
+    }
+
+    if (cf.ssid.value.match( /[^\x20-\x7E]/ )) {
+        set_mui_textfield_error($('.ssid'));
+        alert("Character is not allowed in SSID.");
+        return false;
+    }
+
+    cf.enable_ssid_bc.value = "ssid_24G_bc";
+    cf.enable_bssid.value = 1;
+
+    if (document.getElementsByName("security_type")[0].checked === true)
+        parent.document.forms[0].security_type.value = "None";
+    else if (document.getElementsByName("security_type")[1].checked === true) {
+        passphrase_key = cf.passphrase_wpa2;
+        passphrase_check = checkData_wpa(passphrase_key, 0);
+
+        if (!passphrase_check)
+            set_mui_textfield_error($('.passphrase_wpa2'));
+    } else if (document.getElementsByName("security_type")[2].checked === true) {
+        passphrase_key = cf.passphrase_wpa2;
+        passphrase_check= checkData_wpa(passphrase_key, 0);
+
+        if (!passphrase_check)
+            set_mui_textfield_error($('.passphrase_wpa2'));
+    } else if (document.getElementsByName("security_type")[3].checked === true) {
+        passphrase_key = cf.passphrase_wpa2;
+        passphrase_check = checkData_wpa(passphrase_key, 0);
+
+        if (!passphrase_check)
+            set_mui_textfield_error($('.passphrase_wpa2'));
+    }
+    
+    if (passphrase_check === false)
+        return false;
+    
+    cf.passphrase.value = passphrase_key.value;
+    cf.load_2g_frame.value = "1";
+
+    return true;
+}
+
+function securityGUI(VAL,INDX) {
+    if ((parseInt(VAL) < 0) || (parseInt(VAL) > 6))
+        return false;
+    switch(VAL) {
+        case 0: //None
+            document.getElementsByName("security_type_"+INDX)[0].checked = true;
+            document.getElementById("wpa_key_"+INDX).style.display = "none";
+
+            document.getElementById("sec_863_or_64h_"+INDX).style.display = "none";
+            document.getElementById("sec_8127_or_128h_"+INDX).style.display = "none";
+
+            break;
+        case 1: //WPA2-PSK      
+            document.getElementsByName("security_type_"+INDX)[1].checked = true;
+            document.getElementById("wpa_key_"+INDX).style.display = "";
+            document.getElementById("passphrase_wpa2SlashText").innerHTML="(8-63 characters or 64 hex digits)";
+
+            document.getElementById("sec_863_or_64h_"+INDX).style.display = "block";
+            document.getElementById("sec_8127_or_128h_"+INDX).style.display = "none";
+            
+            break;
+        case 2: //WPA-AUTO-PSK
+            document.getElementsByName("security_type_"+INDX)[2].checked = true;
+            document.getElementById("wpa_key_"+INDX).style.display = "";
+            document.getElementById("passphrase_wpa2SlashText").innerHTML="(8-63 characters or 64 hex digits)";
+
+            document.getElementById("sec_863_or_64h_"+INDX).style.display = "block";
+            document.getElementById("sec_8127_or_128h_"+INDX).style.display = "none";
+            
+            break;
+        case 3: //WPA3-Personal
+            document.getElementsByName("security_type_"+INDX)[3].checked = true;
+            document.getElementById("wpa_key_"+INDX).style.display = "";
+            //document.getElementById("passphrase_wpa3SlashText").innerHTML="(8-127 characters or 128 hex digits)";
+            document.getElementById("passphrase_wpa2SlashText").innerHTML="(8-63 characters or 64 hex digits)";
+
+            document.getElementById("sec_863_or_64h_"+INDX).style.display = "block";
+            document.getElementById("sec_8127_or_128h_"+INDX).style.display = "none";
+            
+            break;
+       
+    }
+}
+</script>
+</html>

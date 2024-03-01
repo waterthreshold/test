@@ -1,0 +1,899 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body  class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  name="frmLan" method="POST" action="SetLan.cgi">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Lan Setting</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mui-textfield input-ip">
+                            <input type="text" name="sysLANIPAddr1" id="sys_lan_ipaddress1" class="form-control" maxlength="3" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)" onBlur="dhcp_update(1)">.
+                            <input type="text" name="sysLANIPAddr2" id="sys_lan_ipaddress2" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)" onBlur="dhcp_update(2)">.
+                            <input type="text" name="sysLANIPAddr3" id="sys_lan_ipaddress3" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)" onBlur="dhcp_update(3)">.
+                            <input type="text" name="sysLANIPAddr4" id="sys_lan_ipaddress4" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)" onBlur="dhcp_update(4)">
+                            <label tabindex="-1">IP Address</label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input type="text" name="sysLANSubnetMask1" id="sys_lan_netmask1" class="form-control" maxlength="3" onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input type="text" name="sysLANSubnetMask2" id="sys_lan_netmask2" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input type="text" name="sysLANSubnetMask3" id="sys_lan_netmask3" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input type="text" name="sysLANSubnetMask4" id="sys_lan_netmask4" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)">
+                            <label tabindex="-1">IP Subnet Mask</label>
+                        </div>
+                        <div class="mui-textfield" style="display:none;">
+                            <select class="form-control" id="rip_direction" name="rip_direction" size="1">
+                                <option value=1>Both</option>
+                                <option value=2>In Only</option>
+                                <option value=3>Out Only</option>
+                            </select>
+                            <label tabindex="-1">RIP Direction</label>
+                        </div>
+                        <div class="mui-textfield" style="display:none;">
+                            <select class="form-control" id="sys_rip_version" name="sysRIPVersion" size="1" onchange="chgRipAuth2()">
+                                <option>Disabled</option>
+                                <option>RIP_1</option>
+                                <option>RIP_2B</option>
+                                <option>RIP_2M</option>
+                            </select>
+                            <label tabindex="-1">RIP Version</label>
+                        </div>
+                        <div class="mui-textfield" id="rip_auth_id">
+                            <select class="form-control" name="sysRIPAuthMode" size="1" id="sys_rip_auto_mode" onchange="chgRipAuth()">
+                                <option>No authentication</option>
+                                <option>Text</option>
+                                <option>MD5</option>
+                            </select>
+                            <label tabindex="-1">RIPv2 authentication mode</label>
+                        </div>
+                        <!--<div class="mui-textfield mui-textfield-pwd" id="rip_passwd_id">
+                            <input type="password" name="sysRIPPass" id="sys_rip_passwd" class="form-control" maxlength="16" value="NVRAM_rip_auth_string">
+                            <label tabindex="-1">Password</label>
+                            <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('sys_rip_passwd');">
+                               <i id="sys_rip_passwdSlash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                        </div>
+                        <div class="mui-textfield mui-textfield-pwd" id="rip_key_id">
+                            <input type="password" name="sysRIPKey" id="sys_rip_key" class="form-control" maxlength="16" value="NVRAM_rip_key_string">
+                            <label tabindex="-1">Key string</label>
+                            <img src="img/pwdEye.png" class="pwdEyeImg" onclick="changePwdVisibleStatus('sys_rip_key');">
+                               <i id="sys_rip_keySlash" class="pwdEyeSlash pwdEyeSlashShow"></i>
+                        </div>-->
+                    </div>
+                   <!-- <div class="card-btn card-flex" onClick="parent.trigger_dev_name();">
+                        <div>
+                            <div class="card-title">Device Name</div>
+                            <p id="dev_name_id" value="N/A" ></p>
+                        </div>
+                        <div class="card-margin-left">
+                            <i class="material-icons">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#888888"><path d="M10 17l5-5-5-5v10z"/><path d="M0 24V0h24v24H0z" fill="none"/></svg>
+                            </i>
+                        </div>
+                    </div>
+                    <div class="card-divider"></div>-->
+                    <div class="card-subheader">
+                        <div class="card-title">DHCP Server Setup</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="dhcp_server_enable" value="dhcp_server" name="dhcp_server" onchange="ui_show_lan_proto()">Use Router as DHCP Server
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="sys_pool_starting_address1" type="text" name="sysPoolStartingAddr1" class="form-control" maxlength="3" readonly onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input id="sys_pool_starting_address2" type="text" name="sysPoolStartingAddr2" class="form-control" maxlength="3" readonly onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="sys_pool_starting_address3" type="text" name="sysPoolStartingAddr3" class="form-control" maxlength="3" readonly onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="sys_pool_starting_address4" type="text" name="sysPoolStartingAddr4" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)">
+                            <label tabindex="-1">Starting IP Address</label>
+                        </div>
+                        <div class="mui-textfield input-ip">
+                            <input id="sys_pool_finish_address1" type="text" name="sysPoolFinishAddr1" class="form-control" maxlength="3" readonly onkeydown="bscheck(event,this,1)" onkeyup="jumpcheck(this,0)">.
+                            <input id="sys_pool_finish_address2" type="text" name="sysPoolFinishAddr2" class="form-control" maxlength="3" readonly onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="sys_pool_finish_address3" type="text" name="sysPoolFinishAddr3" class="form-control" maxlength="3" readonly onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,0)">.
+                            <input id="sys_pool_finish_address4" type="text" name="sysPoolFinishAddr4" class="form-control" maxlength="3" onkeydown="bscheck(event,this,0)" onkeyup="jumpcheck(this,1)"></td>
+                            <label tabindex="-1">Ending IP Address</label>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                    	<button id="apply" value="Apply"  onClick="buttonClick(this,'Apply');" type="SUBMIT" name="action" class="btn btn-primary pull-right btn-round">Apply</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-flex">
+                            <div class="card-title">Address Reservation</div>
+                            <div class="card-margin-left">
+                                <button id="add" type="Submit" value="Add" name="Add" class="btn btn-green btn-round" onclick="buttonClick(this,'Add');" >Add</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                            <thead class="text-primary">
+                            <tr>
+                                <th class="align-center">#</th>
+                                <th>IP Address</th>
+                                <th>Device Name</th>
+                                <th>MAC Address</th>
+                                <th class="align-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <!-- <% lan_cgi_get_rsvip_table(); %>-->
+                            </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right" style="display: none;">
+                            <button id="edit" type="Submit" value="Edit" name="Edit" class="btn btn-white btn-mg-15" onclick="buttonClick(this,'Edit');return checkEdit_Delete(0)" >Edit</button>
+                            <button id="delete" type="Submit" value="Delete" name="Delete" class="btn btn-red btn-mg-15" onclick="buttonClick(this,'Delete');return checkEdit_Delete(1)" >Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="select" value="-1">
+                <input name=arp_enable type=hidden value= "NVRAM_arp_enable">
+                <!-- <input name=ipmac_token type=hidden value= "<% lan_cgi_get_rsvip_param("ipmac_token"); %>"> -->
+                <!-- <input name=dev_name type=hidden value= "<% wps_cgi_get_param("dev_name"); %>"> -->
+                <input name=lan_ipaddr type=hidden value= "NVRAM_lan_ipaddr">
+                <input name=lan_netmask type=hidden value= "NVRAM_lan_netmask">
+                <input name=rip_enable type=hidden value= "NVRAM_rip_enable">
+                <input name=rip_multicast type=hidden value= "NVRAM_rip_multicast">
+                <input name=rip_version type=hidden value= "NVRAM_rip_version">
+
+                <input name=rip_auth_mode type=hidden value= "NVRAM_rip_auth_mode">
+                <input name=rip_auth type=hidden value= "NVRAM_rip_auth"> 
+                <input name=rip_auth_string type=hidden value= ""> 
+                <input name=rip_key_string type=hidden value= "">
+
+                <input name=lan_proto type=hidden value= "NVRAM_lan_proto">
+                <input name=dhcp_start type=hidden value= "NVRAM_dhcp_start">
+                <input name=dhcp_end type=hidden value= "NVRAM_dhcp_end">
+                <input name=dhcp_start_old type=hidden value= "NVRAM_dhcp_start">
+                <input name=dhcp_end_old type=hidden value= "NVRAM_dhcp_end">
+                <input name=pptp_wan_ipaddr type=hidden value= "NVRAM_pptp_user_ip">
+                <input name=l2tp_wan_ipaddr type=hidden value= "NVRAM_l2tp_user_ip">
+                <input name=pppoe_wan_ipaddr type=hidden value= "NVRAM_pppoe_user_ip">
+                <input name=pptp_serv_ipaddr type=hidden value= "NVRAM_pptp_serv_ip">
+                <input name=l2tp_serv_ipaddr type=hidden value= "NVRAM_l2tp_serv_ip">
+                <!-- <input name=wan_dns1_pri type=hidden value= "<% nvram_list("wan_dns1", 0); %>"> -->
+                <!-- <input name=wan_dns1_sec type=hidden value= "<% nvram_list("wan_dns1", 1); %>"> -->
+                <!-- <% is_dsl_or_router("is_dsl_start"); %> -->
+                <!-- <input name=wan_proto type=hidden value= "NVRAM_wan0_proto"> -->
+                <!-- <input name=wan_ipaddr type=hidden value= "NVRAM_wan0_ipaddr"> -->
+                <!-- <input name=wan_netmask type=hidden value= "NVRAM_wan0_netmask"> -->
+                <!-- <% is_dsl_or_router("is_dsl_end"); %>  -->
+                <!-- <% is_dsl_or_router("is_router_start"); %> -->
+                <!-- <input name=wan_proto type=hidden value= "NVRAM_wan_proto"> -->
+                <!-- <input name=wan_ipaddr type=hidden value= "NVRAM_wan_ipaddr"> -->
+                <!-- <input name=wan_netmask type=hidden value= "NVRAM_wan_netmask"> -->
+                <!-- <% is_dsl_or_router("is_router_end"); %> -->
+                <input type="hidden" name="repeater" value="NVRAM_wla_repeater">
+                <input type="hidden" name="repeater_an" value="NVRAM_wlg_repeater">
+                <input type="hidden" name="dlna_autoip_en" value="NVRAM_dlna_auto_ip">
+                <input name=tmp_lan_ipaddr type=hidden value= "NVRAM_tmp_lan_ipaddr">
+                <input name=tmp_lan_netmask type=hidden value= "NVRAM_tmp_lan_netmask">
+                <input name=tmp_lan_proto type=hidden value= "NVRAM_tmp_lan_proto">
+                <input name=tmp_rip_enable type=hidden value= "NVRAM_tmp_rip_enable">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+
+function iptocol (ip ,preffix) {
+	var arr_ip = ip.split('.')
+	for (var i = 0 ;i < arr_ip.length; i++) {
+		let id_item =  preffix+ (i+1)
+		document.getElementById(id_item).value = arr_ip[i]
+	}
+}
+function coltoip(preffix) {
+	var ip =""
+	for (var i=1; i<=4 ;i++ ) {
+		idname= preffix+i
+		 ip += document.getElementById(idname).value
+		 if (i!=4)
+			ip+="."
+	}
+	
+	return ip;
+}
+function ui_show_lan_proto() {
+	const arr= ['sys_lan_ipaddress','sys_lan_netmask']
+		
+	let lan_proto= $('#dhcp_server_enable').attr('checked')		
+	for (var i =0 ;i<arr.length; i++){
+		for (var j=1; j<=4;j++){
+			tmp_id=arr[i] + j
+			if ( lan_proto){
+				document.getElementById(tmp_id).disabled  = true
+			} else {
+				document.getElementById(tmp_id).disabled  = false
+			}
+		}
+	}
+		
+		
+}
+function coltoip(preffix) {
+	var ip =""
+	for (var i=1; i<=4 ;i++ ) {
+		idname= preffix+i
+		 ip += document.getElementById(idname).value
+		 if (i!=4)
+			ip+="."
+	}
+	
+	return ip;
+}
+function getData() {
+	var  formdata = {}
+	if ($('#dhcp_server_enable').attr('checked') ){
+		formdata.lan_proto='dhcp'
+	} else {
+		formdata.lan_proto='static'
+		formdata.lan_ipaddr=coltoip("sys_lan_ipaddress")
+		formdata.lan_netmask=coltoip("sys_lan_netmask")
+	}
+	formdata.dhcp_start= coltoip ("sys_pool_starting_address")
+	formdata.dhcp_end= coltoip ("sys_pool_finish_address")
+	formdata.rip_enable=$('#sys_rip_auto_mode option:selected').index().toString()
+	return formdata
+}
+$(document).ready(function()
+{
+	 $("#target").submit(function(e) {
+		e.preventDefault();
+		var formdata = getData()
+		console.log (formdata)
+		$.ajax({
+			type: "POST",
+			url: $('#target').attr('action'), 
+			contentType: "application/json",
+			data: JSON.stringify(formdata),
+			dataType: "json",
+			success: function(response) {
+			  console.log("Success:", response);
+			},
+			error: function(error) {
+			  console.error("Error:", error);
+			}
+      });
+        buttonFilter();
+		location.reload()
+		
+    });
+	init_setting ()
+});
+
+/*
+	{
+        "arp_enable":   "disable",
+        "ipmac_token":  "",
+        "dev_name":     "",
+        "lan_ipaddr":   "192.168.1.1",
+        "lan_netmask":  "255.255.255.0",
+        "rip_enable":   "0",
+        "rip_multicast":        "1",
+        "rip_enable":   "0",
+        "rip_version":  "2",
+        "rip_auth_mode":        "md5",
+        "rip_auth":     "0",
+        "rip_auth_string":      "",
+        "rip_key_string":       "",
+        "lan_proto":    "dhcp",
+        "dhcp_start":   "192.168.1.2",
+        "dhcp_end":     "192.168.1.254",
+        "dhcp_start_old":       "",
+        "dhcp_end_old": "",
+        "pptp_wan_ipaddr":      "",
+        "l2tp_wan_ipaddr":      "",
+        "pppoe_wan_ipaddr":     "",
+        "pptp_serv_ipaddr":     "",
+        "l2tp_serv_ipaddr":     "",
+        "wan_dns1_pri": "",
+        "wan_dns1_sec": ""
+}
+*/
+function init_setting (){
+	 $.get("GetLan.cgi",function (data){
+			
+			const  param = $.parseJSON(JSON.stringify(data))
+			
+			lan_proto = param.lan_proto;
+			if ( lan_proto == "dhcp")
+				$('#dhcp_server_enable').attr('checked',true)
+			else 
+				$('#dhcp_server_enable').attr("checked",false)
+				
+				
+			//dev_name=param.dev_name
+			
+			//ui_show(wan_proto)
+			lan_ipaddr = param.lan_ipaddr;
+			iptocol(lan_ipaddr, "sys_lan_ipaddress");
+			lan_netmask = param.lan_netmask;
+			iptocol(lan_netmask, "sys_lan_netmask");
+			dhcp_start = param.dhcp_start;
+			iptocol(dhcp_start, "sys_pool_starting_address");
+			dhcp_end = param.dhcp_end;
+			iptocol(dhcp_end, "sys_pool_finish_address");
+			
+			rip_enable=param.rip_enable
+			 
+			var str= `$('#sys_rip_auto_mode option[index=${rip_enable}]').attr('selected',true)`
+			
+			eval(str)
+			//
+			ui_show_lan_proto(lan_proto)
+			
+	});
+}
+function ch_edit(index)
+{
+    document.forms[0].select.value = index;
+    $("#edit").click();
+    return true;
+}
+
+function ch_del(index)
+{
+    document.forms[0].select.value = index;
+    $("#delete").click()
+    return true;
+}
+
+function checkEdit_Delete(index)
+{
+    var cf = document.forms[0];
+    var action_flag = index;
+    var ipmac_count = cf.ipmac_token.value;
+    var arp_enable = cf.arp_enable.value;
+    
+    if (arp_enable == "enable")
+    {
+        if (ipmac_count == 1)
+        {
+            if (action_flag == 0)
+            {/*Edit*/
+                alert("If the rule is configured wrong, no device would be able to access the router interface.");
+            }
+            else if(action_flag == 1)
+            {/*Delete*/
+                alert("If the last device is deleted, no device will be able to access the router interface.");
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function isIPFlushed()
+{
+    var cf = document.forms[0];
+    var lan_netmask = cf.lan_netmask.value.split(".");
+    var newMask = [0, 0, 0, 0];
+    var oldMask = [0, 0, 0, 0];
+
+    newMask[0] = parseInt(cf.sysLANSubnetMask1.value,10);
+    newMask[1] = parseInt(cf.sysLANSubnetMask2.value,10);
+    newMask[2] = parseInt(cf.sysLANSubnetMask3.value,10);
+    newMask[3] = parseInt(cf.sysLANSubnetMask4.value,10);
+
+    oldMask[0] = parseInt(lan_netmask[0],10);
+    oldMask[1] = parseInt(lan_netmask[1],10);
+    oldMask[2] = parseInt(lan_netmask[2],10);
+    oldMask[3] = parseInt(lan_netmask[3],10);
+
+    for (i = 0; i < 4; i++)
+    {
+        if (newMask[i] > oldMask[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function chgRipAuth()
+{
+    var cf = document.forms[0];
+    var rip_enable = cf.rip_enable.value;
+
+    if ( cf.sysRIPAuthMode.selectedIndex == 0 )
+    {
+        document.getElementById("rip_passwd_id").style.display="none";
+        document.getElementById("rip_key_id").style.display="none";
+    }
+    else if ( cf.sysRIPAuthMode.selectedIndex == 1 )
+    {
+        document.getElementById("rip_passwd_id").style.display="block";
+        document.getElementById("rip_key_id").style.display="none";
+    }
+    else
+    {
+        document.getElementById("rip_passwd_id").style.display="none";
+        document.getElementById("rip_key_id").style.display="block";
+    }
+}
+
+function chgRipAuth2()
+{
+    var cf = document.forms[0];
+
+    if (cf.sysRIPVersion.selectedIndex == 0 || cf.sysRIPVersion.selectedIndex == 1)
+    {
+        document.getElementById("rip_auth_id").style.display="none";
+        document.getElementById("rip_passwd_id").style.display="none";
+        document.getElementById("rip_key_id").style.display="none";
+        return;
+    }
+    else
+    {
+        document.getElementById("rip_auth_id").style.display="block";
+    }
+
+    if ( cf.sysRIPAuthMode.selectedIndex == 0 )
+    {
+        document.getElementById("rip_passwd_id").style.display="none";
+        document.getElementById("rip_key_id").style.display="none";
+    }
+    else if ( cf.sysRIPAuthMode.selectedIndex == 1 )
+    {
+        document.getElementById("rip_passwd_id").style.display="block";
+        document.getElementById("rip_key_id").style.display="none";
+    }
+    else
+    {
+        document.getElementById("rip_passwd_id").style.display="none";
+        document.getElementById("rip_key_id").style.display="block";
+    }    
+} 
+
+function checkData()
+{
+    var cf = document.forms[0];
+    var msg = "";
+
+    var wan_proto = cf.wan_proto.value;
+    var pptp_wan_ipaddr = cf.pptp_wan_ipaddr.value.split(".");
+    var l2tp_wan_ipaddr = cf.l2tp_wan_ipaddr.value.split(".");
+    var pppoe_wan_ipaddr = cf.pppoe_wan_ipaddr.value.split(".");
+    var dns_pri_ipaddr = cf.wan_dns1_pri.value.split(".");
+    var dns_sec_ipaddr = cf.wan_dns1_sec.value.split(".");
+    
+    var wan_ipaddr = cf.wan_ipaddr.value.split(".");
+    var wan_netmask = cf.wan_netmask.value.split(".");
+    var w_ipaddr = (wan_ipaddr[0] << 24) | (wan_ipaddr[1] << 16) | (wan_ipaddr[2] << 8)| (wan_ipaddr[3]);
+    var w_netmask = (wan_netmask[0]<< 24) | (wan_netmask[1]<< 16) | (wan_netmask[2]<< 8)| (wan_netmask[3]);
+    var l_ipaddr = (cf.sysLANIPAddr1.value << 24) | (cf.sysLANIPAddr2.value << 16) | (cf.sysLANIPAddr3.value << 8)| (cf.sysLANIPAddr4.value);
+    var l_netmask = (cf.sysLANSubnetMask1.value<< 24) | (cf.sysLANSubnetMask2.value<< 16) | (cf.sysLANSubnetMask3.value<< 8)| (cf.sysLANSubnetMask4.value);
+    var lan_netaddr_min = (l_ipaddr & l_netmask) + 1;
+    var lan_netaddr_max = ((l_ipaddr & l_netmask) | (~l_netmask)) - 1;
+    var dns_pri_ipaddr2 = (dns_pri_ipaddr[0] << 24) | (dns_pri_ipaddr[1] << 16) | (dns_pri_ipaddr[2] << 8)| (dns_pri_ipaddr[3]);
+    var dns_sec_ipaddr2 = (dns_sec_ipaddr[0] << 24) | (dns_sec_ipaddr[1] << 16) | (dns_sec_ipaddr[2] << 8)| (dns_sec_ipaddr[3]);
+    var manual_or_auto = 0;
+    manual_or_auto = NVRAM_wan_dns_sel;
+
+    var ipFlushed = isIPFlushed();
+
+    if(checkIP(cf.sysLANSubnetMask1,cf.sysLANSubnetMask2,cf.sysLANSubnetMask3,cf.sysLANSubnetMask4,255)
+        ||!isNetmask(cf.sysLANSubnetMask1, cf.sysLANSubnetMask2, cf.sysLANSubnetMask3, cf.sysLANSubnetMask4)
+        ||(lan_netaddr_min > lan_netaddr_max))
+        msg+= "Invalid subnet mask. Please enter it again.n";
+    if(checkIP(cf.sysLANIPAddr1,cf.sysLANIPAddr2,cf.sysLANIPAddr3,cf.sysLANIPAddr4,254)
+        ||((parseInt(cf.sysLANIPAddr4.value,10)==0) && (parseInt(cf.sysLANSubnetMask4.value,10)==0) && (parseInt(cf.sysLANSubnetMask3.value,10)!=0))
+        ||((parseInt(cf.sysLANIPAddr4.value,10)==0) && (parseInt(cf.sysLANIPAddr3.value,10)==0) && (parseInt(cf.sysLANSubnetMask4.value,10)==0) && (parseInt(cf.sysLANSubnetMask3.value,10)==0)&& (parseInt(cf.sysLANSubnetMask2.value,10)!=0))
+        ||parseInt(cf.sysLANIPAddr1.value,10)>224
+        ||(l_ipaddr < lan_netaddr_min)||(l_ipaddr > lan_netaddr_max))
+        msg+= "Invalid IP address. Please enter it again.";
+
+    var n1=parseInt(cf.sysPoolStartingAddr4.value,10);
+    var n2=parseInt(cf.sysPoolFinishAddr4.value,10);
+
+    if( isNaN(n1) || isNaN(n2)
+        || (n1<1||n1>254||n2<1||n2>254||n1>n2)
+        || ((n1 == n2) && (n1 == (l_ipaddr & 0xFF)))
+        || (n1 < (lan_netaddr_min & 0xFF)) || (n2 > (lan_netaddr_max & 0xFF))
+        || ((cf.sysPoolStartingAddr4.value & cf.sysLANSubnetMask4.value) != (cf.sysLANIPAddr4.value & cf.sysLANSubnetMask4.value))
+        || ((cf.sysPoolFinishAddr4.value & cf.sysLANSubnetMask4.value) != (cf.sysLANIPAddr4.value & cf.sysLANSubnetMask4.value)) )
+        msg+= "Invalid DHCP ending and starting IP addresses. Please enter them again.n";
+    if (msg.length > 1)
+    {
+        alert(msg);
+        return false;
+    }
+    else
+    {
+        if ((w_ipaddr != 0) && 
+            (((l_netmask & w_netmask ) & l_ipaddr) == ((l_netmask & w_netmask ) & w_ipaddr)))
+        {
+            alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+            return false;
+        }
+        
+        /*  if(NVRAM_wan_dns_sel==0) */
+        /* checking whether DNS address as LAN address, while not setting DNS server manually */
+        if ((w_netmask != 0) && manual_or_auto == 0)
+        {
+                    if ((dns_pri_ipaddr2 != 0) &&  /* first DNS conflict check */
+                     (((l_netmask & w_netmask) & l_ipaddr) == ((l_netmask & w_netmask) & dns_pri_ipaddr2)))
+                    {
+                        alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+                        return false;
+            }
+
+            if ((dns_pri_ipaddr2 != 0) &&  /* first DNS conflict check */
+                       (((l_ipaddr & l_netmask) & w_netmask) == ((dns_pri_ipaddr2 & l_netmask) & w_netmask)))
+                    {
+                         alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+                         return false;
+            }
+
+                    if ((dns_sec_ipaddr2 != 0) && /* second DNS conflict check */
+                     (((l_netmask & w_netmask) & l_ipaddr) == ((l_netmask & w_netmask) & dns_sec_ipaddr2)))
+                    {
+                        alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+                        return false;
+            }
+
+            if ((dns_sec_ipaddr2 != 0) &&  /* second DNS conflict check */
+                     (((l_ipaddr & l_netmask) & w_netmask) == ((dns_sec_ipaddr2 & l_netmask) & w_netmask)))
+                    {
+                        alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+                        return false;
+            }
+        }   
+
+        if (wan_proto == "pptp")
+        {
+            w_ipaddr = (pptp_wan_ipaddr[0] << 24) | (pptp_wan_ipaddr[1] << 16) | (pptp_wan_ipaddr[2] << 8)| (pptp_wan_ipaddr[3]);
+            w_netmask = l_netmask;
+        }
+        else if (wan_proto == "l2tp")
+        {
+            w_ipaddr = (l2tp_wan_ipaddr[0] << 24) | (l2tp_wan_ipaddr[1] << 16) | (l2tp_wan_ipaddr[2] << 8)| (l2tp_wan_ipaddr[3]);
+            w_netmask = l_netmask;
+        }
+        else if (wan_proto == "pppoe")
+        {
+            w_ipaddr = (pppoe_wan_ipaddr[0] << 24) | (pppoe_wan_ipaddr[1] << 16) | (pppoe_wan_ipaddr[2] << 8)| (pppoe_wan_ipaddr[3]);
+            w_netmask = l_netmask;
+        }
+        
+        if ((w_ipaddr != 0) && 
+            (((l_netmask & w_netmask ) & l_ipaddr) == ((l_netmask & w_netmask ) & w_ipaddr)))
+        {
+            alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+            return false;
+        }
+
+        data = cf.pptp_serv_ipaddr.value.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/);
+        data1 = cf.l2tp_serv_ipaddr.value.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/);
+        if (data && (wan_proto == "pptp"))
+        {
+            pptp_serv_ipaddr = cf.pptp_serv_ipaddr.value.split(".");
+            w_ipaddr = (pptp_serv_ipaddr[0] << 24) | (pptp_serv_ipaddr[1] << 16) | (pptp_serv_ipaddr[2] << 8)| (pptp_serv_ipaddr[3]);
+            w_netmask = l_netmask;
+
+            if ((w_ipaddr != 0) && 
+                (((l_netmask & w_netmask ) & l_ipaddr) == ((l_netmask & w_netmask ) & w_ipaddr)))
+            {
+                alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+                return false;
+            }
+        }
+        if (data1 && (wan_proto == "l2tp"))
+        {
+            l2tp_serv_ipaddr = cf.l2tp_serv_ipaddr.value.split(".");
+            w_ipaddr = (l2tp_serv_ipaddr[0] << 24) | (l2tp_serv_ipaddr[1] << 16) | (l2tp_serv_ipaddr[2] << 8)| (l2tp_serv_ipaddr[3]);
+            w_netmask = l_netmask;
+
+            if ((w_ipaddr != 0) && 
+                (((l_netmask & w_netmask ) & l_ipaddr) == ((l_netmask & w_netmask ) & w_ipaddr)))
+            {
+                alert("The IP address conflicts with the WAN IP subnet. Please enter a different IP address.");
+                return false;
+            }
+        }
+    }
+    cf.sysLANIPAddr1.value = parseInt(cf.sysLANIPAddr1.value,10);
+    cf.sysLANIPAddr2.value = parseInt(cf.sysLANIPAddr2.value,10);
+    cf.sysLANIPAddr3.value = parseInt(cf.sysLANIPAddr3.value,10);
+    cf.sysLANIPAddr4.value = parseInt(cf.sysLANIPAddr4.value,10);
+    cf.sysLANSubnetMask1.value = parseInt(cf.sysLANSubnetMask1.value,10);
+    cf.sysLANSubnetMask2.value = parseInt(cf.sysLANSubnetMask2.value,10);
+    cf.sysLANSubnetMask3.value = parseInt(cf.sysLANSubnetMask3.value,10);
+    cf.sysLANSubnetMask4.value = parseInt(cf.sysLANSubnetMask4.value,10);
+    cf.sysPoolStartingAddr4.value = parseInt(cf.sysPoolStartingAddr4.value,10);
+    cf.sysPoolFinishAddr4.value = parseInt(cf.sysPoolFinishAddr4.value,10);
+    cf.lan_ipaddr.value = cf.sysLANIPAddr1.value+'.'+cf.sysLANIPAddr2.value+'.'+cf.sysLANIPAddr3.value+'.'+cf.sysLANIPAddr4.value;
+    cf.lan_netmask.value = cf.sysLANSubnetMask1.value+'.'+cf.sysLANSubnetMask2.value+'.'+cf.sysLANSubnetMask3.value+'.'+cf.sysLANSubnetMask4.value;
+    cf.dhcp_start.value = cf.sysLANIPAddr1.value+'.'+cf.sysLANIPAddr2.value+'.'+cf.sysLANIPAddr3.value+'.'+cf.sysPoolStartingAddr4.value;
+    cf.dhcp_end.value = cf.sysLANIPAddr1.value+'.'+cf.sysLANIPAddr2.value+'.'+cf.sysLANIPAddr3.value+'.'+cf.sysPoolFinishAddr4.value;
+    if (cf.dhcp_server.checked)
+    {
+        var old_start = cf.dhcp_start_old.value.split(".");
+        var old_end   = cf.dhcp_end_old.value.split(".");       
+        
+        cf.lan_proto.value = "dhcp";
+    }
+    else
+    {
+        cf.lan_proto.value = "static";
+        alert("");
+    }
+    
+    if ( cf.sysRIPAuthMode.selectedIndex == 1 )
+    {
+        if (  cf.sysRIPPass.value == "" )
+             msg+= "RIP password cannot be empty";
+    }
+    else if ( cf.sysRIPAuthMode.selectedIndex == 2 )
+    {
+        if (  cf.sysRIPKey.value == "" )
+             msg+= "Key string cannot be empty";
+    }
+
+    if (msg.length > 1)
+    {
+        alert(msg);
+        return false;
+    }    
+    
+    checkRip();
+
+    if (ipFlushed == true)
+    {
+        alert("ip flushed!!");
+    }
+    return true;
+}
+
+function loadSettings()
+{
+    var cf = document.forms[0];
+    var lan_ipaddr = cf.lan_ipaddr.value.split(".");
+    var lan_netmask = cf.lan_netmask.value.split(".");
+    var dhcp_start = cf.dhcp_start.value.split(".");
+    var dhcp_end = cf.dhcp_end.value.split(".");
+    var lan_proto = cf.lan_proto.value;
+    var rip_enable = cf.rip_enable.value;
+    var rip_multicast = cf.rip_multicast.value;
+    var rip_version = cf.rip_version.value;
+    var rip_auth_mode = cf.rip_auth_mode.value;
+    var rip_auth = cf.rip_auth.value;
+    
+    var lan_ipaddr_tmp = cf.tmp_lan_ipaddr.value.split(".");
+    var lan_netmask_tmp = cf.tmp_lan_netmask.value.split(".");
+    var lan_proto_tmp = cf.tmp_lan_proto.value;
+    var rip_enable_tmp = cf.tmp_rip_enable.value;
+    
+    if (cf.dlna_autoip_en.value == "0" || cf.dlna_autoip_en.value == "")
+    {
+        //cf.dlna_autoip.checked = false;
+        cf.sysLANIPAddr1.value = lan_ipaddr[0];
+        cf.sysLANIPAddr2.value = lan_ipaddr[1];
+        cf.sysLANIPAddr3.value = lan_ipaddr[2];
+        cf.sysLANIPAddr4.value = lan_ipaddr[3];
+        cf.sysLANSubnetMask1.value = lan_netmask[0];
+        cf.sysLANSubnetMask2.value = lan_netmask[1];
+        cf.sysLANSubnetMask3.value = lan_netmask[2];
+        cf.sysLANSubnetMask4.value = lan_netmask[3];
+        
+        cf.rip_direction.selectedIndex = NVRAM_rip_dir - 1;
+        if (rip_enable == "0")
+            cf.sysRIPVersion.selectedIndex = 0;
+        else
+        if (rip_version == "1")
+            cf.sysRIPVersion.selectedIndex = 1;
+        else
+        if (rip_version == "2")
+        {
+            if (rip_multicast == "0")
+                cf.sysRIPVersion.selectedIndex = 2;
+            else
+                cf.sysRIPVersion.selectedIndex = 3;
+        }
+            
+        if (lan_proto == "dhcp")
+            cf.dhcp_server.checked = true;
+        else
+            cf.dhcp_server.checked = false;
+        cf.sysPoolStartingAddr1.value = dhcp_start[0];
+        cf.sysPoolStartingAddr2.value = dhcp_start[1];
+        cf.sysPoolStartingAddr3.value = dhcp_start[2];
+        cf.sysPoolStartingAddr4.value = dhcp_start[3];
+        cf.sysPoolFinishAddr1.value = dhcp_end[0];
+        cf.sysPoolFinishAddr2.value = dhcp_end[1];
+        cf.sysPoolFinishAddr3.value = dhcp_end[2];
+        cf.sysPoolFinishAddr4.value = dhcp_end[3];
+        
+        if (cf.repeater.value == "1" || cf.repeater_an.value == "1") {
+            cf.rip_direction.disabled = true;
+            cf.sysRIPVersion.disabled = true;
+            cf.dhcp_server.disabled = true;
+            cf.sysPoolStartingAddr1.disabled = true;
+            cf.sysPoolStartingAddr2.disabled = true;
+            cf.sysPoolStartingAddr3.disabled = true;
+            cf.sysPoolStartingAddr4.disabled = true;
+            cf.sysPoolFinishAddr1.disabled = true;
+            cf.sysPoolFinishAddr2.disabled = true;
+            cf.sysPoolFinishAddr3.disabled = true;
+            cf.sysPoolFinishAddr4.disabled = true;
+            cf.Add.disabled = true;
+            cf.Edit.disabled = true;
+            cf.Delete.disabled = true;
+        } 
+    }
+    else
+    {
+        //cf.dlna_autoip.checked = true;
+        cf.sysLANIPAddr1.value = lan_ipaddr_tmp[0];
+        cf.sysLANIPAddr2.value = lan_ipaddr_tmp[1];
+        cf.sysLANIPAddr3.value = lan_ipaddr_tmp[2];
+        cf.sysLANIPAddr4.value = lan_ipaddr_tmp[3];
+        cf.sysLANSubnetMask1.value = lan_netmask_tmp[0];
+        cf.sysLANSubnetMask2.value = lan_netmask_tmp[1];
+        cf.sysLANSubnetMask3.value = lan_netmask_tmp[2];
+        cf.sysLANSubnetMask4.value = lan_netmask_tmp[3];
+        
+        cf.rip_direction.selectedIndex = NVRAM_rip_dir - 1;
+        if (rip_enable_tmp == "0")
+            cf.sysRIPVersion.selectedIndex = 0;
+        else
+        if (rip_version == "1")
+            cf.sysRIPVersion.selectedIndex = 1;
+        else
+        if (rip_version == "2")
+        {
+            if (rip_multicast == "0")
+                cf.sysRIPVersion.selectedIndex = 2;
+            else
+                cf.sysRIPVersion.selectedIndex = 3;
+        }
+            
+        if (lan_proto_tmp == "dhcp")
+            cf.dhcp_server.checked = true;
+        else
+            cf.dhcp_server.checked = false;
+        cf.sysPoolStartingAddr1.value = dhcp_start[0];
+        cf.sysPoolStartingAddr2.value = dhcp_start[1];
+        cf.sysPoolStartingAddr3.value = dhcp_start[2];
+        cf.sysPoolStartingAddr4.value = dhcp_start[3];
+        cf.sysPoolFinishAddr1.value = dhcp_end[0];
+        cf.sysPoolFinishAddr2.value = dhcp_end[1];
+        cf.sysPoolFinishAddr3.value = dhcp_end[2];
+        cf.sysPoolFinishAddr4.value = dhcp_end[3];
+        
+        cf.sysLANIPAddr1.disabled = true;
+        cf.sysLANIPAddr2.disabled = true;
+        cf.sysLANIPAddr3.disabled = true;
+        cf.sysLANIPAddr4.disabled = true;
+        cf.sysLANSubnetMask1.disabled = true;
+        cf.sysLANSubnetMask2.disabled = true;
+        cf.sysLANSubnetMask3.disabled = true;
+        cf.sysLANSubnetMask4.disabled = true;
+        cf.rip_direction.disabled = true;
+        cf.sysRIPVersion.disabled = true;
+        cf.dhcp_server.disabled = true;
+        cf.sysPoolStartingAddr1.disabled = true;
+        cf.sysPoolStartingAddr2.disabled = true;
+        cf.sysPoolStartingAddr3.disabled = true;
+        cf.sysPoolStartingAddr4.disabled = true;
+        cf.sysPoolFinishAddr1.disabled = true;
+        cf.sysPoolFinishAddr2.disabled = true;
+        cf.sysPoolFinishAddr3.disabled = true;
+        cf.sysPoolFinishAddr4.disabled = true;
+        cf.Add.disabled = true;
+        cf.Edit.disabled = true;
+        cf.Delete.disabled = true;
+    }
+    
+    
+    if ( rip_auth == "1")
+    {
+        if ( rip_auth_mode == "md5" )
+            cf.sysRIPAuthMode.selectedIndex = 2;
+        else
+            cf.sysRIPAuthMode.selectedIndex = 1;
+    }
+    else
+        cf.sysRIPAuthMode.selectedIndex = 0;
+    
+    chgRipAuth2()
+}
+
+function checkRip()
+{
+    var cf = document.forms[0];
+
+    if (cf.sysRIPVersion.selectedIndex == 0)
+    {
+        cf.rip_enable.value = "0";
+    }
+    else
+    if (cf.sysRIPVersion.selectedIndex == 1)
+    {
+        cf.rip_enable.value = "1";
+        cf.rip_version.value = "1";
+    }
+    else
+    if (cf.sysRIPVersion.selectedIndex == 2)
+    {
+        cf.rip_enable.value = "1";
+        cf.rip_version.value = "2";
+        cf.rip_multicast.value = "0";
+    }
+    else
+    if (cf.sysRIPVersion.selectedIndex == 3)
+    {
+        cf.rip_enable.value = "1";
+        cf.rip_version.value = "2";
+        cf.rip_multicast.value = "1";
+    }
+    
+    if ( cf.sysRIPAuthMode.selectedIndex == 0 )
+    {
+        cf.rip_auth.value = "0";
+    }
+    else if ( cf.sysRIPAuthMode.selectedIndex == 1 )
+    {
+        cf.rip_auth.value = "1";
+        cf.rip_auth_mode.value = "text";
+        cf.rip_auth_string.value = cf.sysRIPPass.value;
+    }
+    else
+    {
+        cf.rip_auth.value = "1";
+        cf.rip_auth_mode.value = "md5";
+        cf.rip_key_string.value = cf.sysRIPKey.value;
+    }
+}
+    
+function dhcp_update(index)
+{
+    var cf = document.forms[0];
+    switch (index) {
+        case 1:
+            cf.sysPoolStartingAddr1.value=cf.sysLANIPAddr1.value;
+            cf.sysPoolFinishAddr1.value=cf.sysLANIPAddr1.value;
+            break;
+        case 2:
+            cf.sysPoolStartingAddr2.value=cf.sysLANIPAddr2.value;
+            cf.sysPoolFinishAddr2.value=cf.sysLANIPAddr2.value;
+            break;
+        case 3:
+            cf.sysPoolStartingAddr3.value=cf.sysLANIPAddr3.value;
+            cf.sysPoolFinishAddr3.value=cf.sysLANIPAddr3.value;
+            break;
+        case 4:
+            cf.sysPoolStartingAddr3.value=cf.sysLANIPAddr3.value;
+            cf.sysPoolFinishAddr3.value=cf.sysLANIPAddr3.value;
+            break;
+    }
+}
+
+</script>
+</html>
+

@@ -1,0 +1,213 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+<script src="func.js"></script>
+<script src="utility.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content">
+    <form id="target"  name="formname" method="POST" action="fwpt.cgi">
+        <input type="hidden" name="buttonHit">
+        <input type="hidden" name="buttonValue">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item" onclick="window.location.href='FW_forward2.htm'">
+                                <a class="nav-link">Port Forwarding</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active">Port Triggering</a>
+                            </li>
+                        </ul>
+                        <input id="serv_pf" type="hidden" name="serv_type" value="pt">
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="fwpt_enable" type="checkbox" name="fwpt_enable" value="1" >Disable Port Triggering
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <!-- <div class="mui-textfield"> -->
+                            <!-- <input class="form-control" id="fwpt_timeout" type="text" name="fwpt_timeout" maxlength="4" value="<% fw_cgi_pt_get_policy_param("fwpt_timeout"); %>" onFocus="this.select();"> -->
+                            <!-- <label tabindex="-1">Port Triggering Time-out (in minutes)</label> -->
+                        <!-- </div> -->
+                    </div>
+                    <div class="card-bottom">
+                        <button id="add" value="Apply"  onclick="buttonClick(this,'Apply');return checkData();"  type="submit" name="srvApply" class=" btn btn-primary pull-right btn-round" > Apply</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-flex">
+                            <div class="card-title">Port Triggering Portmap Table</div>
+                            <div class="card-margin-left">
+                                <button class="btn btn-green btn-round btn-icon pull-righ" id="service_add" type="button" value="Add Service" name="srvAdd" onclick="buttonClick(this,'Add Service');srvAction(1);"><i class="material-icons"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="20px" viewBox="0 0 24 24" width="20px" fill="#FFFFFF"><g><rect fill="none" height="24" width="24"/></g><g><g><path d="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z"/></g></g></svg><p>Add Service</p></i></button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>Enable</th>
+                                <th>Service Name</th>
+                                <th>Service Type</th>
+                                <th>Inbound Connection</th>
+                                <th>Service User</th>
+                                <th class="align-right">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <% fw_cgi_pt_get_policy_table(); %> -->
+                            </tbody>
+                            </table>
+                            <input id="serviceSelect" type="hidden" name="serviceSelect" value="0">
+                        </div>
+                    </div>
+                    <div class="pull-right" style="display: none;">
+                        <button id="service_edit" type="button" value="Edit Service" name="srvEdit" class="btn btn-white btn-mg-15" onclick="buttonClick(this,'Edit Service');srvAction(2);">Edit Service</button>
+                        <button id="service_delete" type="button" value="Delete Service" name="srvDelete" class="btn btn-white btn-mg-15" onclick="buttonClick(this,'Delete Service');srvAction(3);">Delete Service</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="df_sel" value="-1">
+        <input type="hidden" name="custom_sel" value="-1">
+        <input type=hidden name=Add value="">
+        <input type=hidden name=Edit value="">
+        <input type=hidden name=Delete value="">
+        <input type=hidden name=Apply value="Apply">
+        <!-- <input type=hidden name=policyCount value="<% fw_cgi_pt_get_policy_table("policyCount"); %>"> -->
+    </form>
+</div>
+</body>
+
+<script>
+$(document).ready(function()
+{
+    parent.hide_loading();
+
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+
+    $(".table-responsive input[type=checkbox]").change(function() {
+        $("#add").click();
+    });
+});
+
+function chgSel_df(index)
+{
+    var cf = document.forms[0];
+    cf.df_sel.value = index;
+    cf.custom_sel.value = -1;
+}
+function chgSel(index)
+{
+    var cf = document.forms[0];
+    cf.custom_sel.value = index;
+    cf.df_sel.value = -1;
+}
+
+function edit_df(index)
+{
+    var cf = document.forms[0];
+    cf.df_sel.value = index;
+    cf.custom_sel.value = -1;
+
+    $("#service_edit").click();
+}
+
+function del_df(index)
+{
+    var cf = document.forms[0];
+    cf.df_sel.value = index;
+    cf.custom_sel.value = -1;
+
+    $("#service_delete").click();
+}
+
+function edit(index)
+{
+    var cf = document.forms[0];
+    cf.custom_sel.value = index;
+    cf.df_sel.value = -1;
+
+    $("#service_edit").click();
+}
+
+function del(index)
+{
+    var cf = document.forms[0];
+    cf.custom_sel.value = index;
+    cf.df_sel.value = -1;
+
+    $("#service_delete").click();
+}
+
+function checkData()
+{
+    var cf = document.forms[0];
+    var timeout = cf.fwpt_timeout.value;
+    if (cf.fwpt_timeout.value.length == 0 || !_isNumeric(timeout) || timeout <= 0 ||
+        cf.fwpt_timeout.value.match ( /^0/ ))
+    {
+        alert("Port triggering time-out cannot be null.");
+        return false;
+    }
+    else
+    {
+        cf.fwpt_timeout.value = parseInt(cf.fwpt_timeout.value,10);
+    }
+
+    parent.show_loading();
+
+    return true;
+}
+
+function srvAction(index)
+{
+    var cf = document.forms[0];
+    var count = cf.policyCount.value;
+    cf.Add.value = "";
+    cf.Edit.value = "";
+    cf.Delete.value = "";
+    
+    switch (index) {
+        case 1:
+            if (count == 20)
+            {
+                alert("The router can support 20 only port triggering rules.");
+                return false;
+            }
+            cf.Add.value = "Add";
+            break;
+        case 2:
+            cf.Edit.value = "Edit";
+            break;
+        case 3:
+            cf.Delete.value = "Delete";
+            break;
+        default:
+            break;
+    }
+
+    parent.show_loading();
+    
+    cf.submit();
+}
+</script>
+</html>
+
+

@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>W6B-T223-001</title>
+<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+<link href="css/new_custom.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script src="script/script.js"></script>
+</head>
+
+<body class="page-body">
+<div class="container-fluid frame-content" id="frame-content" style="overflow:auto">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="target"  method="POST" action="backup.cgi" ENCTYPE="multipart/form-data">
+                <input type="hidden" name="buttonHit">
+                <input type="hidden" name="buttonValue">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Revert to factory default settings</div>
+                    </div>
+                    <div class="card-body">
+                        <p>A window appears letting you know that the router has been successfully restored to the previous settings. The router will restart. This will take about 1 minute.</p>
+                    </div>
+                    <div class="card-bottom">
+                        <button id="erase" type="button" value="Erase" name="defaults" class="btn btn-primary pull-right btn-round" onClick="buttonClick(this,'Erase');location.href='BAK_cfm.htm'">Erase</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+$(document).ready(function() {
+    $("#target").submit(function() {
+        buttonFilter();
+    });
+});
+
+function check_restore() {
+    if (document.forms[0].mtenBcmRestoreCfg.value.length === 0) {
+        alert("File name cannot be blank.");
+        return false;
+    }
+
+    if (confirm("Warning! nRestoring settings from a configuration file will erase all of the current settings. nAre you sure you want to do this?"))
+        return true;
+    else
+        return false;
+}
+</script> 
+</html>
